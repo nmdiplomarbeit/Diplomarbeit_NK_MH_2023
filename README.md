@@ -1,0 +1,2 @@
+# Diplomarbeit_NK_MH_2023
+Lohnverrechnungsprogramm Gastronomie HGC Group
