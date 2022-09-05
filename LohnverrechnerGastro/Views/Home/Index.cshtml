@@ -2,9 +2,10 @@
 @{
     ViewData["Title"] = "Index";
 }
+<h1 style="text-align: center;">Rechner</h1>
+<br />
+<div class="felder">
 
-<div class="regan">
-    <h1>Rechner</h1>
     <form asp-controller="home" asp-action="index" method="post">
         <p>
             <label asp-for="Bundesland">
@@ -69,6 +70,62 @@
         <p>
             <input type="submit" value="absenden" />
             <input type="reset" value="abbrechen" />
+        </p>
+        <p>
+            <label asp-for="TGPauschale">
+                Trinkgeldpauschale:
+            </label>
+            <input type="number" asp-for="TGPauschale" />
+            <span asp-validation-for="TGPauschale"></span>
+        </p>
+        <p>
+            <label asp-for="Sachbezug">
+                Sachbezug:
+            </label>
+            <input type="number" asp-for="Sachbezug" />
+            <span asp-validation-for="Sachbezug"></span>
+        </p>
+        <p>
+            <label asp-for="FKErsatz">
+                Fahrtkostenersatz:
+            </label>
+            <input type="number" asp-for="FKErsatz" />
+            <span asp-validation-for="FKErsatz"></span>
+        </p>
+        <p>
+            <label asp-for="DNBeitrag">
+                Dienstnehmerbeitrag:
+            </label>
+            <input type="number" asp-for="DNBeitrag" />
+            <span asp-validation-for="DNBeitrag"></span>
+        </p>
+        <p>
+            <label asp-for="LstFreibetrag">
+                Lohnsteuer-Freibetrag:
+            </label>
+            <input type="number" asp-for="LstFreibetrag" />
+            <span asp-validation-for="LstFreibetrag"></span>
+        </p>
+        <p>
+            <label asp-for="FaBoPlus">
+                Fabo+:
+            </label>
+            <input type="checkbox" asp-for="FaBoPlus" />
+            <span asp-validation-for="FaBoPlus"></span>
+        </p>
+        <p>
+            <label asp-for="AVABoAEAB">
+                AVAB/AEAB:
+            </label>
+            <input type="checkbox" asp-for="AVABoAEAB" />
+            <span asp-validation-for="AVABoAEAB"></span>
+        </p>
+        <p>
+            <label asp-for="PendlerPauschale">
+                Pendlerpauschale:
+            </label>
+            <input type="checkbox" asp-for="PendlerPauschale" />
+            <span asp-validation-for="PendlerPauschale"></span>
         </p>
     </form>
 </div>

@@ -12,6 +12,15 @@ namespace LohnverrechnerGastro.Models
 
         private double stundenprowoche;
 
+        private double tgpauschale;
+
+        private double sachbezug;
+
+        private double fkersatz;
+
+        private double dnbeitrag;
+
+        private double lstfreibetrag;
 
         public Bundesland Bundesland { get; set; }
 
@@ -43,8 +52,73 @@ namespace LohnverrechnerGastro.Models
         }
 
         public string SZvombrutodKV { get; set; }
-        
 
+        // Zusatzfunktionen
         
+        public double TGPauschale {
+            get { return this.tgpauschale; }
+            set
+            {
+                if (value >= 0)
+                {
+                    this.tgpauschale = value;
+                }
+            }
+        }
+
+        public double Sachbezug
+        {
+            get { return this.sachbezug; }
+            set
+            {
+                if (value >= 0)
+                {
+                    this.sachbezug = value;
+                }
+            }
+        }
+
+        public double FKErsatz
+        {
+            get { return this.fkersatz; }
+            set
+            {
+                if (value >= 0)
+                {
+                    this.fkersatz = value;
+                }
+            }
+        }
+
+        public double DNBeitrag
+        {
+            get { return this.dnbeitrag; }
+            set
+            {
+                if (value >= 0)
+                {
+                    this.dnbeitrag = value;
+                }
+            }
+        }
+
+        public double LstFreibetrag
+        {
+            get { return this.lstfreibetrag; }
+            set
+            {
+                if (value >= 0)
+                {
+                    this.lstfreibetrag = value;
+                }
+            }
+        }
+
+        public bool FaBoPlus { get; set; }
+
+        public bool AVABoAEAB { get; set; }
+
+        public bool PendlerPauschale { get; set; }
+
     }
 }
