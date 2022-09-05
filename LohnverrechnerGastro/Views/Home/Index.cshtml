@@ -1,0 +1,74 @@
+﻿@model LohnverrechnerGastro.Models.Eingaben
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="regan">
+    <h1>Rechner</h1>
+    <form asp-controller="home" asp-action="index" method="post">
+        <p>
+            <label asp-for="Bundesland">
+                Bundesland:
+            </label>
+            <select asp-for="Bundesland" dropzone="1">
+                <option value="0">Burgenland</option>
+                <option value="1">Kärnten</option>
+                <option value="2">Niederösterreich</option>
+                <option value="3">Oberösterreich</option>
+                <option value="4">Salzburg</option>
+                <option value="5">Steiermark</option>
+                <option value="6">Tirol</option>
+                <option value="7">Vorarlberg</option>
+                <option value="8">Wien</option>
+            </select>
+            <span asp-validation-for="Bundesland"></span>
+        </p>
+
+        <p>
+            <label asp-for="Jahr">
+                Jahr:
+            </label>
+            <input type="number" asp-for="Jahr" />
+            <span asp-validation-for="Jahr"></span>
+        </p>
+        <p>
+            <label asp-for="Brutodnet">
+                Brutto / Netto:
+            </label>
+            <select asp-for="Brutodnet" dropzone="1">
+                <option value="Brutto">Brutto</option>
+                <option value="Netto">Netto</option>
+            </select>
+            <span asp-validation-for="Brutodnet"></span>
+        </p>
+        <p>
+            <label asp-for="Einkommen">
+                Einkommen:
+            </label>
+            <input type="number" asp-for="Einkommen" />
+            <span asp-validation-for="Einkommen"></span>
+        </p>
+        <p>
+            <label asp-for="StundenproWoche">
+                Stunden pro Woche:
+            </label>
+            <input type="number" asp-for="StundenproWoche" />
+            <span asp-validation-for="StundenproWoche"></span>
+        </p>
+
+        <p>
+            <label asp-for="SZvombrutodKV">
+                SZ vom Brutto oder KV:
+            </label>
+            <select asp-for="SZvombrutodKV" dropzone="1">
+                <option value="Brutto">Brutto</option>
+                <option value="KV">KV</option>
+            </select>
+            <span asp-validation-for="SZvombrutodKV"></span>
+        </p>
+        <p>
+            <input type="submit" value="absenden" />
+            <input type="reset" value="abbrechen" />
+        </p>
+    </form>
+</div>

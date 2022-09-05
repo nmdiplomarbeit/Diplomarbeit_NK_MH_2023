@@ -1,0 +1,28 @@
+﻿@model LohnverrechnerGastro.Models.User
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="regan">
+    <h1>Anmeldung</h1>
+    <form asp-controller="user" asp-action="login" method="post">
+        <p>
+            <label asp-for="Name">
+                Benutzername
+            </label><br />
+            <input type="text" asp-for="Name" />
+            <span asp-validation-for="Name"></span>
+        </p>
+        <p>
+            <label asp-for="Password">
+                Passwort
+            </label><br />
+            <input type="password" asp-for="Password" />
+            <span asp-validation-for="Password"></span>
+        </p>
+        <p>
+            <input type="submit" value="absenden" />
+            <input type="reset" value="abbrechen" />
+        </p>
+    </form>
+</div>
