@@ -2,6 +2,14 @@
 @{
     ViewData["Title"] = "Index";
 }
+
+
+
+    
+
+    
+
+
 <h1 style="text-align: center;">Rechner</h1>
 <br />
 <div class="felder">
@@ -110,22 +118,95 @@
             <label asp-for="FaBoPlus">
                 Fabo+:
             </label>
-            <input type="checkbox" asp-for="FaBoPlus" />
+            <input type="checkbox" asp-for="FaBoPlus" id="checkTogglefabo" onclick="togglefunc()" />
             <span asp-validation-for="FaBoPlus"></span>
+        </p>
+        <p id="zusatzfabo" style="display:none">
+            <label asp-for="HalberBonus">
+                Halber Bonus?:
+            </label>
+            <input type="checkbox" asp-for="HalberBonus" />
+            <span asp-validation-for="HalberBonus"></span>
+            &nbsp;&nbsp;&nbsp;&nbsp;                            @*Tabulatorabstand*@
+            <label asp-for="AnzKinderbis17">
+                Kinder bis 17:
+            </label>
+            <select asp-for="AnzKinderbis17" dropzone="1">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+            <span asp-validation-for="AnzKinderbis17"></span>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <label asp-for="AnzKinderab18">
+                Kinder ab 18:
+            </label>
+            <select asp-for="AnzKinderab18" dropzone="1">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+            <span asp-validation-for="AnzKinderab18"></span>
         </p>
         <p>
             <label asp-for="AVABoAEAB">
                 AVAB/AEAB:
             </label>
-            <input type="checkbox" asp-for="AVABoAEAB" />
+            <input type="checkbox" asp-for="AVABoAEAB" id="checkToggleavabaeab" onclick="togglefunc()" />
             <span asp-validation-for="AVABoAEAB"></span>
+        </p>
+        <p id="zusatzavabaeab" style="display:none">
+            <label asp-for="AnzKinder">
+                Kinder:
+            </label>
+            <select asp-for="AnzKinder" dropzone="1">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+            <span asp-validation-for="AnzKinder"></span>
         </p>
         <p>
             <label asp-for="PendlerPauschale">
                 Pendlerpauschale:
             </label>
-            <input type="checkbox" asp-for="PendlerPauschale" />
+            <input type="checkbox" asp-for="PendlerPauschale" id="checkTogglependler" onclick="togglefunc()" />
             <span asp-validation-for="PendlerPauschale"></span>
+        </p>
+        <p id="zusatzpendler" style="display:none">
+            <label asp-for="Kategorie">
+                Kinder:
+            </label>
+            <select asp-for="Kategorie" dropzone="1">
+                <option value="0">20-40 km (klein)</option>
+                <option value="1">40-60 km (klein)</option>
+                <option value="2">ab 60 km (klein)</option>
+                <option value="3">2-20 km (groß)</option>
+                <option value="4">20-40 km (groß)</option>
+                <option value="5">40-60 km (groß)</option>
+                <option value="6">ab 60 km (groß)</option>
+            </select>
+            <span asp-validation-for="Kategorie"></span>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <label asp-for="AnzKilometer">
+                Anzahl km:
+            </label>
+            <input type="number" asp-for="AnzKilometer" />
+            <span asp-validation-for="AnzKilometer"></span>
         </p>
     </form>
 </div>
+
+
+@section Scripts{
+    <script src="~/js/site.js" asp-append-version="true"></script>
+}

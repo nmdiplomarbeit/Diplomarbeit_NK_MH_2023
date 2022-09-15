@@ -22,6 +22,19 @@ namespace LohnverrechnerGastro.Models
 
         private double lstfreibetrag;
 
+        private int anzkinderbis17;
+
+        private int anzkinderab18;
+
+        private int anzKinder;
+
+        private int anzkilometer;
+
+        private bool halberBonus;
+
+        private Kategorie kategorie;
+
+
         public Bundesland Bundesland { get; set; }
 
         public int Jahr { get; set; }
@@ -120,5 +133,130 @@ namespace LohnverrechnerGastro.Models
 
         public bool PendlerPauschale { get; set; }
 
+        public bool HalberBonus {
+            get { if (FaBoPlus == true) { 
+                    return this.halberBonus; 
+                  } else
+                {
+                    return false;
+                }
+            }
+            set
+            {
+                if(FaBoPlus == true) {
+                    this.halberBonus = value;
+                }
+            }
+        }
+
+        public int AnzKinderbis17 {
+            get
+            {
+                if (FaBoPlus == true)
+                {
+                    return this.anzkinderbis17;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            set
+            {
+                if ((value >= 0 && value <= 5) && FaBoPlus == true)
+                {
+                    this.anzkinderbis17 = value;
+                }
+            }    
+        }
+
+        public int AnzKinderab18
+        {
+            get
+            {
+                if (FaBoPlus == true)
+                {
+                    return this.anzkinderab18;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            set
+            {
+                if ((value >= 0 && value <= 5) && FaBoPlus == true)
+                {
+                    this.anzkinderab18 = value;
+                }
+            }
+        }
+
+        public int AnzKinder
+        {
+            get
+            {
+                if (AVABoAEAB == true)
+                {
+                    return this.anzKinder;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            set
+            {
+                if ((value >= 0 && value <= 5) && AVABoAEAB == true)
+                {
+                    this.anzKinder = value;
+                }
+            }
+        }
+
+        public Kategorie Kategorie
+        {
+            get
+            {
+                if (PendlerPauschale == true)
+                {
+                    return this.kategorie;
+                }
+                else
+                {
+                    return Kategorie.keineKat;
+                }
+            }
+            set
+            {
+                if (PendlerPauschale == true)
+                {
+                    this.kategorie = value;
+                }
+            }
+        }
+
+
+        public int AnzKilometer
+        {
+            get
+            {
+                if (PendlerPauschale == true)
+                {
+                    return this.anzkilometer;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            set
+            {
+                if ((value >= 0) && PendlerPauschale == true)
+                {
+                    this.anzkilometer = value;
+                }
+            }
+        }
     }
 }
