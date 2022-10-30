@@ -51,11 +51,11 @@ namespace LohnverrechnerGastro.Controllers
                     await rep.ConnectAsync();
                     if (await rep.LoginAsync(userdaten.Name, userdaten.Password))
                     {
-                        Console.WriteLine("Falsche Anmeldedaten");
+                        return RedirectToAction("Index", "Home");
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        Console.WriteLine("Falsche Anmeldedaten");
                     }
                 }
                 catch (DbException)
