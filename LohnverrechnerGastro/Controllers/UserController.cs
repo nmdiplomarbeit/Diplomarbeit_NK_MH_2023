@@ -51,6 +51,8 @@ namespace LohnverrechnerGastro.Controllers
                     await rep.ConnectAsync();
                     if (await rep.LoginAsync(userdaten.Name, userdaten.Password))
                     {
+                        userdaten.IsLogged = true;
+                        Logged = true;
                         return RedirectToAction("Index", "Home");
                     }
                     else

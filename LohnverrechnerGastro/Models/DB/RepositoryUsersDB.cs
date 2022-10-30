@@ -24,11 +24,6 @@ namespace LohnverrechnerGastro.Models.DB
             }
         }
 
-        public Task<bool> DeleteAsync(int userId)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task DisconnectAsync()
         {
             if ((this._conn != null) && (this._conn.State == ConnectionState.Open))
@@ -37,36 +32,6 @@ namespace LohnverrechnerGastro.Models.DB
             }
         }
 
-        public async Task<User> GetKundeAsync(int userId)
-        {
-            User user;
-            if (this._conn?.State == ConnectionState.Open)
-            {
-                DbCommand cmd = this._conn.CreateCommand();
-                cmd.CommandText = "select * from users where userId = @userId";     // Name der ID in DB und in Code gleich,
-                DbParameter paramID = cmd.CreateParameter();                        //      -> weniger Fehler
-                paramID.ParameterName = "userId";
-                paramID.DbType = DbType.String;
-                paramID.Value = userId;
-                cmd.Parameters.Add(paramID);
-                using (DbDataReader reader = await cmd.ExecuteReaderAsync())
-                {
-                    while (await reader.ReadAsync())
-                    {
-                        user = new User
-                        {
-                            UserId = userId,
-                            Name = Convert.ToString(reader["name"]),
-                            Email = Convert.ToString(reader["email"]),
-                            Password = Convert.ToString(reader["password"])
-                        };
-                        return user;
-                    }
-                }
-            }
-            return null;
-
-        }
         public async Task<bool> InsertAsync(User user)
         {
 
@@ -100,7 +65,38 @@ namespace LohnverrechnerGastro.Models.DB
             return false;
         }
 
-        public async Task<bool> Login(string name, string password)
+        public async Task<User> GetKundeAsync(int userId)
+        {
+            User user;
+            if (this._conn?.State == ConnectionState.Open)
+            {
+                DbCommand cmd = this._conn.CreateCommand();
+                cmd.CommandText = "select * from users where userId = @userId";     // Name der ID in DB und in Code gleich,
+                DbParameter paramID = cmd.CreateParameter();                        //      -> weniger Fehler
+                paramID.ParameterName = "userId";
+                paramID.DbType = DbType.String;
+                paramID.Value = userId;
+                cmd.Parameters.Add(paramID);
+                using (DbDataReader reader = await cmd.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        user = new User
+                        {
+                            UserId = userId,
+                            Name = Convert.ToString(reader["name"]),
+                            Email = Convert.ToString(reader["email"]),
+                            Password = Convert.ToString(reader["password"])
+                        };
+                        return user;
+                    }
+                }
+            }
+            return null;
+
+        }
+
+        public async Task<bool> LoginAsync(string name, string password)
 
         {
             if (this._conn?.State == ConnectionState.Open)
@@ -130,11 +126,6 @@ namespace LohnverrechnerGastro.Models.DB
                 }
             }
             return false;
-        }
-
-        public Task<bool> LoginAsync(string name, string password)
-        {
-            throw new NotImplementedException();
         }
     }
 }
