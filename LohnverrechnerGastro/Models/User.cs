@@ -25,19 +25,21 @@ namespace LohnverrechnerGastro.Models
 
         public string Name { get; set; }
 
+        public string Email { get; set; }  
+
         public string Password { get; set; }
 
         public bool IsLogged { get; set; }
 
-        //public User() : this(0, "", "") { }
+        public User() : this(0, "", "") { }
 
-        //public User(int userId, string name, string password)
-        //{
-        //    this.UserId = userId;
-        //    this.Name = name;
-        //    this.Password = password;
-        //    this.IsLogged = false;
-        //}
+        public User(int userId, string name, string password)
+        {
+            this.UserId = userId;
+            this.Name = name;
+            this.Password = password;
+            this.IsLogged = false;
+        }
 
     }
 }

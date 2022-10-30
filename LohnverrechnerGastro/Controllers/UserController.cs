@@ -1,7 +1,10 @@
 ﻿using LohnverrechnerGastro.Models;
+using LohnverrechnerGastro.Models.DB;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,6 +13,7 @@ namespace LohnverrechnerGastro.Controllers
     public class UserController : Controller
     {
 
+        private IRepositoryUsersDB rep = new RepositoryUsersDB();
 
         public IActionResult Index()
         {
@@ -24,22 +28,47 @@ namespace LohnverrechnerGastro.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(User userdaten)
+        public async Task<IActionResult> LoginAsync(User userdaten)
         {
             if (userdaten == null)
             {
                 return RedirectToAction("Login");
             }
+            //if (ModelState.IsValid)
+            //{
+            //    if(userdaten.Name == "admin" && userdaten.Password == "admin")
+            //    {
+            //        userdaten.IsLogged = true;
+            //        Logged = true;
+            //        return RedirectToAction("Index", "Home");
+            //    }
+            //}
+            //return View(userdaten);
             if (ModelState.IsValid)
             {
-                if(userdaten.Name == "admin" && userdaten.Password == "admin")
+                try
                 {
-                    userdaten.IsLogged = true;
-                    Logged = true;
-                    return RedirectToAction("Index", "Home");
+                    await rep.ConnectAsync();
+                    if (await rep.LoginAsync(userdaten.Name, userdaten.Password))
+                    {
+                        Console.WriteLine("Falsche Anmeldedaten");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+                catch (DbException)
+                {
+                    Console.WriteLine("Datenbankfehler");
+                }
+                finally
+                {
+                    await rep.DisconnectAsync();
                 }
             }
             return View(userdaten);
+
         }
 
         public IActionResult Logout()

@@ -8,7 +8,7 @@ namespace LohnverrechnerGastro.Models
     public class Eingaben
     {
 
-        private double einkommen;
+        private decimal einkommen;
 
         private double stundenprowoche;
 
@@ -41,7 +41,7 @@ namespace LohnverrechnerGastro.Models
 
         public string Brutodnet { get; set; } // Brutto 0, Netto 1
 
-        public double Einkommen {
+        public decimal Einkommen {
             get { return this.einkommen; }
             set
             {
@@ -224,7 +224,7 @@ namespace LohnverrechnerGastro.Models
                 }
                 else
                 {
-                    return Kategorie.keineKat;
+                    return Kategorie.notSpecified;
                 }
             }
             set
@@ -257,6 +257,39 @@ namespace LohnverrechnerGastro.Models
                     this.anzkilometer = value;
                 }
             }
+        }
+
+        public Eingaben(Bundesland bundesland, int jahr, string brutodnet, decimal einkommen,
+            double stundenprowoche, string szvombruttoodKV) : this(bundesland, jahr, brutodnet, einkommen,
+                stundenprowoche, szvombruttoodKV, 0, 0, 0, 0, 0, false, false, false, false, 0, 0, 0,
+                Kategorie.notSpecified, 0){ }
+
+        public Eingaben(Bundesland bundesland, int jahr, string brutodnet, decimal einkommen, 
+            double stundenprowoche, string szvombruttoodKV, double tgpauschale, double sachbezug, 
+            double fkersatz, double dnbeitrag, double lstfreibetrag,bool faboplus, bool avaboaeab, bool pendlerpauschale, 
+            bool halberbonus, int anzkinderbis17, int anzkinderab18, int anzkinder, Kategorie kategorie, 
+            int anzkilometer)
+        {
+            this.Bundesland = bundesland;
+            this.Jahr = jahr;
+            this.Brutodnet = brutodnet;
+            this.Einkommen = einkommen;
+            this.StundenproWoche = stundenprowoche;
+            this.SZvombrutodKV = szvombruttoodKV;
+            this.TGPauschale = tgpauschale;
+            this.Sachbezug = sachbezug;
+            this.FKErsatz = fkersatz;
+            this.DNBeitrag = dnbeitrag;
+            this.LstFreibetrag = lstfreibetrag;
+            this.FaBoPlus = faboplus;
+            this.AVABoAEAB = avaboaeab;
+            this.PendlerPauschale = pendlerpauschale;
+            this.HalberBonus = halberbonus;
+            this.AnzKinderbis17 = anzkinderbis17;
+            this.AnzKinderab18 = anzkinderab18;
+            this.AnzKinder = anzkinder;
+            this.Kategorie = kategorie;
+            this.AnzKilometer = anzkilometer;
         }
     }
 }
