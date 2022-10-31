@@ -12,6 +12,10 @@ namespace LohnverrechnerGastro.Models.DB
         private string _connectionString = "Server=localhost;database=pvdiplomarbeit;user=root;password=";
         private DbConnection _conn;
 
+
+        public static bool IsLogged { get; set; }
+        public static bool IsAdmin { get; set; }
+
         public async Task ConnectAsync()
         {
             if (this._conn == null)
@@ -55,9 +59,15 @@ namespace LohnverrechnerGastro.Models.DB
                 paramPWD.DbType = DbType.String;
                 paramPWD.Value = user.Password;
 
+                //DbParameter paramLogged = cmdInsert.CreateParameter();
+                //paramLogged.ParameterName = "isLogged";
+                //paramLogged.DbType = DbType.String;
+                //paramLogged.Value = user.IsLogged;
+
                 cmdInsert.Parameters.Add(paramN);
-                cmdInsert.Parameters.Add(paramPWD);
                 cmdInsert.Parameters.Add(paramEmail);
+                cmdInsert.Parameters.Add(paramPWD);
+                //cmdInsert.Parameters.Add(paramLogged);
 
                 return await cmdInsert.ExecuteNonQueryAsync() == 1;
             }
@@ -65,7 +75,7 @@ namespace LohnverrechnerGastro.Models.DB
             return false;
         }
 
-        public async Task<User> GetKundeAsync(int userId)
+        public async Task<User> GetUserAsync(int userId)
         {
             User user;
             if (this._conn?.State == ConnectionState.Open)
@@ -86,7 +96,8 @@ namespace LohnverrechnerGastro.Models.DB
                             UserId = userId,
                             Name = Convert.ToString(reader["name"]),
                             Email = Convert.ToString(reader["email"]),
-                            Password = Convert.ToString(reader["password"])
+                            Password = Convert.ToString(reader["password"]),
+                            //IsLogged = Convert.ToBoolean(reader["isLogged"])
                         };
                         return user;
                     }
@@ -95,6 +106,32 @@ namespace LohnverrechnerGastro.Models.DB
             return null;
 
         }
+
+        //public async Task<bool> UpdateLoggedAsync(int userId, bool newLogged)
+        //{
+        //    if (this._conn?.State == ConnectionState.Open)
+        //    {
+        //        DbCommand cmd = this._conn.CreateCommand();
+        //        cmd.CommandText = "update users set isLogged = @isLogged where userId = @userId";
+
+        //        DbParameter paramID = cmd.CreateParameter();
+        //        paramID.ParameterName = "userId";
+        //        paramID.DbType = DbType.Int32;
+        //        paramID.Value = paramID;
+
+        //        DbParameter paramLogged = cmd.CreateParameter();
+        //        paramLogged.ParameterName = "isLogged";
+        //        paramLogged.DbType = DbType.String;
+        //        paramLogged.Value = newLogged;
+
+        //        cmd.Parameters.Add(paramID);
+        //        cmd.Parameters.Add(paramLogged);
+
+        //        return await cmd.ExecuteNonQueryAsync() == 1;
+        //    }
+
+        //    return false;
+        //}
 
         public async Task<bool> LoginAsync(string name, string password)
 
@@ -117,10 +154,16 @@ namespace LohnverrechnerGastro.Models.DB
                 cmdInsert.Parameters.Add(paramN);
                 cmdInsert.Parameters.Add(paramPWD);
 
+                if (name == "AdminAdmin123" && password == "AdminAdmin123")
+                {
+                    IsAdmin = true;
+                }
+
                 using (DbDataReader reader = await cmdInsert.ExecuteReaderAsync())
                 {
                     if (await reader.ReadAsync())
                     {
+                        IsLogged = true;
                         return true;
                     }
                 }

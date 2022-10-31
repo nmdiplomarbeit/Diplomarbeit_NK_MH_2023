@@ -8,7 +8,8 @@ namespace LohnverrechnerGastro.Models.DB
         Task ConnectAsync();
         Task DisconnectAsync();
         Task<bool> InsertAsync(User user);
-        Task<User> GetKundeAsync(int userId);
+        Task<User> GetUserAsync(int userId);
+        //Task<bool> UpdateLoggedAsync(int userId, bool newLogged);
         Task<bool> LoginAsync(string name, string password);
     }
 }

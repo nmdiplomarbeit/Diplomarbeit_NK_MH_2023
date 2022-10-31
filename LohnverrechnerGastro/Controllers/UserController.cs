@@ -20,6 +20,90 @@ namespace LohnverrechnerGastro.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult Registration()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Registration(User userdaten)
+        {
+            if(userdaten == null)
+            {
+                return RedirectToAction("Resgistration");
+            }
+            RegistrationValidation(userdaten);
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await rep.ConnectAsync();
+                    if (await rep.InsertAsync(userdaten))
+                    {
+                        Console.WriteLine("Daten gespeichert!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Daten nicht gespeichert!");
+                    }
+                }
+                catch (DbException e)
+                {
+                    Console.WriteLine("Datenbankfehler!");
+                }
+                finally
+                {
+                    await rep.DisconnectAsync();
+                }
+            }
+            return View(userdaten);
+        }
+
+        public void RegistrationValidation(User user)
+        {
+            Boolean keinKleinbuchstabe = false;
+            Boolean keinGroßbuchstabe = false;
+
+            keinKleinbuchstabe = user.Password.ToUpper().Equals(user.Password);
+            keinGroßbuchstabe = user.Password.ToLower().Equals(user.Password);
+
+            if (user == null)
+            {
+                return;
+            }
+            if ((user.Name == null) || (user.Name.Trim().Length < 4))
+            {
+                ModelState.AddModelError("Name", "Der Benutzername muss mindestens 4 Zeichen lang sein");
+            }
+            if ((user.Password == null) || (user.Password.Length < 8))
+            {
+                ModelState.AddModelError("Password", "Das Passwort muss mindestens 8 Zeichen lang sein");
+            }
+            if ((keinKleinbuchstabe) || (keinGroßbuchstabe))
+            {
+                ModelState.AddModelError("Password", "Das Passwort muss Groß- und Kleinbuchstaben enthalten");
+            }
+            if ((!user.Email.Contains("@")) || (user.Email == null))
+            {
+                ModelState.AddModelError("EMail", "Die EMail sollte in dem EMail-Format (bsp.: maxmustermann@abc.com)");
+            }
+            for (int i = 0; i < 10; i++)
+            {
+                if (user.Password.Contains(i.ToString()))
+                {
+                    return;
+                }
+            }
+            for (int i = 0; i < 10; i++)
+            {
+                if (!user.Password.Contains(i.ToString()))
+                {
+                    ModelState.AddModelError("Password", "Das Passwort muss mindestens eine Zahl enthalten");
+                }
+            }
+        }
+
 
         [HttpGet]
         public IActionResult Login()
@@ -51,8 +135,7 @@ namespace LohnverrechnerGastro.Controllers
                     await rep.ConnectAsync();
                     if (await rep.LoginAsync(userdaten.Name, userdaten.Password))
                     {
-                        userdaten.IsLogged = true;
-                        Logged = true;
+                        RepositoryUsersDB.IsLogged = true;
                         return RedirectToAction("Index", "Home");
                     }
                     else
@@ -75,15 +158,14 @@ namespace LohnverrechnerGastro.Controllers
 
         public IActionResult Logout()
         {
-            if (Logged)
+            if (RepositoryUsersDB.IsLogged)
             {
-                Logged = false;
+                RepositoryUsersDB.IsLogged = false;
+                RepositoryUsersDB.IsAdmin = false;
                 return RedirectToAction("Login");
             }
             return View("Index", "Home");       // falls nicht angemeldet kommt man einfach auf die Seite des Rechners
         }
-
-        public static bool Logged { get; set; }
         
     }
 }

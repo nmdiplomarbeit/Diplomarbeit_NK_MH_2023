@@ -29,7 +29,7 @@ namespace LohnverrechnerGastro.Models
 
         public string Password { get; set; }
 
-        public bool IsLogged { get; set; }
+        //public bool IsLogged { get; set; }
 
         public User() : this(0, "", "") { }
 
@@ -38,7 +38,7 @@ namespace LohnverrechnerGastro.Models
             this.UserId = userId;
             this.Name = name;
             this.Password = password;
-            this.IsLogged = false;
+            //this.IsLogged = false;
         }
 
     }

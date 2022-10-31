@@ -1,16 +1,21 @@
 ﻿@using LohnverrechnerGastro.Controllers
+@using LohnverrechnerGastro.Models.DB
 
 <div id="nav">
     <ul>
         <li><a asp-area="" asp-controller="Home" asp-action="Index"><img src="~/multimedia/pictures/calculator.jpg" alt="calculator" height=40 width="27" asp-append-version="true" /></a></li>
         <li><a class="navtext" asp-area="" asp-controller="Home" asp-action="Index">Calculator</a></li>
-        @if (UserController.Logged)
+        @if (RepositoryUsersDB.IsLogged)
         {
             <li><a class="navtext" asp-area="" asp-controller="User" asp-action="Logout">Logout</a></li>
         }
         else
         {
             <li><a class="navtext" asp-area="" asp-controller="User" asp-action="Login">Login</a></li>
+        }
+        @if (RepositoryUsersDB.IsAdmin)
+        {
+            <li><a class="navtext" asp-area="" asp-controller="User" asp-action="Registration">Registration</a></li>
         }
         <li><a class="navtext" asp-area="" asp-controller="User" asp-action="Index">Users</a></li>
 
