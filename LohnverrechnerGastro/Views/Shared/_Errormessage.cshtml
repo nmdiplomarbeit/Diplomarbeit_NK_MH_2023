@@ -1,0 +1,19 @@
+﻿@model LohnverrechnerGastro.Models.Message
+
+<asp:Scriptmanager id="Scriptmanager1" runat="server">
+</asp:Scriptmanager>
+if(Model != null){
+<h3>@Model.Header</h3>
+<p>
+    <b>Meldung</b>
+    @Model.Text
+}
+
+@if ((Model.Solution != null) && (Model.Solution.Trim().Length >= 1))
+{
+    <p>
+        <b>Lösung</b>
+        @Model.Solution
+    </p>
+
+}
