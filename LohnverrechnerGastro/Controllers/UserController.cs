@@ -67,9 +67,6 @@ namespace LohnverrechnerGastro.Controllers
             Boolean keinKleinbuchstabe = false;
             Boolean keinGroßbuchstabe = false;
 
-            keinKleinbuchstabe = user.Password.ToUpper().Equals(user.Password);
-            keinGroßbuchstabe = user.Password.ToLower().Equals(user.Password);
-
             if (user == null)
             {
                 return;
@@ -81,6 +78,11 @@ namespace LohnverrechnerGastro.Controllers
             if ((user.Password == null) || (user.Password.Length < 8))
             {
                 ModelState.AddModelError("Password", "Das Passwort muss mindestens 8 Zeichen lang sein");
+            }
+            if(user.Password != null)
+            {
+                keinKleinbuchstabe = user.Password.ToUpper().Equals(user.Password);
+                keinGroßbuchstabe = user.Password.ToLower().Equals(user.Password);
             }
             if ((keinKleinbuchstabe) || (keinGroßbuchstabe))
             {
@@ -103,6 +105,60 @@ namespace LohnverrechnerGastro.Controllers
                 {
                     ModelState.AddModelError("Password", "Das Passwort muss mindestens eine Zahl enthalten");
                 }
+            }
+        }
+
+        public async Task<IActionResult> checkEmailAsync(string email)
+        {
+            try
+            {
+                await rep.ConnectAsync();
+                if (await rep.AskEmailAsync(email))
+                {
+                    return new JsonResult(true);
+                }
+                else
+                {
+                    return new JsonResult(false);
+                }
+            }
+            //catch (DbException e)
+            //{
+            //    return View("_Errormessage",
+            //                    new Errormessage("Anmeldung", "Datenbankfehler!",
+            //                                "Bitte versuchen Sie es später erneut!"));
+            //}
+            finally
+            {
+                await rep.DisconnectAsync();
+
+            }
+        }
+
+        public async Task<IActionResult> checkNameAsync(string email)
+        {
+            try
+            {
+                await rep.ConnectAsync();
+                if (await rep.AskNameAsync(email))
+                {
+                    return new JsonResult(true);
+                }
+                else
+                {
+                    return new JsonResult(false);
+                }
+            }
+            //catch (DbException e)
+            //{
+            //    return View("_Errormessage",
+            //                    new Errormessage("Anmeldung", "Datenbankfehler!",
+            //                                "Bitte versuchen Sie es später erneut!"));
+            //}
+            finally
+            {
+                await rep.DisconnectAsync();
+
             }
         }
 
@@ -148,7 +204,7 @@ namespace LohnverrechnerGastro.Controllers
                 catch (DbException)
                 {
                     return View("_Errormessage",
-                                new Errormessage("Login", "Datenbankfehler!",
+                                new Errormessage("Anmeldung", "Datenbankfehler!",
                                             "Bitte versuchen Sie es später erneut!"));
                 }
                 finally

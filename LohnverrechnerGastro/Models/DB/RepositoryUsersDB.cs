@@ -133,6 +133,55 @@ namespace LohnverrechnerGastro.Models.DB
         //    return false;
         //}
 
+        public async Task<bool> AskEmailAsync(string email)
+        {
+            if (this._conn?.State == ConnectionState.Open)
+            {
+                DbCommand cmd = this._conn.CreateCommand();
+                cmd.CommandText = "select * from users where email = @email";
+
+                DbParameter paramEM = cmd.CreateParameter();
+                paramEM.ParameterName = "email";
+                paramEM.DbType = DbType.String;
+                paramEM.Value = email;
+
+                cmd.Parameters.Add(paramEM);
+
+
+                using (DbDataReader reader = await cmd.ExecuteReaderAsync())
+                {
+                    if (await reader.ReadAsync())
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public async Task<bool> AskNameAsync(string name)
+        {
+            DbCommand cmd = this._conn.CreateCommand();
+            cmd.CommandText = "select * from users where name = @name";
+
+            DbParameter paramN = cmd.CreateParameter();
+            paramN.ParameterName = "name";
+            paramN.DbType = DbType.String;
+            paramN.Value = name;
+
+            cmd.Parameters.Add(paramN);
+
+
+            using (DbDataReader reader = await cmd.ExecuteReaderAsync())
+            {
+                if (await reader.ReadAsync())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public async Task<bool> LoginAsync(string name, string password)
 
         {

@@ -57,3 +57,15 @@ function togglefunc() {
         zusatzpendler.style.display = "none";
     }
 }
+
+//function OpenPopup() {
+
+//    alert('gewählt');
+//    return false;
+//}
+
+$('#modal').on('shown.bs.modal', function () {
+    $('#modal-body').trigger('focus')
+})
+
+

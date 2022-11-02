@@ -21,13 +21,12 @@
             <span asp-validation-for="Password"></span>
         </p>
         <p>
-            <input id="Button1" type="submit" value="anmelden" />
+            <input type="submit" value="anmelden" @*onclick="OpenPopup()"*@ />
             <input type="reset" value="abbrechen" />
         </p>
     </form>
-    <form id="form1" runat="server">
-        <div class="div">
-            <asp:Button id="btn" Text="Click Me" CssClass="btn-default" runat="server" onclick="btn_Click"></asp:Button>
-        </div>
-    </form>
 </div>
+
+@section Scripts{
+    <script src="~/js/site.js" asp-append-version="true"></script>
+}
