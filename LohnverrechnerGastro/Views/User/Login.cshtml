@@ -21,8 +21,13 @@
             <span asp-validation-for="Password"></span>
         </p>
         <p>
-            <input type="submit" value="anmelden" />
+            <input id="Button1" type="submit" value="anmelden" />
             <input type="reset" value="abbrechen" />
         </p>
+    </form>
+    <form id="form1" runat="server">
+        <div class="div">
+            <asp:Button id="btn" Text="Click Me" CssClass="btn-default" runat="server" onclick="btn_Click"></asp:Button>
+        </div>
     </form>
 </div>

@@ -50,7 +50,9 @@ namespace LohnverrechnerGastro.Controllers
                 }
                 catch (DbException e)
                 {
-                    Console.WriteLine("Datenbankfehler!");
+                    return View("_Errormessage",
+                                new Errormessage("Registrierung", "Datenbankfehler!",
+                                            "Bitte versuchen Sie es später erneut!"));
                 }
                 finally
                 {
@@ -145,7 +147,9 @@ namespace LohnverrechnerGastro.Controllers
                 }
                 catch (DbException)
                 {
-                    Console.WriteLine("Datenbankfehler");
+                    return View("_Errormessage",
+                                new Errormessage("Login", "Datenbankfehler!",
+                                            "Bitte versuchen Sie es später erneut!"));
                 }
                 finally
                 {

@@ -1,20 +1,30 @@
-﻿namespace LohnverrechnerGastro.Models
+﻿using Org.BouncyCastle.Asn1.Ocsp;
+using System;
+
+namespace LohnverrechnerGastro.Models
 {
     public class Errormessage
-    {   public string Header { get; set; }
-        public string Text { get; set; }
-        public string Solution { get; set; }
+    { 
+    //    public string Header { get; set; }
+    //    public string Text { get; set; }
+    //    public string Solution { get; set; }
 
 
-        public Errormessage() : this("", "", "") { }
+    //    public Errormessage() : this("", "", "") { }
 
-        public Errormessage(string header, string text) : this(header, text, "") { }
+    //    public Errormessage(string header, string text) : this(header, text, "") { }
 
-        public Errormessage(string header, string text, string solution)
+    //    public Errormessage(string header, string text, string solution)
+    //    {
+    //        this.Header = header;
+    //        this.Text = text;
+    //        this.Solution = solution;
+    //    }
+
+        protected void btn_Click(object sender, EventArgs e)
         {
-            this.Header = header;
-            this.Text = text;
-            this.Solution = solution;
+            Response.Write("<script>alert('hello')</scirpt>");
         }
+
     }
 }

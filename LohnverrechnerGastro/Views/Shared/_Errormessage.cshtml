@@ -1,13 +1,15 @@
-﻿@model LohnverrechnerGastro.Models.Message
+﻿@model LohnverrechnerGastro.Models.Errormessage
 
-<asp:Scriptmanager id="Scriptmanager1" runat="server">
-</asp:Scriptmanager>
-if(Model != null){
-<h3>@Model.Header</h3>
+<head runat="server">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+
+@*<h3>@Model.Header</h3>
 <p>
     <b>Meldung</b>
     @Model.Text
-}
+
 
 @if ((Model.Solution != null) && (Model.Solution.Trim().Length >= 1))
 {
@@ -16,4 +18,56 @@ if(Model != null){
         @Model.Solution
     </p>
 
-}
+}*@
+
+<body>
+@*    @if(Model != null){
+    <form id="form1" runat="server">
+        <asp:Scriptmanager id="Scriptmanager1" runat="server">
+        </asp:Scriptmanager>
+    <div>
+        <asp:Panel id="Panel1" CssClass="popup roundedcorner" runat="server">
+            <asp:Label id="Label1" server="runat">
+                <b>Meldung</b>
+                @Model.Text
+            </asp:Label>
+        </asp:Panel>
+        <cc1:ModalPopupExtender id="ModalPopupExtender1" TargetControlID="Button1" PopupControlID="Panel1"
+        BackgroundCssClass="background" runat="server"></cc1:ModalPopupExtender>
+    </div>
+    </form>
+
+        <div class="modalPopupAlign">
+            <asp:LinkButton ID="lnkConfirm" Style="display: none;" CausesValidation="false" runat="server" PostBackUrl="#">Confirm</asp:LinkButton>
+            <ajax:ModalPopupExtender ID="lnkConfirm_ModalPopupExtender" runat="server" TargetControlID="lnkConfirm" PopupControlID="pnlConfirmation" BackgroundCssClass="modalBackground" DropShadow="true" RepositionMode="None">
+            </ajax:ModalPopupExtender>
+            <div id="pnlConfirmation" class="modalPopup" style="display: none;">
+                <br />
+                <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                    <ContentTemplate>
+                        <div class="modalPopupContainerAlign">
+                            <div>
+                                <asp:Image ID="imgIcon" CssClass="modalPopupImage" runat="server" />
+                                <asp:Label ID="lblMessage" CssClass="modalPopupMessage" runat="server"></asp:Label>
+                                <div class="modalPopupTextbox"><asp:TextBox ID="txtValue" Width="200px" MaxLength="100" Visible="false" runat="server"></asp:TextBox></div>
+
+                                <asp:Button ID="btnAction" runat="server" CausesValidation="false" CssClass="defaultButton" Text="OK" />
+
+                            </div>
+                        </div>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+            </div>
+        </div>
+
+
+
+
+
+    }*@
+    <form id="form1" runat="server">
+        <div class="div">
+            <asp:Button id="btn" Text="Click Me" CssClass="btn-default" runat="server" onclick="btn_Click"></asp:Button>
+        </div>
+    </form>
+</body>
