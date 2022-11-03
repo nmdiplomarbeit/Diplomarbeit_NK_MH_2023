@@ -21,12 +21,13 @@
             <span asp-validation-for="Password"></span>
         </p>
         <p>
-            <input type="submit" value="anmelden" @*onclick="OpenPopup()"*@ />
+            <input type="submit" value="anmelden" href="#" data-toggle="modal" data-target="#exampleModalCenter" @*onclick="OpenPopup()"*@/>
             <input type="reset" value="abbrechen" />
-            <a href="#" data-toggle="modal" data-target="#exampleModalCenter">uuuu<i class="fa fa-trash"></i></a>
+            <a href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-trash"></i></a>
         </p>
     </form>
 </div>
+
 <!-- Pop Up -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -47,6 +48,11 @@
         </div>
     </div>
 </div>
+    }
+}
+
+
+
 
 @section Scripts{
     <script src="~/js/site.js" asp-append-version="true"></script>

@@ -41,7 +41,7 @@ namespace LohnverrechnerGastro.Controllers
                     await rep.ConnectAsync();
                     if (await rep.InsertAsync(userdaten))
                     {
-                        Console.WriteLine("Daten gespeichert!");
+                        return RedirectToAction("Index", "Home");
                     }
                     else
                     {
@@ -50,9 +50,8 @@ namespace LohnverrechnerGastro.Controllers
                 }
                 catch (DbException e)
                 {
-                    return View("_Errormessage",
-                                new Errormessage("Registrierung", "Datenbankfehler!",
-                                            "Bitte versuchen Sie es später erneut!"));
+                    userdaten.IsError = true;
+                    return View("Registration");
                 }
                 finally
                 {
@@ -203,9 +202,8 @@ namespace LohnverrechnerGastro.Controllers
                 }
                 catch (DbException)
                 {
-                    return View("_Errormessage",
-                                new Errormessage("Anmeldung", "Datenbankfehler!",
-                                            "Bitte versuchen Sie es später erneut!"));
+                    userdaten.IsError = true;
+                    return View("Login");
                 }
                 finally
                 {
