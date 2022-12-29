@@ -3,13 +3,6 @@
     ViewData["Title"] = "Index";
 }
 
-
-
-
-
-
-
-
 <h1 style="text-align: center;">Rechner</h1>
 <br />
 <div class="felder">
@@ -37,7 +30,7 @@
             <label asp-for="Jahr">
                 Jahr<b class="notnull">*</b>:
             </label>
-            <input id="jahr" type="number" asp-for="Jahr" />
+            <input id="jahr" type="number" asp-for="Jahr" value="2022"/>
             <span asp-validation-for="Jahr"></span>
         </p>
         <p>
@@ -45,7 +38,7 @@
                 Brutto / Netto<b class="notnull">*</b>:
             </label>
             <select id="brutodnet" asp-for="Brutodnet" dropzone="1">
-                <option value="Brutto">Brutto</option>
+                <option value="Brutto" selected>Brutto</option>
                 <option value="Netto">Netto</option>
             </select>
             <span asp-validation-for="Brutodnet"></span>
@@ -54,14 +47,14 @@
             <label asp-for="Einkommen">
                 Einkommen<b class="notnull">*</b>:
             </label>
-            <input id="einkommen" type="number" asp-for="Einkommen" />
+            <input id="einkommen" type="number" asp-for="Einkommen" value="2000"/>
             <span asp-validation-for="Einkommen"></span>
         </p>
         <p>
             <label asp-for="StundenproWoche">
                 Stunden pro Woche<b class="notnull">*</b>:
             </label>
-            <input id="hprowoche" type="number" asp-for="StundenproWoche" />
+            <input id="hprowoche" type="number" asp-for="StundenproWoche" value="40" />
             <span asp-validation-for="StundenproWoche"></span>
         </p>
 
@@ -70,7 +63,7 @@
                 SZ vom Brutto oder KV<b class="notnull">*</b>:
             </label>
             <select id="szbrutkv" asp-for="SZvombrutodKV" dropzone="1">
-                <option value="Brutto">Brutto</option>
+                <option value="Brutto" selected>Brutto</option>
                 <option value="KV">KV</option>
             </select>
             <span asp-validation-for="SZvombrutodKV"></span>
@@ -79,56 +72,56 @@
             <label asp-for="TGPauschale">
                 Trinkgeldpauschale:
             </label>
-            <input id="tgpauschale" type="number" asp-for="TGPauschale" />
+            <input id="tgpauschale" type="number" asp-for="TGPauschale" value="0"/>
             <span asp-validation-for="TGPauschale"></span>
         </p>
         <p>
             <label asp-for="Sachbezug">
                 Sachbezug:
             </label>
-            <input id="sachbezug" type="number" asp-for="Sachbezug" />
+            <input id="sachbezug" type="number" asp-for="Sachbezug" value="0"/>
             <span asp-validation-for="Sachbezug"></span>
         </p>
         <p>
             <label asp-for="FKErsatz">
                 Fahrtkostenersatz:
             </label>
-            <input id="fkersatz" type="number" asp-for="FKErsatz" />
+            <input id="fkersatz" type="number" asp-for="FKErsatz" value="0" />
             <span asp-validation-for="FKErsatz"></span>
         </p>
         <p>
             <label asp-for="DNBeitrag">
                 Dienstnehmerbeitrag:
             </label>
-            <input id="dnbeitrag" type="number" asp-for="DNBeitrag" />
+            <input id="dnbeitrag" type="number" asp-for="DNBeitrag" value="0" />
             <span asp-validation-for="DNBeitrag"></span>
         </p>
         <p>
             <label asp-for="LstFreibetrag">
                 Lohnsteuer-Freibetrag:
             </label>
-            <input id="lstfreibetrag" type="number" asp-for="LstFreibetrag" />
+            <input id="lstfreibetrag" type="number" asp-for="LstFreibetrag" value="0" />
             <span asp-validation-for="LstFreibetrag"></span>
         </p>
         <p>
             <label asp-for="FaBoPlus">
                 Fabo+:
             </label>
-            <input type="checkbox" asp-for="FaBoPlus" id="checkTogglefabo" onclick="togglefunc()" />
+            <input type="checkbox" asp-for="FaBoPlus" id="checkTogglefabo" onclick="togglefunc()" value="0" />
             <span asp-validation-for="FaBoPlus"></span>
         </p>
         <p id="zusatzfabo" style="display:none">
             <label asp-for="HalberBonus">
                 Halber Bonus?:
             </label>
-            <input type="checkbox" asp-for="HalberBonus" />
+            <input type="checkbox" asp-for="HalberBonus" value="0" />
             <span asp-validation-for="HalberBonus"></span>
             &nbsp;&nbsp;&nbsp;&nbsp;                            @*Tabulatorabstand*@
             <label asp-for="AnzKinderbis17">
                 Kinder bis 17:
             </label>
             <select asp-for="AnzKinderbis17" dropzone="1">
-                <option value="0">0</option>
+                <option value="0" selected>0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -141,7 +134,7 @@
                 Kinder ab 18:
             </label>
             <select asp-for="AnzKinderab18" dropzone="1">
-                <option value="0">0</option>
+                <option value="0" selected>0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -154,7 +147,7 @@
             <label asp-for="AVABoAEAB">
                 AVAB/AEAB:
             </label>
-            <input type="checkbox" asp-for="AVABoAEAB" id="checkToggleavabaeab" onclick="togglefunc()" />
+            <input type="checkbox" asp-for="AVABoAEAB" id="checkToggleavabaeab" onclick="togglefunc()" value="0" />
             <span asp-validation-for="AVABoAEAB"></span>
         </p>
         <p id="zusatzavabaeab" style="display:none">
@@ -162,7 +155,7 @@
                 Kinder:
             </label>
             <select asp-for="AnzKinder" dropzone="1">
-                <option value="0">0</option>
+                <option value="0" selected>0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -175,7 +168,7 @@
             <label asp-for="PendlerPauschale">
                 Pendlerpauschale:
             </label>
-            <input type="checkbox" asp-for="PendlerPauschale" id="checkTogglependler" onclick="togglefunc()" />
+            <input type="checkbox" asp-for="PendlerPauschale" id="checkTogglependler" onclick="togglefunc()" value="0" />
             <span asp-validation-for="PendlerPauschale"></span>
         </p>
         <p id="zusatzpendler" style="display:none">
@@ -183,7 +176,7 @@
                 Kinder:
             </label>
             <select asp-for="Kategorie" dropzone="1">
-                <option value="0">20-40 km (klein)</option>
+                <option value="0" selected>20-40 km (klein)</option>
                 <option value="1">40-60 km (klein)</option>
                 <option value="2">ab 60 km (klein)</option>
                 <option value="3">2-20 km (groß)</option>
@@ -196,7 +189,7 @@
             <label asp-for="AnzKilometer">
                 Anzahl km:
             </label>
-            <input type="number" asp-for="AnzKilometer" />
+            <input type="number" asp-for="AnzKilometer" value="0" />
             <span asp-validation-for="AnzKilometer"></span>
         </p>
         <p>

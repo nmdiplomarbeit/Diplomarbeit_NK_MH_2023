@@ -261,6 +261,11 @@ namespace LohnverrechnerGastro.Models
 
         public decimal Ergebnis { get; set; }
 
+        public bool IsNull(float value)
+        {
+            return value == 0;
+        }
+
 
         public Eingaben() : this(Bundesland.Burgenland, 0, "", 0,
                 0, "", 0, 0, 0, 0, 0, false, false, false, false, 0, 0, 0,
@@ -291,6 +296,7 @@ namespace LohnverrechnerGastro.Models
             this.Einkommen = einkommen;
             this.StundenproWoche = stundenprowoche;
             this.SZvombrutodKV = szvombruttoodKV;
+            
             this.TGPauschale = tgpauschale;
             this.Sachbezug = sachbezug;
             this.FKErsatz = fkersatz;
