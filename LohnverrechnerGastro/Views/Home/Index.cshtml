@@ -203,6 +203,15 @@
             <input type="submit" value="absenden" />
             <input type="reset" value="abbrechen" />
         </p>
+        <p>
+            <label asp-for="Ergebnis">
+                Ergebnis: @if(Model != null){
+                    <p>@Model.Ergebnis</p>
+                }
+            </label>
+            <output type="text" asp-for="Ergebnis" />
+            <span asp-validation-for="Ergebnis"></span>
+        </p>
     </form>
 </div>
 
