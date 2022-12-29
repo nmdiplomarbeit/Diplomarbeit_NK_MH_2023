@@ -123,3 +123,55 @@ input[type=button], input[type=submit], input[type=reset] {
     margin: 4px 2px;
     cursor: pointer;
 }
+
+input {
+    
+}
+
+.notnull{
+    color: red;
+}
+
+#bundesland{
+    margin-left: 100px;
+}
+
+#jahr {
+    margin-left: 153px;
+}
+
+#brutodnet {
+    margin-left: 81px;
+}
+
+#einkommen {
+    margin-left: 98px;
+}
+
+#hprowoche {
+    margin-left: 41px;
+}
+
+#szbrutkv {
+    margin-left: 19px;
+}
+
+#tgpauschale {
+    margin-left: 52.7px;
+}
+
+#sachbezug {
+    margin-left: 111px;
+}
+
+#fkersatz {
+    margin-left: 64px;
+}
+
+#dnbeitrag {
+    margin-left: 39px;
+}
+
+#lstfreibetrag {
+    margin-left: 31px;
+}
