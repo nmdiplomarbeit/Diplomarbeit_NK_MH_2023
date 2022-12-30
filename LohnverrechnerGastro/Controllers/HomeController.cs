@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using LohnverrechnerGastro.Models;
 using LohnverrechnerGastro.Models.DB;
 using System.Data.Common;
+using OpenQA.Selenium.DevTools.V104.Database;
 
 namespace LohnverrechnerGastro.Controllers
 {
@@ -47,8 +48,7 @@ namespace LohnverrechnerGastro.Controllers
                 }
                 catch (DbException e)
                 {
-                   // data.IsError = true;
-                    return View("Registration");
+                    return View("Index");
                 }
                 finally
                 {
@@ -57,9 +57,24 @@ namespace LohnverrechnerGastro.Controllers
             }
             return View(data);
         }
-        public IActionResult Impressum()
+
+        [Route("/Home/Tables/{TableName}")]
+        public async Task<IActionResult> Tables(string TableName)
         {
-            return View();
+            try
+            {
+                await rep.ConnectAsync();
+                return View(await rep.GetAllTablesAsync(TableName));
+            }
+            catch (DbException)
+            {
+                return View("Index");
+            }
+            finally
+            {
+                await rep.DisconnectAsync();
+            }
         }
+         //public string TableName { get; set; }
     }
 }

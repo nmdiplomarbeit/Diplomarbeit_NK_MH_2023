@@ -1,9 +1,9 @@
 ﻿@using LohnverrechnerGastro.Controllers
 @using LohnverrechnerGastro.Models.DB
 
-<div id="nav">
+<div class="nav">
     <ul>
-        <li><a asp-area="" asp-controller="Home" asp-action="Index"><img src="~/multimedia/pictures/calculator.jpg" alt="calculator" height=40 width="27" asp-append-version="true" /></a></li>
+        <li><a asp-area="" asp-controller="Home" asp-action="Index" class="calcimg"><img src="~/multimedia/pictures/calculator.jpg" alt="calculator" height=40 width="27" asp-append-version="true" /></a></li>
         <li><a class="navtext" asp-area="" asp-controller="Home" asp-action="Index">Calculator</a></li>
         @if (RepositoryUsersDB.IsLogged)
         {
@@ -18,6 +18,24 @@
             <li><a class="navtext" asp-area="" asp-controller="User" asp-action="Registration">Registration</a></li>
         }
         <li><a class="navtext" asp-area="" asp-controller="User" asp-action="Index">Users</a></li>
+        <li><a class="navtext" asp-area="" asp-controller="Home" asp-action="Tables">Tabellen</a></li>
+        <li>
+            <div class="dropdown">
+                <button class="dropbtn">
+                    Dropdown
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    @{
+                        var urlsv = "/Home/Tables/" + "sv";
+                        <a href=@urlsv>Link 1</a>
+                        <a href="#">Link 2</a>
+                        <a href="#">Link 3</a>
+                    }
+                </div>
+            </div>
+        </li>
+
 
     </ul>
 </div>

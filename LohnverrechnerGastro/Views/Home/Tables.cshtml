@@ -1,0 +1,61 @@
+﻿@model List<LohnverrechnerGastro.Models.Table>
+@using LohnverrechnerGastro.Models.DB;
+
+@{
+    ViewData["Title"] = "Impressum";
+}
+
+
+@if ((Model == null) || (Model.Count < 1))
+{
+    <p>
+        Keine Einträge in der Tabelle vorhanden!
+    </p>
+} else {
+    <table id="tables">
+        <thead>
+            <tr>
+                <td colspan="7">Tabellen</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>bruttovon</th>
+                <th>bruttobis</th>
+                <th>sv_satz</th>
+                <th></th>
+                <th></th>
+            </tr>
+            @foreach (Table t in Model)
+            {
+                <tr>
+                    <td>@t.Column1</td>
+                    <td>@t.Column2</td>
+                    <td>@t.Column3</td>
+
+                    @*@if (RepositoryUsersDB.IsAdmin)
+            {
+            <td>
+            <form action="/kunde/delete/@t.KundenId" method="get">
+            <input type="submit" value="löschen" />
+            </form>
+            </td>
+            <td>
+            <form action="/kunde/update/@k.KundenId" method="get">
+            <input type="submit" value="ändern" />
+            </form>
+            </td>
+            }*@
+                
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="7">zur Bearbeitung der User</td>
+            </tr>
+        </tfoot>
+    </table>
+}
+           
+       

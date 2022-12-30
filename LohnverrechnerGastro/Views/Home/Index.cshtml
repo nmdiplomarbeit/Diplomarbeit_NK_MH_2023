@@ -3,8 +3,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1 style="text-align: center;">Rechner</h1>
-<br />
+<!--<h1 style="text-align: center;">Rechner</h1>-->
 <div class="felder">
     <p class="notnull"><b>* Pflichtfeld</b></p>
     <form asp-controller="home" asp-action="index" method="post">
@@ -200,7 +199,8 @@
             <label asp-for="Ergebnis">
                 Ergebnis: @if (Model != null)
                 {
-                    <p>@Model.Ergebnis</p>
+                    <a>@Math.Round(Model.Ergebnis, 2)</a>
+                    <a>€</a>
                 }
             </label>
             <output type="text" asp-for="Ergebnis" />

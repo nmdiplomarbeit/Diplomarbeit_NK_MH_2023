@@ -3,6 +3,8 @@ using System.Data.Common;
 using System.Data;
 using System.Threading.Tasks;
 using System;
+using System.Collections.Generic;
+using MySqlX.XDevAPI.Relational;
 
 namespace LohnverrechnerGastro.Models.DB
 {
@@ -10,16 +12,6 @@ namespace LohnverrechnerGastro.Models.DB
     {
         private string _connectionString = "Server=localhost;database=pvdiplomarbeit;user=root;password=";
         private DbConnection _conn;
-
-        public Task<bool> AskEmailAsync(string email)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<bool> AskNameAsync(string name)
-        {
-            throw new System.NotImplementedException();
-        }
 
         public async Task ConnectAsync()
         {
@@ -90,9 +82,37 @@ namespace LohnverrechnerGastro.Models.DB
             return 0;
         }
 
-        public Task<bool> LoginAsync(string name, string password)
+        public async Task<List<Table>> GetAllTablesAsync(string tablename)
         {
-            throw new System.NotImplementedException();
+
+            List<Table> sv = new List<Table>();
+
+            if (this._conn?.State == ConnectionState.Open)
+            {
+
+                DbCommand cmdTables = this._conn.CreateCommand();
+                cmdTables.CommandText = "select * from @tablename";
+                DbParameter paramtable = cmdTables.CreateParameter();
+                paramtable.ParameterName = "tablename";
+                paramtable.DbType = DbType.String;
+                paramtable.Value = tablename;
+                cmdTables.Parameters.Add(paramtable);
+
+                using (DbDataReader reader = await cmdTables.ExecuteReaderAsync())
+                {
+
+                    while (await reader.ReadAsync())
+                    {
+                        sv.Add(new Table()
+                        {
+                            Column1 = Convert.ToDecimal(reader["bruttovon"]),
+                            Column2 = Convert.ToDecimal(reader["bruttobis"]),
+                            Column3 = Convert.ToDecimal(reader["sv_satz"]),
+                        });
+                    }
+                }
+            }
+            return sv;
         }
     }
 }

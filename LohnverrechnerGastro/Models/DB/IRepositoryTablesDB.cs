@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace LohnverrechnerGastro.Models.DB
 {
@@ -10,8 +11,6 @@ namespace LohnverrechnerGastro.Models.DB
         Task<decimal> GetSVSatzAsync(decimal einkommen);
         //Task<bool> UpdateLoggedAsync(int userId, bool newLogged);
         Task<decimal> GetEffTarifAsync(decimal einkommen);
-        Task<bool> AskEmailAsync(string email);
-        Task<bool> LoginAsync(string name, string password);
-        Task<bool> AskNameAsync(string name);
+        Task<List<Table>> GetAllTablesAsync(string tablename);
     }
 }
