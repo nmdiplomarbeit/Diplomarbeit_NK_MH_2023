@@ -42,9 +42,26 @@ namespace LohnverrechnerGastro.Controllers
                     {
                         Console.WriteLine("Daten nicht gespeichert!");
                     }*/
-                    decimal lst_bem = data.Einkommen - ((await rep.GetSVSatzAsync(data.Einkommen) / 100) * data.Einkommen);
-                    decimal eff_tarif = await rep.GetEffTarifAsync(lst_bem);
-                    data.Ergebnis = lst_bem - eff_tarif;
+
+                    // einfaches Beispiel rechnen
+                    //decimal lst_bem = data.Einkommen - ((await rep.GetSVSatzAsync(data.Einkommen) / 100) * data.Einkommen);
+                    //decimal eff_tarif = await rep.GetEffTarifAsync(lst_bem);
+                    //data.Ergebnis = lst_bem - eff_tarif;
+
+                    // DG Abgaben Dictionary testen
+                    //Dictionary<string, decimal> dic = await rep.GetDGAbgaben();
+                    //data.Ergebnis = dic["sv_dg"];
+
+                    // Grenzen SV Dictionary testen
+                    //Dictionary<string, decimal> dic = await rep.GetGrenzenSV();
+                    //Dictionary<string, decimal> dic2 = await rep.GetGrenzenSVSZ();
+                    //data.Ergebnis = dic["hbgl"] + dic2["hbgl_sz"];
+
+                    // SZ Steuergrenzen testen
+                    //data.Ergebnis = await rep.GetSZSteuergrenzen(data.Einkommen);
+
+
+
                 }
                 catch (DbException e)
                 {

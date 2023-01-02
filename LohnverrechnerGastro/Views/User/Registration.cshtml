@@ -12,14 +12,14 @@
             </label><br />
             <input type="text" asp-for="Name" />
             <span asp-validation-for="Name"></span>
-            </br>
+            <br>
             <span id="namemessage" style="visibility:hidden; color:red; font-size:0.8em; font-weight:bold">Benutzername existiert bereits</span>
         </p>
         <p>
             <label asp-for="Email">Email</label><br />
             <input type="email" asp-for="Email" />
             <span asp-validation-for="Email"></span>
-            </br>
+            <br>
             <span id="emailmessage" style="visibility:hidden; color:red; font-size:0.8em; font-weight:bold">EMail-Adresse existiert bereits</span>
         </p>
         <p>
@@ -28,8 +28,8 @@
             </label><br />
             <input type="password" asp-for="Password" />
             <span asp-validation-for="Password"></span>
-            </br>
-            </br>
+            <br>
+            <br>
         </p>
         <p>
             <input type="submit" value="registrieren" />

@@ -34,7 +34,7 @@ function togglefunc() {
     var zusatzfabo = document.getElementById("zusatzfabo");         
 
     if (checkTogglefabo.checked == true) {
-        zusatzfabo.style.display = "block";
+        zusatzfabo.style.display = "inline";
     } else {
         zusatzfabo.style.display = "none";
     }
@@ -43,7 +43,7 @@ function togglefunc() {
     var zusatzavabaeab = document.getElementById("zusatzavabaeab");
 
     if (checkToggleavabaeab.checked == true) {
-        zusatzavabaeab.style.display = "block";
+        zusatzavabaeab.style.display = "inline";
     } else {
         zusatzavabaeab.style.display = "none";
     }
@@ -52,7 +52,7 @@ function togglefunc() {
     var zusatzpendler = document.getElementById("zusatzpendler");
 
     if (checkTogglependler.checked == true) {
-        zusatzpendler.style.display = "block";
+        zusatzpendler.style.display = "inline";
     } else {
         zusatzpendler.style.display = "none";
     }

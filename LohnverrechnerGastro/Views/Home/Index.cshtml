@@ -87,29 +87,13 @@
             </label>
             <input id="fkersatz" type="number" asp-for="FKErsatz" value="0" />
             <span asp-validation-for="FKErsatz"></span>
-        </p>
-        <p>
-            <label asp-for="DNBeitrag">
-                Dienstnehmerbeitrag:
-            </label>
-            <input id="dnbeitrag" type="number" asp-for="DNBeitrag" value="0" />
-            <span asp-validation-for="DNBeitrag"></span>
-        </p>
-        <p>
-            <label asp-for="LstFreibetrag">
-                Lohnsteuer-Freibetrag:
-            </label>
-            <input id="lstfreibetrag" type="number" asp-for="LstFreibetrag" value="0" />
-            <span asp-validation-for="LstFreibetrag"></span>
-        </p>
-        <p>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <label asp-for="FaBoPlus">
                 Fabo+:
             </label>
             <input type="checkbox" asp-for="FaBoPlus" id="checkTogglefabo" onclick="togglefunc()" value="0" />
             <span asp-validation-for="FaBoPlus"></span>
-        </p>
-        <p id="zusatzfabo" style="display:none">
+            <a id="zusatzfabo" style="display:none">
             <label asp-for="HalberBonus">
                 Halber Bonus?:
             </label>
@@ -141,36 +125,49 @@
                 <option value="5">5</option>
             </select>
             <span asp-validation-for="AnzKinderab18"></span>
+        </a>
         </p>
         <p>
+            <label asp-for="DNBeitrag">
+                Dienstnehmerbeitrag:
+            </label>
+            <input id="dnbeitrag" type="number" asp-for="DNBeitrag" value="0" />
+            <span asp-validation-for="DNBeitrag"></span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
             <label asp-for="AVABoAEAB">
                 AVAB/AEAB:
             </label>
             <input type="checkbox" asp-for="AVABoAEAB" id="checkToggleavabaeab" onclick="togglefunc()" value="0" />
             <span asp-validation-for="AVABoAEAB"></span>
-        </p>
-        <p id="zusatzavabaeab" style="display:none">
-            <label asp-for="AnzKinder">
-                Kinder:
-            </label>
-            <select asp-for="AnzKinder" dropzone="1">
-                <option value="0" selected>0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-            <span asp-validation-for="AnzKinder"></span>
+            <a id="zusatzavabaeab" style="display:none">
+                <label asp-for="AnzKinder">
+                    Kinder:
+                </label>
+                <select asp-for="AnzKinder" dropzone="1">
+                    <option value="0" selected>0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <span asp-validation-for="AnzKinder"></span>
+            </a>
         </p>
         <p>
+            <label asp-for="LstFreibetrag">
+                Lohnsteuer-Freibetrag:
+            </label>
+            <input id="lstfreibetrag" type="number" asp-for="LstFreibetrag" value="0" />
+            <span asp-validation-for="LstFreibetrag"></span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <label asp-for="PendlerPauschale">
                 Pendlerpauschale:
             </label>
             <input type="checkbox" asp-for="PendlerPauschale" id="checkTogglependler" onclick="togglefunc()" value="0" />
             <span asp-validation-for="PendlerPauschale"></span>
-        </p>
-        <p id="zusatzpendler" style="display:none">
+            <a id="zusatzpendler" style="display:none">
             <label asp-for="Kategorie">
                 Kinder:
             </label>
@@ -190,17 +187,17 @@
             </label>
             <input type="number" asp-for="AnzKilometer" value="0" />
             <span asp-validation-for="AnzKilometer"></span>
+            </a>
         </p>
         <p>
-            <input type="submit" value="absenden" />
-            <input type="reset" value="abbrechen" />
+            <input type="submit" value="berechnen" />
+            <input type="reset" value="zurücksetzen" />
         </p>
         <p>
-            <label asp-for="Ergebnis">
+            <label asp-for="Ergebnis" class="output">
                 Ergebnis: @if (Model != null)
                 {
-                    <a>@Math.Round(Model.Ergebnis, 2)</a>
-                    <a>€</a>
+                    <a>@Math.Round(Model.Ergebnis, 2) €</a>
                 }
             </label>
             <output type="text" asp-for="Ergebnis" />
