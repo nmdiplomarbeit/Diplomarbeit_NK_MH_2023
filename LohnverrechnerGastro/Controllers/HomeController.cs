@@ -44,9 +44,9 @@ namespace LohnverrechnerGastro.Controllers
                     }*/
 
                     // einfaches Beispiel rechnen
-                    //decimal lst_bem = data.Einkommen - ((await rep.GetSVSatzAsync(data.Einkommen) / 100) * data.Einkommen);
-                    //decimal eff_tarif = await rep.GetEffTarifAsync(lst_bem);
-                    //data.Ergebnis = lst_bem - eff_tarif;
+                    decimal lst_bem = data.Einkommen - ((await rep.GetSVSatzAsync(data.Einkommen) / 100) * data.Einkommen);
+                    decimal eff_tarif = await rep.GetEffTarifAsync(lst_bem);
+                    data.Ergebnis = lst_bem - eff_tarif;
 
                     // DG Abgaben Dictionary testen
                     //Dictionary<string, decimal> dic = await rep.GetDGAbgaben();
