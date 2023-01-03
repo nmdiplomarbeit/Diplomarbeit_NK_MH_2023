@@ -2,7 +2,7 @@
 @using LohnverrechnerGastro.Models.DB;
 
 @{
-    ViewData["Title"] = "Impressum";
+    ViewData["Title"] = "Tabellen";
 }
 
 
@@ -19,42 +19,56 @@
             </tr>
         </thead>
         <tbody>
+            @*@foreach(Table t in Model){*@
+                
             <tr>
-                <th>bruttovon</th>
-                <th>bruttobis</th>
-                <th>sv_satz</th>
-                <th></th>
-                <th></th>
+                <th>@Model[0].Column1Name</th>
+                <th>@Model[0].Column2Name</th>
+                <th>@Model[0].Column3Name</th>
+                <th>@Model[0].Column4Name</th>
+                <th>@Model[0].Column5Name</th>
+                
             </tr>
+
+            @*}*@
+            
             @foreach (Table t in Model)
             {
                 <tr>
                     <td>@t.Column1</td>
                     <td>@t.Column2</td>
-                    <td>@t.Column3</td>
+                    @if (t.Column3Name != null || t.Column4Name != null || t.Column5Name != null)
+                    {
+                        <td>@t.Column3</td>
+                        @if (t.Column4Name != null)
+                        {
+                            <td>@t.Column4</td>
+                            <td>@t.Column5</td>
+                        }
+                    }
 
-                    @*@if (RepositoryUsersDB.IsAdmin)
-            {
-            <td>
-            <form action="/kunde/delete/@t.KundenId" method="get">
-            <input type="submit" value="löschen" />
-            </form>
-            </td>
-            <td>
-            <form action="/kunde/update/@k.KundenId" method="get">
-            <input type="submit" value="ändern" />
-            </form>
-            </td>
-            }*@
+                @if (RepositoryUsersDB.IsAdmin)
+                {
+                    <td>
+                    <form action="/home/delete/@t.Cnumber" method="get">
+                    <input type="submit" value="löschen" />
+                    </form>
+                    </td>
+                    <td>
+                    <form action="/home/update/@t.Cnumber" method="get">
+                    <input type="submit" value="ändern" />
+                    </form>
+                    </td>
+                }       
                 
                 </tr>
             }
         </tbody>
-        <tfoot>
+        @*<tfoot>
             <tr>
                 <td colspan="7">zur Bearbeitung der User</td>
             </tr>
-        </tfoot>
+        </tfoot>*@
     </table>
 }
            

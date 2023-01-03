@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Org.BouncyCastle.Asn1.X509;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace LohnverrechnerGastro.Models.DB
@@ -13,12 +14,14 @@ namespace LohnverrechnerGastro.Models.DB
 
         //Task<bool> UpdateLoggedAsync(int userId, bool newLogged);
         Task<decimal> GetEffTarifAsync(decimal einkommen);
-        Task<List<Table>> GetAllTablesAsync(string tablename);
         Task<Dictionary<string, decimal>> GetDGAbgaben();
         Task<Dictionary<string, decimal>> GetDGAbgabenSZ();
         Task<Dictionary<string, decimal>> GetGrenzenSV();
         Task<Dictionary<string, decimal>> GetGrenzenSVSZ();
         Task<decimal> GetSZSteuergrenzen(decimal einkommen);
+        Task<List<Table>> GetAllTablesAsync(string tablename);
+        Task<bool> DeleteAsync(int cnumber, string tablename);
+
 
 
 

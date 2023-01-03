@@ -223,37 +223,167 @@ namespace LohnverrechnerGastro.Models.DB
 
 
 
+        //public async Task<List<Table>> GetAllTablesAsync(string tablename)
+        //{
+
+        //    List<Table> sv = new List<Table>();
+
+        //    if (this._conn?.State == ConnectionState.Open)
+        //    {
+
+        //        DbCommand cmdTables = this._conn.CreateCommand();
+        //        cmdTables.CommandText = "select * from @tablename";
+        //        DbParameter paramtable = cmdTables.CreateParameter();
+        //        paramtable.ParameterName = "tablename";
+        //        paramtable.DbType = DbType.String;
+        //        paramtable.Value = tablename;
+        //        cmdTables.Parameters.Add(paramtable);
+        //        cmdTables.ExecuteNonQuery();
+
+        //        using (DbDataReader reader = await cmdTables.ExecuteReaderAsync())
+        //        {
+
+        //            while (await reader.ReadAsync())
+        //            {
+        //                sv.Add(new Table()
+        //                {
+        //                    Column1 = Convert.ToDecimal(reader["bruttovon"]),
+        //                    Column2 = Convert.ToDecimal(reader["bruttobis"]),
+        //                    Column3 = Convert.ToDecimal(reader["sv_satz"]),
+        //                });
+        //            }
+        //        }
+        //    }
+        //    return sv;
+        //}
+
         public async Task<List<Table>> GetAllTablesAsync(string tablename)
         {
 
-            List<Table> sv = new List<Table>();
+            List<Table> table = new List<Table>();
 
             if (this._conn?.State == ConnectionState.Open)
             {
 
                 DbCommand cmdTables = this._conn.CreateCommand();
-                cmdTables.CommandText = "select * from @tablename";
-                DbParameter paramtable = cmdTables.CreateParameter();
-                paramtable.ParameterName = "tablename";
-                paramtable.DbType = DbType.String;
-                paramtable.Value = tablename;
-                cmdTables.Parameters.Add(paramtable);
+                cmdTables.CommandText = "select * from " + tablename;       // zuerst wieder mit @tablename probieren -> funktioniert nicht
 
                 using (DbDataReader reader = await cmdTables.ExecuteReaderAsync())
                 {
 
                     while (await reader.ReadAsync())
                     {
-                        sv.Add(new Table()
+                        
+                        if (tablename == "sv" || tablename == "sv_sz")
                         {
-                            Column1 = Convert.ToDecimal(reader["bruttovon"]),
-                            Column2 = Convert.ToDecimal(reader["bruttobis"]),
-                            Column3 = Convert.ToDecimal(reader["sv_satz"]),
-                        });
+                            table.Add(new Table()
+                            {
+                                Column1 = Convert.ToDecimal(reader["bruttovon"]),
+                                Column2 = Convert.ToDecimal(reader["bruttobis"]),
+                                Column3 = Convert.ToDecimal(reader["sv_satz"]),
+                                Column1Name = "bruttovon",
+                                Column2Name = "bruttobis",
+                                Column3Name = "sv_satz",
+                            });
+                        }
+                        if (tablename == "dg_abgaben" || tablename == "dg_abgaben_sz")
+                        {
+                            table.Add(new Table()
+                            {
+                                Column1 = Convert.ToDecimal(reader["sv_dg"]),
+                                Column2 = Convert.ToDecimal(reader["bmv"]),
+                                Column3 = Convert.ToDecimal(reader["db"]),
+                                Column4 = Convert.ToDecimal(reader["dz"]),
+                                Column5 = Convert.ToDecimal(reader["kommst"]),
+                                Column1Name = "sv_dg",
+                                Column2Name = "bmv",
+                                Column3Name = "db",
+                                Column4Name = "dz",
+                                Column5Name = "kommst",
+
+                            });
+                        }
+                        if (tablename == "grenzen_sv")
+                        {
+                            table.Add(new Table()
+                            {
+                                Column1 = Convert.ToDecimal(reader["hbgl"]),
+                                Column2 = Convert.ToDecimal(reader["gfg"]),
+                                Column1Name = "hbgl",
+                                Column2Name = "gfg",
+                            });
+                        }
+                        if (tablename == "grenzen_sv_sz")
+                        {
+                            table.Add(new Table()
+                            {
+                                Column1 = Convert.ToDecimal(reader["hbgl_sz"]),
+                                Column2 = Convert.ToDecimal(reader["gfg"]),
+                                Column1Name = "hbgl_sz",
+                                Column2Name = "gfg",
+                            });
+                        }
+                        if (tablename == "effektiv_tarif_monat")
+                        {
+                            table.Add(new Table()
+                            {
+                                Column1 = Convert.ToDecimal(reader["lst_bemgrundlage_von"]),
+                                Column2 = Convert.ToDecimal(reader["lst_bemgrundlage_bis"]),
+                                Column3 = Convert.ToDecimal(reader["grenzsteuersatz"]),
+                                Column4 = Convert.ToDecimal(reader["anz_kinder"]),
+                                Column5 = Convert.ToDecimal(reader["abgaben"]),
+                                Column1Name = "lst_bemgrundlage_von",
+                                Column2Name = "lst_bemgrundlage_bis",
+                                Column3Name = "grenzsteuersatz",
+                                Column4Name = "anz_kinder",
+                                Column5Name = "abzug",
+                            });
+                        }
+                        if (tablename == "sz_steuergrenzen")
+                        {
+                            table.Add(new Table()
+                            {
+                                Column1 = Convert.ToDecimal(reader["von"]),
+                                Column2 = Convert.ToDecimal(reader["bis"]),
+                                Column3 = Convert.ToDecimal(reader["prozent"]),
+                                Column1Name = "von",
+                                Column2Name = "bis",
+                                Column3Name = "prozent",
+                            });
+                        }
+                        if (tablename == "freibetraege_lst")
+                        {
+                            table.Add(new Table()
+                            {
+                                Column1 = Convert.ToDecimal(reader["§68/2"]),
+                                Column2 = Convert.ToDecimal(reader["§68/1"]),
+                                Column1Name = "§68/2",
+                                Column2Name = "§68/1",
+                            });
+                        }
                     }
                 }
             }
-            return sv;
+            return table;
+        }
+
+        public async Task<bool> DeleteAsync(int cnumber, string tablename)
+        {
+            if (this._conn?.State == ConnectionState.Open)
+            {
+                DbCommand cmdDelete = this._conn.CreateCommand();
+                cmdDelete.CommandText = "delete from " + tablename + " where cnumber = @cnumber";
+                DbParameter paramcn = cmdDelete.CreateParameter();
+                paramcn.ParameterName = "cnumber";
+                paramcn.DbType = DbType.Int32;
+                paramcn.Value = cnumber;
+
+                cmdDelete.Parameters.Add(paramcn);
+
+                return await cmdDelete.ExecuteNonQueryAsync() == 1;
+            }
+
+            return false;
         }
     }
 }

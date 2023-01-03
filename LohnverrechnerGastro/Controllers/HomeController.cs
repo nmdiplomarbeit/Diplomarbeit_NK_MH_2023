@@ -92,6 +92,24 @@ namespace LohnverrechnerGastro.Controllers
                 await rep.DisconnectAsync();
             }
         }
-         //public string TableName { get; set; }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteAsync(int cnumber, string tablename)
+        {
+            try
+            {
+                await rep.ConnectAsync();
+                await rep.DeleteAsync(cnumber, tablename);
+                return RedirectToAction("Index");
+            }
+            catch (DbException)
+            {
+                return View("Index");
+            }
+            finally
+            {
+                await rep.DisconnectAsync();
+            }
+        }
     }
 }
