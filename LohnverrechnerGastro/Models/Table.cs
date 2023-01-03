@@ -3,6 +3,7 @@
     public class Table
     {
         public int Cnumber { get; set; }
+        public string TableName { get; set; }
         public decimal Column1 { get; set; }
         public string Column1Name { get; set; }
         public decimal Column2 { get; set; }

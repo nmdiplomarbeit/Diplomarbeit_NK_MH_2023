@@ -1,6 +1,8 @@
 ﻿@using LohnverrechnerGastro.Controllers
 @using LohnverrechnerGastro.Models.DB
 
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link href="~/css/site.css"/>
 <div class="nav">
     <ul>
         <li><a asp-area="" asp-controller="Home" asp-action="Index" class="calcimg"><img src="~/multimedia/pictures/calculator.jpg" alt="calculator" height=40 width="27" asp-append-version="true" /></a></li>
@@ -18,38 +20,49 @@
             <li><a class="navtext" asp-area="" asp-controller="User" asp-action="Registration">Registration</a></li>
         }
         <li><a class="navtext" asp-area="" asp-controller="User" asp-action="Index">Users</a></li>
-        <li><a class="navtext" asp-area="" asp-controller="Home" asp-action="Tables">Tabellen</a></li>
+        <li><a class="navtext" asp-area="" asp-controller="Home" asp-action="Tables">Tabellen</a></li>        
         <li>
             <div class="dropdown">
-                <button class="dropbtn">
-                    Dropdown
-                    <i class="fa fa-caret-down"></i>
-                </button>
-                <div class="dropdown-content">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                    Dropdown link
+                </a>
+       
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     @{
                         var urlsv = "/Home/Tables/sv";
-                        <a href=@urlsv>SV Tabelle</a>           //@ hier razor code
-                        var urlsv_sz = "/Home/Tables/sv_sz";        
-                        <a href=@urlsv_sz>SV SZ Tabelle</a>
+                        var urlsv_sz = "/Home/Tables/sv_sz";
                         var urldg_abgaben = "/Home/Tables/dg_abgaben";
-                        <a href=@urldg_abgaben>DG Abgaben lfd Tabelle</a>
                         var urldg_abgaben_sz = "/Home/Tables/dg_abgaben_sz";
-                        <a href=@urldg_abgaben_sz>DG Abgaben SZ Tabelle</a>
                         var urlgrenzen_sv = "/Home/Tables/grenzen_sv";
-                        <a href=@urlgrenzen_sv>Grenzen SV Tabelle</a>
                         var urlgrenzen_sv_sz = "/Home/Tables/grenzen_sv_sz";
-                        <a href=@urlgrenzen_sv_sz>Grenzen SV SZ Tabelle</a>
                         var urlefftar = "/Home/Tables/effektiv_tarif_monat";
-                        <a href=@urlefftar>Effektiv Tarif Monat Tabelle</a>
                         var urlsz_steuergrenzen = "/Home/Tables/sz_steuergrenzen";
-                        <a href=@urlsz_steuergrenzen>SZ Steuergrenzen Tabelle</a>
                         var urlfreibetr_lst = "/Home/Tables/freibetraege_lst";
-                        <a href=@urlfreibetr_lst>Freibetraege Lst Tabelle</a>
                     }
+                    <li><a href=@urlsv>SV Tabelle</a></li>
+                    <li><a href=@urlsv_sz>SV SZ Tabelle</a></li>
+                    <li><a href=@urldg_abgaben>DG Abgaben lfd Tabelle</a></li>
+                    <li><a class="dropdown-item" href=@urldg_abgaben_sz>DG Abgaben SZ Tabelle</a></li>
+                    <li><a class="dropdown-item" href=@urlgrenzen_sv>Grenzen SV Tabelle</a></li>
+                    <li><a class="dropdown-item" href=@urlgrenzen_sv_sz>Grenzen SV SZ Tabelle</a></li>
+                    <li><a class="dropdown-item" href=@urlefftar>Effektiv Tarif Monat Tabelle</a></li>
+                    <li><a class="dropdown-item" href=@urlsz_steuergrenzen>SZ Steuergrenzen Tabelle</a></li>
+                    <li><a class="dropdown-item" href=@urlfreibetr_lst>Freibetraege Lst Tabelle</a></li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <div class="dropdown">
+                <button class="dropbtn">Dropdown</button>
+                <div class="dropdown-content">
+                    <a href=@urlsv>SV Tabelle</a>
+                    <a href=@urlsv_sz>SV SZ Tabelle</a>
+                    <a href=@urldg_abgaben>DG Abgaben lfd Tabelle</a>
                 </div>
             </div>
         </li>
-
-
     </ul>
 </div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

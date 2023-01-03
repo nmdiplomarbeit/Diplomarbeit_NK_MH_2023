@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using MySqlX.XDevAPI.Relational;
+using Org.BouncyCastle.Asn1.X509;
 
 namespace LohnverrechnerGastro.Models.DB
 {
@@ -278,6 +279,8 @@ namespace LohnverrechnerGastro.Models.DB
                         {
                             table.Add(new Table()
                             {
+                                TableName = tablename,
+                                Cnumber = Convert.ToInt32(reader["cnumber"]),
                                 Column1 = Convert.ToDecimal(reader["bruttovon"]),
                                 Column2 = Convert.ToDecimal(reader["bruttobis"]),
                                 Column3 = Convert.ToDecimal(reader["sv_satz"]),
@@ -286,10 +289,13 @@ namespace LohnverrechnerGastro.Models.DB
                                 Column3Name = "sv_satz",
                             });
                         }
+
                         if (tablename == "dg_abgaben" || tablename == "dg_abgaben_sz")
                         {
                             table.Add(new Table()
                             {
+                                TableName = tablename,
+                                Cnumber = Convert.ToInt32(reader["cnumber"]),
                                 Column1 = Convert.ToDecimal(reader["sv_dg"]),
                                 Column2 = Convert.ToDecimal(reader["bmv"]),
                                 Column3 = Convert.ToDecimal(reader["db"]),
@@ -307,6 +313,8 @@ namespace LohnverrechnerGastro.Models.DB
                         {
                             table.Add(new Table()
                             {
+                                TableName = tablename,
+                                Cnumber = Convert.ToInt32(reader["cnumber"]),
                                 Column1 = Convert.ToDecimal(reader["hbgl"]),
                                 Column2 = Convert.ToDecimal(reader["gfg"]),
                                 Column1Name = "hbgl",
@@ -317,6 +325,8 @@ namespace LohnverrechnerGastro.Models.DB
                         {
                             table.Add(new Table()
                             {
+                                TableName = tablename,
+                                Cnumber = Convert.ToInt32(reader["cnumber"]),
                                 Column1 = Convert.ToDecimal(reader["hbgl_sz"]),
                                 Column2 = Convert.ToDecimal(reader["gfg"]),
                                 Column1Name = "hbgl_sz",
@@ -327,6 +337,8 @@ namespace LohnverrechnerGastro.Models.DB
                         {
                             table.Add(new Table()
                             {
+                                TableName = tablename,
+                                Cnumber = Convert.ToInt32(reader["cnumber"]),
                                 Column1 = Convert.ToDecimal(reader["lst_bemgrundlage_von"]),
                                 Column2 = Convert.ToDecimal(reader["lst_bemgrundlage_bis"]),
                                 Column3 = Convert.ToDecimal(reader["grenzsteuersatz"]),
@@ -343,6 +355,8 @@ namespace LohnverrechnerGastro.Models.DB
                         {
                             table.Add(new Table()
                             {
+                                TableName = tablename,
+                                Cnumber = Convert.ToInt32(reader["cnumber"]),
                                 Column1 = Convert.ToDecimal(reader["von"]),
                                 Column2 = Convert.ToDecimal(reader["bis"]),
                                 Column3 = Convert.ToDecimal(reader["prozent"]),
@@ -355,6 +369,8 @@ namespace LohnverrechnerGastro.Models.DB
                         {
                             table.Add(new Table()
                             {
+                                TableName = tablename,
+                                Cnumber = Convert.ToInt32(reader["cnumber"]),
                                 Column1 = Convert.ToDecimal(reader["§68/2"]),
                                 Column2 = Convert.ToDecimal(reader["§68/1"]),
                                 Column1Name = "§68/2",
@@ -367,7 +383,7 @@ namespace LohnverrechnerGastro.Models.DB
             return table;
         }
 
-        public async Task<bool> DeleteAsync(int cnumber, string tablename)
+        public async Task<bool> DeleteAsync(string tablename, int cnumber)
         {
             if (this._conn?.State == ConnectionState.Open)
             {

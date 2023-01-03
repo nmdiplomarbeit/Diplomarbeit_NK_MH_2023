@@ -7,6 +7,7 @@ using LohnverrechnerGastro.Models;
 using LohnverrechnerGastro.Models.DB;
 using System.Data.Common;
 using OpenQA.Selenium.DevTools.V104.Database;
+using Org.BouncyCastle.Asn1.X509;
 
 namespace LohnverrechnerGastro.Controllers
 {
@@ -75,13 +76,13 @@ namespace LohnverrechnerGastro.Controllers
             return View(data);
         }
 
-        [Route("/Home/Tables/{TableName}")]
-        public async Task<IActionResult> Tables(string TableName)
+        [Route("/Home/Tables/{tablename}")]
+        public async Task<IActionResult> Tables(string tablename)
         {
             try
             {
                 await rep.ConnectAsync();
-                return View(await rep.GetAllTablesAsync(TableName));
+                return View(await rep.GetAllTablesAsync(tablename));
             }
             catch (DbException)
             {
@@ -94,15 +95,16 @@ namespace LohnverrechnerGastro.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DeleteAsync(int cnumber, string tablename)
+        [Route("/Home/DeleteAsync/{tablename}/{cnumber}")]
+        public async Task<IActionResult> DeleteAsync(string tablename, int cnumber)
         {
             try
             {
                 await rep.ConnectAsync();
-                await rep.DeleteAsync(cnumber, tablename);
+                await rep.DeleteAsync(tablename, cnumber);
                 return RedirectToAction("Index");
             }
-            catch (DbException)
+            catch (DbException e)
             {
                 return View("Index");
             }

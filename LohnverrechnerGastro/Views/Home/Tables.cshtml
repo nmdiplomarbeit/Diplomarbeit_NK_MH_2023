@@ -49,13 +49,13 @@
 
                 @if (RepositoryUsersDB.IsAdmin)
                 {
-                    <td>
-                    <form action="/home/delete/@t.Cnumber" method="get">
+                    <td>@t.TableName @t.Cnumber
+                    <form action="/home/deleteasync/@t.TableName/@t.Cnumber" method="get">
                     <input type="submit" value="löschen" />
                     </form>
                     </td>
                     <td>
-                    <form action="/home/update/@t.Cnumber" method="get">
+                    <form action="/home/update/@t.TableName/@t.Cnumber" method="get">
                     <input type="submit" value="ändern" />
                     </form>
                     </td>
