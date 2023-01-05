@@ -258,6 +258,42 @@ namespace LohnverrechnerGastro.Models.DB
         //    return sv;
         //}
 
+        public async Task<Table> GetOneTableRow(string tablename, int cnumber)
+        {
+            Table table;
+            if (this._conn?.State == ConnectionState.Open)
+            {
+                DbCommand cmd = this._conn.CreateCommand();
+                cmd.CommandText = "select * from " + tablename + " where cnumber = @cnumber";
+                DbParameter paramCnumber = cmd.CreateParameter();
+                paramCnumber.ParameterName = "cnumber";
+                paramCnumber.DbType = DbType.Int32;
+                paramCnumber.Value = cnumber;
+                cmd.Parameters.Add(paramCnumber);
+                using (DbDataReader reader = await cmd.ExecuteReaderAsync())
+                {
+                    while (reader.Read())
+                    {
+                        if (tablename == "sv" || tablename == "sv_sz")
+                        {
+                            table = new Table
+                            {
+                                Cnumber = cnumber,
+                                Column1 = Convert.ToDecimal(reader["bruttovon"]),
+                                Column2 = Convert.ToDecimal(reader["bruttobis"]),
+                                Column3 = Convert.ToDecimal(reader["sv_satz"]),
+                                
+                            };
+                            return table;
+                        }
+
+                    }
+                }
+            }
+            return null;
+
+        }
+
         public async Task<List<Table>> GetAllTablesAsync(string tablename)
         {
 
@@ -277,9 +313,9 @@ namespace LohnverrechnerGastro.Models.DB
                         
                         if (tablename == "sv" || tablename == "sv_sz")
                         {
-                            table.Add(new Table()
+                            table.Add(new Table()                       // new Table() macht immer nur einen neuen Eintrag in der Tabelle, dadruch relativ unübersichtlich
                             {
-                                TableName = tablename,
+                                TableName = tablename,                                          
                                 Cnumber = Convert.ToInt32(reader["cnumber"]),
                                 Column1 = Convert.ToDecimal(reader["bruttovon"]),
                                 Column2 = Convert.ToDecimal(reader["bruttobis"]),
@@ -399,6 +435,80 @@ namespace LohnverrechnerGastro.Models.DB
                 return await cmdDelete.ExecuteNonQueryAsync() == 1;
             }
 
+            return false;
+        }
+
+        public async Task<bool> UpdateAsync(string tablename, int cnumber, Table newTable)
+        {
+            if (this._conn?.State == ConnectionState.Open)
+            {
+                string param1Name = "";
+                string param2Name = "";
+                string param3Name = "";
+                DbCommand cmd = this._conn.CreateCommand();
+                if (tablename == "sv" || tablename == "sv_sz")
+                {
+                    cmd.CommandText = "update " + tablename + " set bruttovon = @bruttovon, bruttobis = @bruttobis, " +
+                    "sv_satz = @sv_satz, where cnumber = @cnumber;";
+                    param1Name = "bruttovon"; param2Name = "bruttobis"; param3Name = "sv_satz";
+                }
+                if (tablename == "dg_abgaben" || tablename == "dg_abgaben_sz")
+                {
+                    cmd.CommandText = "update " + tablename + " set sv_dg = @sv_dg, bmv = @bmv, " +
+                    "db = @db, dz = @dz, kommst = @kommst where cnumber = @cnumber;";
+                }
+                //if (tablename == "sv" || tablename == "sv_sz")
+                //{
+                //    cmd.CommandText = "update " + tablename + " set bruttovon = @bruttovon, bruttobis = @bruttobis, " +
+                //    "sv_satz = @sv_satz, where cnumber = @cnumber;";
+                //}
+                //if (tablename == "sv" || tablename == "sv_sz")
+                //{
+                //    cmd.CommandText = "update " + tablename + " set bruttovon = @bruttovon, bruttobis = @bruttobis, " +
+                //    "sv_satz = @sv_satz, where cnumber = @cnumber;";
+                //}
+
+               
+                DbParameter param1 = cmd.CreateParameter();
+                param1.ParameterName = param1Name;
+                param1.DbType = DbType.String;
+                param1.Value = newTable.Column1;
+
+                DbParameter param2 = cmd.CreateParameter();
+                param2.ParameterName = param2Name;
+                param2.DbType = DbType.String;
+                param2.Value = newTable.Column2;
+
+                DbParameter param3 = cmd.CreateParameter();
+                param3.ParameterName = param3Name;
+                param3.DbType = DbType.String;
+                param3.Value = newTable.Column3;
+
+                //DbParameter paramBD = cmd.CreateParameter();
+                //paramBD.ParameterName = "birthdate";
+                //paramBD.DbType = DbType.Date;
+                //paramBD.Value = newKundenData.Birthdate;
+
+                //DbParameter paramGender = cmd.CreateParameter();
+                //paramGender.ParameterName = "geschlecht";
+                //paramGender.DbType = DbType.Int32;
+                //paramGender.Value = newKundenData.Geschlecht;
+
+                DbParameter paramCnumber = cmd.CreateParameter();
+                paramCnumber.ParameterName = "cnumber";
+                paramCnumber.DbType = DbType.Int32;
+                paramCnumber.Value = cnumber;
+
+
+                cmd.Parameters.Add(param1);
+                cmd.Parameters.Add(param2);
+                cmd.Parameters.Add(param3);
+                //cmd.Parameters.Add(paramBD);
+                //cmd.Parameters.Add(paramGender);
+                //cmd.Parameters.Add(paramID);
+
+                return await cmd.ExecuteNonQueryAsync() == 1;
+            }
             return false;
         }
     }

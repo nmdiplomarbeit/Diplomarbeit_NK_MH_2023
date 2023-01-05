@@ -113,5 +113,65 @@ namespace LohnverrechnerGastro.Controllers
                 await rep.DisconnectAsync();
             }
         }
+
+        [HttpGet]
+        [Route("/Home/UpdateAsync/{tablename}/{cnumber}")]
+        public async Task<IActionResult> UpdateAsync(string tablename, int cnumber)
+        {
+            try
+            {
+                await rep.ConnectAsync();
+                // Liste mit allen Usern an die View übergeben
+                return View(await rep.GetOneTableRow(tablename, cnumber));
+            }
+            catch (DbException)
+            {
+                return View("Index");
+            }
+            finally
+            {
+                await rep.DisconnectAsync();
+            }
+            return View();
+        }
+
+        [HttpPost]
+        [Route("/Home/UpdateAsync/{tablename}/{cnumber}")]
+
+        public async Task<IActionResult> UpdateAsync(Table t, int cnumber, string tablename)
+        {
+
+            if (t == null)
+            {
+                return RedirectToAction("update");
+            }
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await rep.ConnectAsync();
+                    if (await rep.UpdateAsync(tablename, cnumber, t))
+                    {
+                        return View("Index");
+                    }
+                    else
+                    {
+                        return View("Tables");
+                    }
+                }
+                catch (DbException)
+                {
+                    return View("Login");
+
+                }
+                finally
+                {
+                    await rep.DisconnectAsync();
+                }
+                //falls etwas falsch eingeg. wurde, wird das Reg-formular
+                // erneut aufgerufen - mit dne bereits eingegebnenen Daten.
+            }
+            return View(t);
+        }
     }
 }

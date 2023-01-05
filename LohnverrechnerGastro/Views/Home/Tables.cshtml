@@ -12,13 +12,17 @@
         Keine Einträge in der Tabelle vorhanden!
     </p>
 } else {
-    <table id="tables">
+    <center>
+
+    <table>
         <thead>
             <tr>
-                <td colspan="7">Tabellen</td>
+                <td colspan="7">@Model[0].TableName</td>
             </tr>
         </thead>
+
         <tbody>
+            
             @*@foreach(Table t in Model){*@
                 
             <tr>
@@ -47,15 +51,15 @@
                         }
                     }
 
-                @if (RepositoryUsersDB.IsAdmin)
-                {
-                    <td>@t.TableName @t.Cnumber
+                @*@if (RepositoryUsersDB.IsAdmin)
+                {*@
+                    <td>
                     <form action="/home/deleteasync/@t.TableName/@t.Cnumber" method="get">
                     <input type="submit" value="löschen" />
                     </form>
                     </td>
                     <td>
-                    <form action="/home/update/@t.TableName/@t.Cnumber" method="get">
+                    <form action="/home/updateasync/@t.TableName/@t.Cnumber" method="get">
                     <input type="submit" value="ändern" />
                     </form>
                     </td>
@@ -70,6 +74,8 @@
             </tr>
         </tfoot>*@
     </table>
+    </center>
+
 }
            
        

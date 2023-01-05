@@ -19,45 +19,52 @@
         {
             <li><a class="navtext" asp-area="" asp-controller="User" asp-action="Registration">Registration</a></li>
         }
-        <li><a class="navtext" asp-area="" asp-controller="User" asp-action="Index">Users</a></li>
-        <li><a class="navtext" asp-area="" asp-controller="Home" asp-action="Tables">Tabellen</a></li>        
-        <li>
+        @*<li><a class="navtext" asp-area="" asp-controller="User" asp-action="Index">Users</a></li>
+        <li><a class="navtext" asp-area="" asp-controller="Home" asp-action="Tables">Tabellen</a></li>        *@
+        @*<li>
             <div class="dropdown">
                 <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                     Dropdown link
                 </a>
        
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    @{
-                        var urlsv = "/Home/Tables/sv";
-                        var urlsv_sz = "/Home/Tables/sv_sz";
-                        var urldg_abgaben = "/Home/Tables/dg_abgaben";
-                        var urldg_abgaben_sz = "/Home/Tables/dg_abgaben_sz";
-                        var urlgrenzen_sv = "/Home/Tables/grenzen_sv";
-                        var urlgrenzen_sv_sz = "/Home/Tables/grenzen_sv_sz";
-                        var urlefftar = "/Home/Tables/effektiv_tarif_monat";
-                        var urlsz_steuergrenzen = "/Home/Tables/sz_steuergrenzen";
-                        var urlfreibetr_lst = "/Home/Tables/freibetraege_lst";
-                    }
+                   
                     <li><a href=@urlsv>SV Tabelle</a></li>
                     <li><a href=@urlsv_sz>SV SZ Tabelle</a></li>
                     <li><a href=@urldg_abgaben>DG Abgaben lfd Tabelle</a></li>
-                    <li><a class="dropdown-item" href=@urldg_abgaben_sz>DG Abgaben SZ Tabelle</a></li>
-                    <li><a class="dropdown-item" href=@urlgrenzen_sv>Grenzen SV Tabelle</a></li>
-                    <li><a class="dropdown-item" href=@urlgrenzen_sv_sz>Grenzen SV SZ Tabelle</a></li>
-                    <li><a class="dropdown-item" href=@urlefftar>Effektiv Tarif Monat Tabelle</a></li>
-                    <li><a class="dropdown-item" href=@urlsz_steuergrenzen>SZ Steuergrenzen Tabelle</a></li>
-                    <li><a class="dropdown-item" href=@urlfreibetr_lst>Freibetraege Lst Tabelle</a></li>
+                    <li><a href=@urldg_abgaben_sz>DG Abgaben SZ Tabelle</a></li>
+                    <li><a href=@urlgrenzen_sv>Grenzen SV Tabelle</a></li>
+                    <li><a href=@urlgrenzen_sv_sz>Grenzen SV SZ Tabelle</a></li>
+                    <li><a href=@urlefftar>Effektiv Tarif Monat Tabelle</a></li>
+                    <li><a href=@urlsz_steuergrenzen>SZ Steuergrenzen Tabelle</a></li>
+                    <li><a href=@urlfreibetr_lst>Freibetraege Lst Tabelle</a></li>
                 </ul>
             </div>
-        </li>
+        </li>*@
         <li>
+            @{
+                var urlsv = "/Home/Tables/sv";
+                var urlsv_sz = "/Home/Tables/sv_sz";
+                var urldg_abgaben = "/Home/Tables/dg_abgaben";
+                var urldg_abgaben_sz = "/Home/Tables/dg_abgaben_sz";
+                var urlgrenzen_sv = "/Home/Tables/grenzen_sv";
+                var urlgrenzen_sv_sz = "/Home/Tables/grenzen_sv_sz";
+                var urlefftar = "/Home/Tables/effektiv_tarif_monat";
+                var urlsz_steuergrenzen = "/Home/Tables/sz_steuergrenzen";
+                var urlfreibetr_lst = "/Home/Tables/freibetraege_lst";
+            }
             <div class="dropdown">
-                <button class="dropbtn">Dropdown</button>
+                <button id="dropbtn">Tables</button>
                 <div class="dropdown-content">
                     <a href=@urlsv>SV Tabelle</a>
                     <a href=@urlsv_sz>SV SZ Tabelle</a>
                     <a href=@urldg_abgaben>DG Abgaben lfd Tabelle</a>
+                    <a href=@urldg_abgaben_sz>DG Abgaben SZ Tabelle</a>
+                    <a href=@urlgrenzen_sv>Grenzen SV Tabelle</a>
+                    <a href=@urlgrenzen_sv_sz>Grenzen SV SZ Tabelle</a>
+                    <a href=@urlefftar>Effektiv Tarif Monat Tabelle</a>
+                    <a href=@urlsz_steuergrenzen>SZ Steuergrenzen Tabelle</a>
+                    <a href=@urlfreibetr_lst>Freibetraege Lst Tabelle</a>
                 </div>
             </div>
         </li>
