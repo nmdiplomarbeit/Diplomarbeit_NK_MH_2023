@@ -36,13 +36,13 @@ namespace LohnverrechnerGastro.Models.DB
             }
         }
 
-        public async Task<bool> InsertAsync(User user)
+        public async Task<bool> InsertAsync(User user, string salt)
         {
 
             if (this._conn?.State == ConnectionState.Open)
             {
                 DbCommand cmdInsert = this._conn.CreateCommand();
-                cmdInsert.CommandText = "insert into users values(null, @name, @email, sha2(@password, 512))";
+                cmdInsert.CommandText = "insert into users values(null, @name, @email, sha2(@password, 512), @salt)";
 
                 DbParameter paramN = cmdInsert.CreateParameter();
                 paramN.ParameterName = "name";
@@ -57,7 +57,12 @@ namespace LohnverrechnerGastro.Models.DB
                 DbParameter paramPWD = cmdInsert.CreateParameter();
                 paramPWD.ParameterName = "password";
                 paramPWD.DbType = DbType.String;
-                paramPWD.Value = user.Password;
+                paramPWD.Value = user.Password + salt;
+
+                DbParameter paramSALT = cmdInsert.CreateParameter();
+                paramSALT.ParameterName = "salt";
+                paramSALT.DbType = DbType.String;
+                paramSALT.Value = salt;
 
                 //DbParameter paramLogged = cmdInsert.CreateParameter();
                 //paramLogged.ParameterName = "isLogged";
@@ -67,6 +72,8 @@ namespace LohnverrechnerGastro.Models.DB
                 cmdInsert.Parameters.Add(paramN);
                 cmdInsert.Parameters.Add(paramEmail);
                 cmdInsert.Parameters.Add(paramPWD);
+                cmdInsert.Parameters.Add(paramSALT);
+
                 //cmdInsert.Parameters.Add(paramLogged);
 
                 return await cmdInsert.ExecuteNonQueryAsync() == 1;
@@ -182,33 +189,50 @@ namespace LohnverrechnerGastro.Models.DB
             return false;
         }
 
-        public async Task<bool> LoginAsync(string name, string password)
+        public async Task<bool> LoginAsync(User userdaten)
 
         {
             if (this._conn?.State == ConnectionState.Open)
             {
-                DbCommand cmdInsert = this._conn.CreateCommand();
+                string salt = "";
 
-                cmdInsert.CommandText = "select name from users where name = @name and password = sha2(@password, 512)";
-                DbParameter paramN = cmdInsert.CreateParameter();
+                DbCommand cmdSalt = this._conn.CreateCommand();
+                cmdSalt.CommandText = "select salt from users where name = @name";
+                DbParameter paramNSalt = cmdSalt.CreateParameter();
+                paramNSalt.ParameterName = "name";
+                paramNSalt.DbType = DbType.String;
+                paramNSalt.Value = userdaten.Name;
+                cmdSalt.Parameters.Add(paramNSalt);
+                using (DbDataReader reader = await cmdSalt.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        salt = Convert.ToString(reader["salt"]);
+                    }
+                }
+
+                DbCommand cmd = this._conn.CreateCommand();
+
+                cmd.CommandText = "select name from users where name = @name and password = sha2(@password, 512)";
+                DbParameter paramN = cmd.CreateParameter();
                 paramN.ParameterName = "name";
                 paramN.DbType = DbType.String;
-                paramN.Value = name;
+                paramN.Value = userdaten.Name;
 
-                DbParameter paramPWD = cmdInsert.CreateParameter();
+                DbParameter paramPWD = cmd.CreateParameter();
                 paramPWD.ParameterName = "password";
                 paramPWD.DbType = DbType.String;
-                paramPWD.Value = password;
+                paramPWD.Value = userdaten.Password + salt;
 
-                cmdInsert.Parameters.Add(paramN);
-                cmdInsert.Parameters.Add(paramPWD);
+                cmd.Parameters.Add(paramN);
+                cmd.Parameters.Add(paramPWD);
 
-                if (name == "AdminAdmin123" && password == "AdminAdmin123")
+                if (userdaten.Name == "AdminAdmin123" && userdaten.Password == "AdminAdmin123")
                 {
                     IsAdmin = true;
                 }
 
-                using (DbDataReader reader = await cmdInsert.ExecuteReaderAsync())
+                using (DbDataReader reader = await cmd.ExecuteReaderAsync())
                 {
                     if (await reader.ReadAsync())
                     {

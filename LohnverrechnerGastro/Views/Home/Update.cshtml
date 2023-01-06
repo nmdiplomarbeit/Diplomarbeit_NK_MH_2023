@@ -9,19 +9,19 @@
 
 <form asp-controller="home" asp-action="update" method="post">
     <input type="hidden" asp-for="Cnumber" />
-    <p>
-        <label asp-for="Column1">Column1</label> <br />
-        <input type="number" step="0.01" asp-for="Column1" />
+    <p>@Model.TableName
+        <label asp-for="Column1">@Model.Column1Name</label> <br />
+        <input type="number" step=".01" asp-for="Column1" />
         <span asp-validation-for="Column1"></span>
     </p>
     <p>
-        <label asp-for="Column2">Column2</label> <br />
-        <input type="number" step="0.01" asp-for="Column2" />
+        <label asp-for="Column2">@Model.Column2Name</label> <br />
+        <input type="number" step=".01" asp-for="Column2" />
         <span asp-validation-for="Column2"></span>
     </p>
     <p>
-        <label asp-for="Column3">Column3</label> <br />
-        <input type="number" step="0.01" asp-for="Column3" />
+        <label asp-for="Column3">@Model.Column3Name</label> <br />
+        <input type="number" step=".01" asp-for="Column3" />
         <span asp-validation-for="Column3"></span>
     </p>
     <p>

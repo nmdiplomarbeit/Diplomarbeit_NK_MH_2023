@@ -40,7 +40,7 @@ namespace LohnverrechnerGastro.Models.DB
             if (this._conn?.State == ConnectionState.Open)
             {
                 DbCommand cmd = this._conn.CreateCommand();
-                cmd.CommandText = "select sv_satz from sv where bruttovon <= @brutto and bruttobis >= @brutto";     
+                cmd.CommandText = "select sv_satz from sv where bruttovon <= @brutto and bruttobis >= @brutto";
                 DbParameter paramBrut = cmd.CreateParameter();
                 paramBrut.ParameterName = "brutto";
                 paramBrut.DbType = DbType.String;
@@ -100,7 +100,7 @@ namespace LohnverrechnerGastro.Models.DB
                 {
                     while (await reader.ReadAsync())
                     {
-                        abzugInsg = (lstbem * (Convert.ToDecimal(reader["grenzsteuersatz"])/100)) - Convert.ToDecimal(reader["abgaben"]);
+                        abzugInsg = (lstbem * (Convert.ToDecimal(reader["grenzsteuersatz"]) / 100)) - Convert.ToDecimal(reader["abgaben"]);
                         return abzugInsg;
                     }
                 }
@@ -108,7 +108,8 @@ namespace LohnverrechnerGastro.Models.DB
             return 0;
         }
 
-        public async Task<Dictionary<string, decimal>> GetDGAbgaben() {    
+        public async Task<Dictionary<string, decimal>> GetDGAbgaben()
+        {
             Dictionary<string, decimal> dgabgaben = new Dictionary<string, decimal>();
             if (this._conn?.State == ConnectionState.Open)
             {
@@ -282,7 +283,7 @@ namespace LohnverrechnerGastro.Models.DB
                                 Column1 = Convert.ToDecimal(reader["bruttovon"]),
                                 Column2 = Convert.ToDecimal(reader["bruttobis"]),
                                 Column3 = Convert.ToDecimal(reader["sv_satz"]),
-                                
+
                             };
                             return table;
                         }
@@ -310,12 +311,12 @@ namespace LohnverrechnerGastro.Models.DB
 
                     while (await reader.ReadAsync())
                     {
-                        
+
                         if (tablename == "sv" || tablename == "sv_sz")
                         {
                             table.Add(new Table()                       // new Table() macht immer nur einen neuen Eintrag in der Tabelle, dadruch relativ unübersichtlich
                             {
-                                TableName = tablename,                                          
+                                TableName = tablename,
                                 Cnumber = Convert.ToInt32(reader["cnumber"]),
                                 Column1 = Convert.ToDecimal(reader["bruttovon"]),
                                 Column2 = Convert.ToDecimal(reader["bruttobis"]),
@@ -449,7 +450,7 @@ namespace LohnverrechnerGastro.Models.DB
                 if (tablename == "sv" || tablename == "sv_sz")
                 {
                     cmd.CommandText = "update " + tablename + " set bruttovon = @bruttovon, bruttobis = @bruttobis, " +
-                    "sv_satz = @sv_satz, where cnumber = @cnumber;";
+                    "sv_satz = @sv_satz where cnumber = @cnumber;";
                     param1Name = "bruttovon"; param2Name = "bruttobis"; param3Name = "sv_satz";
                 }
                 if (tablename == "dg_abgaben" || tablename == "dg_abgaben_sz")
@@ -459,7 +460,7 @@ namespace LohnverrechnerGastro.Models.DB
                 }
                 //if (tablename == "sv" || tablename == "sv_sz")
                 //{
-                //    cmd.CommandText = "update " + tablename + " set bruttovon = @bruttovon, bruttobis = @bruttobis, " +
+                //    cmd.CommandText = "update " + tablenam64788e + " set bruttovon = @bruttovon, bruttobis = @bruttobis, " +
                 //    "sv_satz = @sv_satz, where cnumber = @cnumber;";
                 //}
                 //if (tablename == "sv" || tablename == "sv_sz")
@@ -468,20 +469,20 @@ namespace LohnverrechnerGastro.Models.DB
                 //    "sv_satz = @sv_satz, where cnumber = @cnumber;";
                 //}
 
-               
+
                 DbParameter param1 = cmd.CreateParameter();
                 param1.ParameterName = param1Name;
-                param1.DbType = DbType.String;
+                param1.DbType = DbType.Decimal;
                 param1.Value = newTable.Column1;
 
                 DbParameter param2 = cmd.CreateParameter();
                 param2.ParameterName = param2Name;
-                param2.DbType = DbType.String;
+                param2.DbType = DbType.Decimal;
                 param2.Value = newTable.Column2;
 
                 DbParameter param3 = cmd.CreateParameter();
                 param3.ParameterName = param3Name;
-                param3.DbType = DbType.String;
+                param3.DbType = DbType.Decimal;
                 param3.Value = newTable.Column3;
 
                 //DbParameter paramBD = cmd.CreateParameter();
@@ -503,11 +504,44 @@ namespace LohnverrechnerGastro.Models.DB
                 cmd.Parameters.Add(param1);
                 cmd.Parameters.Add(param2);
                 cmd.Parameters.Add(param3);
+                cmd.Parameters.Add(paramCnumber);
                 //cmd.Parameters.Add(paramBD);
                 //cmd.Parameters.Add(paramGender);
                 //cmd.Parameters.Add(paramID);
 
                 return await cmd.ExecuteNonQueryAsync() == 1;
+            }
+            return false;
+        }
+
+        public async Task<bool> InsertAsync(string tablename, Table newTable)
+        {
+
+            if (this._conn?.State == ConnectionState.Open)
+            {
+                DbCommand cmdInsert = this._conn.CreateCommand();
+                cmdInsert.CommandText = "insert into " + tablename + " values(null, @bruttovon, @bruttobis, @sv_satz)";
+
+                DbParameter param1 = cmdInsert.CreateParameter();
+                param1.ParameterName = "bruttovon";
+                param1.DbType = DbType.Decimal;
+                param1.Value = newTable.Column1;
+
+                DbParameter param2 = cmdInsert.CreateParameter();
+                param2.ParameterName = "bruttobis";
+                param2.DbType = DbType.Decimal;
+                param2.Value = newTable.Column2;
+
+                DbParameter param3 = cmdInsert.CreateParameter();
+                param3.ParameterName = "sv_satz";
+                param3.DbType = DbType.Decimal;
+                param3.Value = newTable.Column3;
+
+                cmdInsert.Parameters.Add(param1);
+                cmdInsert.Parameters.Add(param2);
+                cmdInsert.Parameters.Add(param3);
+
+                return await cmdInsert.ExecuteNonQueryAsync() == 1;
             }
             return false;
         }

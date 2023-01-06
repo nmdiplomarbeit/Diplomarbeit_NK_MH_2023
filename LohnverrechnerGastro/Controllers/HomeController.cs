@@ -24,7 +24,7 @@ namespace LohnverrechnerGastro.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(Eingaben data)
         {
-            if(data == null)
+            if (data == null)
             {
                 return RedirectToAction("Index");
             }
@@ -137,7 +137,6 @@ namespace LohnverrechnerGastro.Controllers
 
         [HttpPost]
         [Route("/Home/UpdateAsync/{tablename}/{cnumber}")]
-
         public async Task<IActionResult> UpdateAsync(Table t, int cnumber, string tablename)
         {
 
@@ -145,33 +144,79 @@ namespace LohnverrechnerGastro.Controllers
             {
                 return RedirectToAction("update");
             }
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    await rep.ConnectAsync();
-                    if (await rep.UpdateAsync(tablename, cnumber, t))
-                    {
-                        return View("Index");
-                    }
-                    else
-                    {
-                        return View("Tables");
-                    }
-                }
-                catch (DbException)
-                {
-                    return View("Login");
 
-                }
-                finally
+            try
+            {
+                await rep.ConnectAsync();
+                if (await rep.UpdateAsync(tablename, cnumber, t))
                 {
-                    await rep.DisconnectAsync();
+                    return View("Index");
                 }
-                //falls etwas falsch eingeg. wurde, wird das Reg-formular
-                // erneut aufgerufen - mit dne bereits eingegebnenen Daten.
+                else
+                {
+                    return View("Tables");
+                }
             }
-            return View(t);
+            catch (DbException)
+            {
+                return View("Login");
+
+            }
+            finally
+            {
+                await rep.DisconnectAsync();
+            }
+            //falls etwas falsch eingeg. wurde, wird das Reg-formular
+            // erneut aufgerufen - mit dne bereits eingegebnenen Daten.
+
+            //return View(t);
         }
+
+        [HttpGet]
+        [Route("/Home/InsertAsync/{tablename}")]
+        public IActionResult InsertAsync()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Route("/Home/InsertAsync/{tablename}")]
+        public async Task<IActionResult> InsertAsync(string tablename, Table t)
+        {
+
+            if (t == null)
+            {
+                return RedirectToAction("update");
+            }
+
+            try
+            {
+                await rep.ConnectAsync();
+                if (await rep.InsertAsync(tablename, t))
+                {
+                    return View("Index");
+                }
+                else
+                {
+                    return View("Tables");
+                }
+            }
+            catch (DbException)
+            {
+                return View("Login");
+
+            }
+            finally
+            {
+                await rep.DisconnectAsync();
+            }
+            //falls etwas falsch eingeg. wurde, wird das Reg-formular
+            // erneut aufgerufen - mit dne bereits eingegebnenen Daten.
+
+            //return View(t);
+        }
+
     }
+
+
 }

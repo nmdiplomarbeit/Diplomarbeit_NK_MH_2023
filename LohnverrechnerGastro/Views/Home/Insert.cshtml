@@ -1,0 +1,39 @@
+﻿@model LohnverrechnerGastro.Models.Table
+
+@{
+    ViewData["Title"] = "Insert";
+}
+
+<h3>Insert</h3>
+
+<form asp-controller="home" asp-action="insert" method="post">
+    <p>
+        <label asp-for="Column1">
+            Column1
+        </label><br />
+        <input type="number" step=".01" asp-for="Column1" />
+        <span asp-validation-for="Column1"></span>
+        <br>
+    </p>
+    <p>
+        <label asp-for="Column2">
+            Column2
+        </label><br />
+        <input type="number" step=".01" asp-for="Column2" />
+        <span asp-validation-for="Column2"></span>
+        <br>
+    </p>
+    <p>
+        <label asp-for="Column3">
+            Column3
+
+        </label><br />
+        <input type="number" step=".01" asp-for="Column3" />
+        <span asp-validation-for="Column3"></span>
+        <br>
+    </p>
+    <p>
+        <input type="submit" value="registrieren" />
+        <input type="reset" value="abbrechen" />
+    </p>
+</form>

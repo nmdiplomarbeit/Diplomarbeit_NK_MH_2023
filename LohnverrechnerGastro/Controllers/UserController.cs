@@ -36,10 +36,20 @@ namespace LohnverrechnerGastro.Controllers
             RegistrationValidation(userdaten);
             if (ModelState.IsValid)
             {
+                var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+                var Charsarr = new char[8];
+                var random = new Random();
+
+                for (int i = 0; i < Charsarr.Length; i++)
+                {
+                    Charsarr[i] = characters[random.Next(characters.Length)];
+                }
+
+                var salt = new String(Charsarr);
                 try
                 {
                     await rep.ConnectAsync();
-                    if (await rep.InsertAsync(userdaten))
+                    if (await rep.InsertAsync(userdaten, salt))
                     {
                         return RedirectToAction("Index", "Home");
                     }
@@ -190,7 +200,7 @@ namespace LohnverrechnerGastro.Controllers
                 try
                 {
                     await rep.ConnectAsync();
-                    if (await rep.LoginAsync(userdaten.Name, userdaten.Password))
+                    if (await rep.LoginAsync(userdaten))
                     {
                         RepositoryUsersDB.IsLogged = true;
                         return RedirectToAction("Index", "Home");

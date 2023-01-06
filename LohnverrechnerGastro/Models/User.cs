@@ -29,6 +29,8 @@ namespace LohnverrechnerGastro.Models
 
         public string Password { get; set; }
 
+        public string Salt { get; set; }
+
         public bool IsError { get; set; }
 
         public User() : this(0, "", "") { }

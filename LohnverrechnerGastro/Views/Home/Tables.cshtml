@@ -12,8 +12,6 @@
         Keine Einträge in der Tabelle vorhanden!
     </p>
 } else {
-    <center>
-
     <table>
         <thead>
             <tr>
@@ -63,19 +61,24 @@
                     <input type="submit" value="ändern" />
                     </form>
                     </td>
-                }       
+                @*}*@      
                 
                 </tr>
             }
-        </tbody>
-        @*<tfoot>
-            <tr>
-                <td colspan="7">zur Bearbeitung der User</td>
-            </tr>
-        </tfoot>*@
-    </table>
-    </center>
 
-}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="7" style="text-align: center;">
+                    <form action="/home/insertasync/@Model[0].TableName" method="get">
+                        <input type="submit" value="eintragen" />
+                    </form>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+   
+
+        }
            
        
