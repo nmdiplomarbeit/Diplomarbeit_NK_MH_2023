@@ -11,17 +11,17 @@
     <input type="hidden" asp-for="Cnumber" />
     <p>@Model.TableName
         <label asp-for="Column1">@Model.Column1Name</label> <br />
-        <input type="number" step=".01" asp-for="Column1" />
+        <input asp-for="Column1" />
         <span asp-validation-for="Column1"></span>
     </p>
     <p>
         <label asp-for="Column2">@Model.Column2Name</label> <br />
-        <input type="number" step=".01" asp-for="Column2" />
+        <input asp-for="Column2" />
         <span asp-validation-for="Column2"></span>
     </p>
     <p>
         <label asp-for="Column3">@Model.Column3Name</label> <br />
-        <input type="number" step=".01" asp-for="Column3" />
+        <input asp-for="Column3" />
         <span asp-validation-for="Column3"></span>
     </p>
     <p>
