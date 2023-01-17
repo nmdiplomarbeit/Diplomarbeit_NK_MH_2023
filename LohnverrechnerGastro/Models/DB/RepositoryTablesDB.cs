@@ -43,7 +43,7 @@ namespace LohnverrechnerGastro.Models.DB
                 cmd.CommandText = "select sv_satz from sv where bruttovon <= @brutto and bruttobis >= @brutto";
                 DbParameter paramBrut = cmd.CreateParameter();
                 paramBrut.ParameterName = "brutto";
-                paramBrut.DbType = DbType.String;
+                paramBrut.DbType = DbType.Decimal;
                 paramBrut.Value = einkommen;
                 cmd.Parameters.Add(paramBrut);
                 using (DbDataReader reader = await cmd.ExecuteReaderAsync())
@@ -68,7 +68,7 @@ namespace LohnverrechnerGastro.Models.DB
                 cmd.CommandText = "select sv_satz from sv_sz where bruttovon <= @brutto and bruttobis >= @brutto";
                 DbParameter paramID = cmd.CreateParameter();
                 paramID.ParameterName = "brutto";
-                paramID.DbType = DbType.String;
+                paramID.DbType = DbType.Decimal;
                 paramID.Value = einkommen;
                 cmd.Parameters.Add(paramID);
                 using (DbDataReader reader = await cmd.ExecuteReaderAsync())
@@ -93,7 +93,7 @@ namespace LohnverrechnerGastro.Models.DB
                 cmd.CommandText = "select grenzsteuersatz, abgaben from effektiv_tarif_monat where lst_bemgrundlage_von <= @lstbem and lst_bemgrundlage_bis >= @lstbem";
                 DbParameter paramLstbem = cmd.CreateParameter();
                 paramLstbem.ParameterName = "lstbem";
-                paramLstbem.DbType = DbType.String;
+                paramLstbem.DbType = DbType.Decimal;
                 paramLstbem.Value = lstbem;
                 cmd.Parameters.Add(paramLstbem);
                 using (DbDataReader reader = await cmd.ExecuteReaderAsync())
@@ -203,7 +203,7 @@ namespace LohnverrechnerGastro.Models.DB
                 cmd.CommandText = "select prozent from sz_steuergrenzen where von <= @einkommen and bis >= @einkommen";
                 DbParameter paramEink = cmd.CreateParameter();
                 paramEink.ParameterName = "einkommen";
-                paramEink.DbType = DbType.String;
+                paramEink.DbType = DbType.Decimal;
                 paramEink.Value = einkommen;
                 cmd.Parameters.Add(paramEink);
                 using (DbDataReader reader = await cmd.ExecuteReaderAsync())
@@ -258,6 +258,79 @@ namespace LohnverrechnerGastro.Models.DB
         //    }
         //    return sv;
         //}
+
+        public async Task<decimal> GetBetrzugehArbeiter(int anzJahre)
+        {
+            decimal prozSatz = 0m;
+            if (this._conn?.State == ConnectionState.Open)
+            {
+                DbCommand cmd = this._conn.CreateCommand();
+                cmd.CommandText = "select prozentsatz from betrzugeh_arbeiter where von <= @anzJahre and bis >= @anzJahre";
+                DbParameter paramJ = cmd.CreateParameter();
+                paramJ.ParameterName = "anzJahre";
+                paramJ.DbType = DbType.Int32;
+                paramJ.Value = anzJahre;
+                cmd.Parameters.Add(paramJ);
+                using (DbDataReader reader = await cmd.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        prozSatz = Convert.ToDecimal(reader["prozentsatz"]);
+                        return prozSatz;
+                    }
+                }
+            }
+            return 0;
+        }
+
+        public async Task<decimal> GetBetrzugehAngestellter(int anzJahre)
+        {
+            decimal prozSatz = 0m;
+            if (this._conn?.State == ConnectionState.Open)
+            {
+                DbCommand cmd = this._conn.CreateCommand();
+                cmd.CommandText = "select prozentsatz from betrzugeh_angestellter where von <= @anzJahre and bis >= @anzJahre";
+                DbParameter paramJ = cmd.CreateParameter();
+                paramJ.ParameterName = "anzJahre";
+                paramJ.DbType = DbType.Int32;
+                paramJ.Value = anzJahre;
+                cmd.Parameters.Add(paramJ);
+                using (DbDataReader reader = await cmd.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        prozSatz = Convert.ToDecimal(reader["prozentsatz"]);
+                        return prozSatz;
+                    }
+                }
+            }
+            return 0;
+        }
+
+        public async Task<decimal> GetProzBundesland(string bundesland)
+        {
+            decimal prozSatz = 0m;
+            if (this._conn?.State == ConnectionState.Open)
+            {
+                DbCommand cmd = this._conn.CreateCommand();
+                cmd.CommandText = "select prozentsatz from bundesland_dz where bundesland = @bundesland";
+                DbParameter paramB = cmd.CreateParameter();
+                paramB.ParameterName = "bundesland";
+                paramB.DbType = DbType.String;
+                paramB.Value = bundesland;
+                cmd.Parameters.Add(paramB);
+                using (DbDataReader reader = await cmd.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        prozSatz = Convert.ToDecimal(reader["prozentsatz"]);
+                        return prozSatz;
+                    }
+                }
+            }
+            return 0;
+        }
+
 
         public async Task<Table> GetOneTableRow(string tablename, int cnumber)
         {
@@ -414,6 +487,35 @@ namespace LohnverrechnerGastro.Models.DB
                                 Column2Name = "§68/1",
                             });
                         }
+
+                        if (tablename == "betrzugeh_angestellter" || tablename == "betrzugeh_arbeiter")
+                        {
+                            table.Add(new Table()
+                            {
+                                TableName = tablename,
+                                Cnumber = Convert.ToInt32(reader["cnumber"]),
+                                Column1 = Convert.ToInt32(reader["von"]),
+                                Column2 = Convert.ToInt32(reader["bis"]),
+                                Column3 = Convert.ToInt32(reader["prozentsatz"]),
+                                Column1Name = "von",
+                                Column2Name = "bis",
+                                Column3Name = "prozentsatz",
+
+                            });
+                        }
+                        if (tablename == "bundesland_dz")
+                        {
+                            table.Add(new Table()
+                            {
+                                TableName = tablename,
+                                Cnumber = Convert.ToInt32(reader["cnumber"]),
+                                Column1s = Convert.ToString(reader["bundesland"]),
+                                Column2 = Convert.ToInt32(reader["prozentsatz"]),
+                                Column1Name = "bundesland",
+                                Column3Name = "prozentsatz",
+
+                            });
+                        }
                     }
                 }
             }
@@ -446,6 +548,9 @@ namespace LohnverrechnerGastro.Models.DB
                 string param1Name = "";
                 string param2Name = "";
                 string param3Name = "";
+                string param4Name = "";
+                string param5Name = "";
+
                 DbCommand cmd = this._conn.CreateCommand();
                 if (tablename == "sv" || tablename == "sv_sz")
                 {

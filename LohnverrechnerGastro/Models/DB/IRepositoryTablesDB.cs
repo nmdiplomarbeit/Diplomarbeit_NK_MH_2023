@@ -20,6 +20,9 @@ namespace LohnverrechnerGastro.Models.DB
         Task<Dictionary<string, decimal>> GetGrenzenSVSZ();
         Task<decimal> GetSZSteuergrenzen(decimal einkommen);
         Task<List<Table>> GetAllTablesAsync(string tablename);
+        Task<decimal> GetBetrzugehArbeiter(int anzJahre);
+        Task<decimal> GetBetrzugehAngestellter(int anzJahre);
+        Task<decimal> GetProzBundesland(string bundesland);
         Task<bool> DeleteAsync(string tablename, int cnumber);
         Task<bool> UpdateAsync(string tablename, int cnumber, Table newTable);
         Task<Table> GetOneTableRow(string tablename, int cnumber);

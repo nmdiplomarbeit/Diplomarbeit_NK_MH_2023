@@ -82,6 +82,7 @@ namespace LohnverrechnerGastro.Models.DB
             return false;
         }
 
+
         public async Task<User> GetUserAsync(int userId)
         {
             User user;

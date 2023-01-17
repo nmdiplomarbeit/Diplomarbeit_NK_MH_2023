@@ -131,8 +131,16 @@ input {
     color: red;
 }
 
+#arboang {
+    margin-left: 34px;
+}
+
 #bundesland {
     margin-left: 100px;
+}
+
+#betrzugeh {
+    margin-left: 20px;
 }
 
 #jahr {

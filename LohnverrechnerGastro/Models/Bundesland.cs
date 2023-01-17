@@ -7,6 +7,6 @@ namespace LohnverrechnerGastro.Models
 {
     public enum Bundesland
     {
-        Burgenland, Kärnten, Niederösterreich, Oberösterreich, Salzburg, Steiermark, Tirol, Vorarlberg, Wien, notSpecified
+        Vorarlberg, Tirol, Salzburg, notSpecified
     }
 }

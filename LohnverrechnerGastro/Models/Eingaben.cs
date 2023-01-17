@@ -35,7 +35,10 @@ namespace LohnverrechnerGastro.Models
         private Kategorie kategorie;
 
 
+        public string ArbeiteroAngestellter { get; set; }
         public Bundesland Bundesland { get; set; }
+
+        public int Betriebszugehoerigkeit { get; set; }
 
         public int Jahr { get; set; }
 
@@ -267,7 +270,7 @@ namespace LohnverrechnerGastro.Models
         }
 
 
-        public Eingaben() : this(Bundesland.Burgenland, 0, "", 0,
+        public Eingaben() : this(Bundesland.Tirol, 0, "", 0,
                 0, "", 0, 0, 0, 0, 0, false, false, false, false, 0, 0, 0,
                 Kategorie.notSpecified, 0, 0) { }
 

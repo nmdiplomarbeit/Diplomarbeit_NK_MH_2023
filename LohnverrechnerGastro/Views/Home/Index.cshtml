@@ -8,21 +8,29 @@
     <p class="notnull"><b>* Pflichtfeld</b></p>
     <form asp-controller="home" asp-action="index" method="post">
         <p>
+            <label asp-for="ArbeiteroAngestellter">
+                Arbeiter/Angestellter<b class="notnull">*</b>:
+            </label>
+            <input id="arboang" type="text" asp-for="ArbeiteroAngestellter" value="Arbeiter" />
+            <span asp-validation-for="ArbeiteroAngestellter"></span>
+        </p>
+        <p>
             <label asp-for="Bundesland">
                 Bundesland<b class="notnull">*</b>:
             </label>
             <select id="bundesland" asp-for="Bundesland" dropzone="1">
-                <option value="0">Burgenland</option>
-                <option value="1">Kärnten</option>
-                <option value="2">Niederösterreich</option>
-                <option value="3">Oberösterreich</option>
-                <option value="4">Salzburg</option>
-                <option value="5">Steiermark</option>
-                <option value="6">Tirol</option>
-                <option value="7">Vorarlberg</option>
-                <option value="8">Wien</option>
+                <option value="0">Vorarlberg</option>
+                <option value="1">Tirol</option>
+                <option value="2">Salzburg</option>
             </select>
             <span asp-validation-for="Bundesland"></span>
+        </p>
+        <p>
+            <label asp-for="Betriebszugehoerigkeit">
+                Betriebszugehoerigkeit<b class="notnull">*</b>:
+            </label>
+            <input id="betrzugeh" type="number" asp-for="Betriebszugehoerigkeit" value="5" />
+            <span asp-validation-for="Betriebszugehoerigkeit"></span>
         </p>
 
         <p>

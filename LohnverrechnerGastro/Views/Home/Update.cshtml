@@ -24,6 +24,18 @@
         <input asp-for="Column3" />
         <span asp-validation-for="Column3"></span>
     </p>
+    @if (Model.TableName == "dg_abgaben" || Model.TableName == "dg_abgaben_sz"){
+        <p>
+            <label asp-for="Column4">@Model.Column4Name</label> <br />
+            <input asp-for="Column4" />
+            <span asp-validation-for="Column4"></span>
+        </p>
+        <p>
+            <label asp-for="Column5">@Model.Column5Name</label> <br />
+            <input asp-for="Column5" />
+            <span asp-validation-for="Column5"></span>
+        </p>
+    }
     <p>
 
         <input type="submit" value="absenden" />

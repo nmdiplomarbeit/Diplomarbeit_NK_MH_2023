@@ -37,7 +37,11 @@
             @foreach (Table t in Model)
             {
                 <tr>
-                    <td>@t.Column1</td>
+                    @if(t.Column1s != null){
+                        <td>@t.Column1s</td>
+                    } else {
+                        <td>@t.Column1</td>
+                    }
                     <td>@t.Column2</td>
                     @if (t.Column3Name != null || t.Column4Name != null || t.Column5Name != null)
                     {

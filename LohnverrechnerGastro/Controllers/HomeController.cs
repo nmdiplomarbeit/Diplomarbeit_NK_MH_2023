@@ -53,6 +53,7 @@ namespace LohnverrechnerGastro.Controllers
                         anzahl_682 = (decimal)Math.Round(((data.StundenproWoche - 40) * 4.33));
                     }
                     data.Ergebnis = lst_bem - eff_tarif;
+                    //data.Ergebnis = await rep.GetProzBundesland(data.Bundesland.ToString());
                     //data.Ergebnis = lst_bem - eff_tarif + (anzahl_682*(await rep.GetSVSatzAsync(data.Einkommen) / 2));
                     //data.Ergebnis = (anzahl_682 * (await rep.GetSVSatzAsync(data.Einkommen) / 2));
 
