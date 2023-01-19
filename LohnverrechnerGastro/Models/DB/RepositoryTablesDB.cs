@@ -356,9 +356,18 @@ namespace LohnverrechnerGastro.Models.DB
                                 Column1 = Convert.ToDecimal(reader["bruttovon"]),
                                 Column2 = Convert.ToDecimal(reader["bruttobis"]),
                                 Column3 = Convert.ToDecimal(reader["sv_satz"]),
+                            };
+                        }
+                        if (tablename == "grenzen_sv")
+                        {
+                            table = new Table
+                            {
+                                Cnumber = cnumber,
+                                Column1 = Convert.ToDecimal(reader["hbgl"]),
+                                Column2 = Convert.ToDecimal(reader["gfg"]),
 
                             };
-                            return table;
+                        return table;
                         }
 
                     }
@@ -512,7 +521,7 @@ namespace LohnverrechnerGastro.Models.DB
                                 Column1s = Convert.ToString(reader["bundesland"]),
                                 Column2 = Convert.ToInt32(reader["prozentsatz"]),
                                 Column1Name = "bundesland",
-                                Column3Name = "prozentsatz",
+                                Column2Name = "prozentsatz",
 
                             });
                         }
@@ -562,6 +571,14 @@ namespace LohnverrechnerGastro.Models.DB
                 {
                     cmd.CommandText = "update " + tablename + " set sv_dg = @sv_dg, bmv = @bmv, " +
                     "db = @db, dz = @dz, kommst = @kommst where cnumber = @cnumber;";
+                    param1Name = "sv_dg"; param2Name = "bmv"; param3Name = "db"; param4Name = "dz"; param5Name = "kommst";
+
+                }
+                if (tablename == "grenzen_sv")
+                {
+                    cmd.CommandText = "update " + tablename + " set hbgl = @hbgl, gfg = @gfg, " +
+                    "where cnumber = @cnumber;";
+                    param1Name = "hbgl"; param2Name = "gfg";
                 }
                 //if (tablename == "sv" || tablename == "sv_sz")
                 //{
@@ -590,6 +607,16 @@ namespace LohnverrechnerGastro.Models.DB
                 param3.DbType = DbType.Decimal;
                 param3.Value = newTable.Column3;
 
+                DbParameter param4 = cmd.CreateParameter();
+                param4.ParameterName = param4Name;
+                param4.DbType = DbType.Decimal;
+                param4.Value = newTable.Column4;
+
+                DbParameter param5 = cmd.CreateParameter();
+                param5.ParameterName = param5Name;
+                param5.DbType = DbType.Decimal;
+                param5.Value = newTable.Column5;
+
                 //DbParameter paramBD = cmd.CreateParameter();
                 //paramBD.ParameterName = "birthdate";
                 //paramBD.DbType = DbType.Date;
@@ -609,6 +636,8 @@ namespace LohnverrechnerGastro.Models.DB
                 cmd.Parameters.Add(param1);
                 cmd.Parameters.Add(param2);
                 cmd.Parameters.Add(param3);
+                cmd.Parameters.Add(param4);
+                cmd.Parameters.Add(param5);
                 cmd.Parameters.Add(paramCnumber);
                 //cmd.Parameters.Add(paramBD);
                 //cmd.Parameters.Add(paramGender);

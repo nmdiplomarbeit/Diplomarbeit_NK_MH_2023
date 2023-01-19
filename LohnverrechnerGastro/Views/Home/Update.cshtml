@@ -19,11 +19,14 @@
         <input asp-for="Column2" />
         <span asp-validation-for="Column2"></span>
     </p>
-    <p>
-        <label asp-for="Column3">@Model.Column3Name</label> <br />
-        <input asp-for="Column3" />
-        <span asp-validation-for="Column3"></span>
-    </p>
+    @if (Model.TableName != "grenzen_sv")
+    {
+        <p>
+            <label asp-for="Column3">@Model.Column3Name</label> <br />
+            <input asp-for="Column3" />
+            <span asp-validation-for="Column3"></span>
+        </p>
+    }
     @if (Model.TableName == "dg_abgaben" || Model.TableName == "dg_abgaben_sz"){
         <p>
             <label asp-for="Column4">@Model.Column4Name</label> <br />
