@@ -350,25 +350,143 @@ namespace LohnverrechnerGastro.Models.DB
                     {
                         if (tablename == "sv" || tablename == "sv_sz")
                         {
-                            table = new Table
+                            table = new Table()                       // new Table() macht immer nur einen neuen Eintrag in der Tabelle, dadruch relativ unübersichtlich
                             {
-                                Cnumber = cnumber,
+                                TableName = tablename,
+                                Cnumber = Convert.ToInt32(reader["cnumber"]),
                                 Column1 = Convert.ToDecimal(reader["bruttovon"]),
                                 Column2 = Convert.ToDecimal(reader["bruttobis"]),
                                 Column3 = Convert.ToDecimal(reader["sv_satz"]),
+
                             };
+                            return table;
+                        }
+
+                        if (tablename == "dg_abgaben" || tablename == "dg_abgaben_sz")
+                        {
+                            table = new Table()
+                            {
+                                TableName = tablename,
+                                Cnumber = Convert.ToInt32(reader["cnumber"]),
+                                Column1 = Convert.ToDecimal(reader["sv_dg"]),
+                                Column2 = Convert.ToDecimal(reader["bmv"]),
+                                Column3 = Convert.ToDecimal(reader["db"]),
+                                Column4 = Convert.ToDecimal(reader["dz"]),
+                                Column5 = Convert.ToDecimal(reader["kommst"]),
+                                Column1Name = "sv_dg",
+                                Column2Name = "bmv",
+                                Column3Name = "db",
+                                Column4Name = "dz",
+                                Column5Name = "kommst",
+
+                            };
+                            return table;
                         }
                         if (tablename == "grenzen_sv")
                         {
-                            table = new Table
+                            table = new Table()
                             {
-                                Cnumber = cnumber,
+                                TableName = tablename,
+                                Cnumber = Convert.ToInt32(reader["cnumber"]),
                                 Column1 = Convert.ToDecimal(reader["hbgl"]),
                                 Column2 = Convert.ToDecimal(reader["gfg"]),
+                                Column1Name = "hbgl",
+                                Column2Name = "gfg",
+                            };
+                            return table;
+                        }
+                        if (tablename == "grenzen_sv_sz")
+                        {
+                            table = new Table()
+                            {
+                                TableName = tablename,
+                                Cnumber = Convert.ToInt32(reader["cnumber"]),
+                                Column1 = Convert.ToDecimal(reader["hbgl_sz"]),
+                                Column2 = Convert.ToDecimal(reader["gfg"]),
+                                Column1Name = "hbgl_sz",
+                                Column2Name = "gfg",
+                            };
+                            return table;
+                        }
+                        if (tablename == "effektiv_tarif_monat")
+                        {
+                            table = new Table()
+                            {
+                                TableName = tablename,
+                                Cnumber = Convert.ToInt32(reader["cnumber"]),
+                                Column1 = Convert.ToDecimal(reader["lst_bemgrundlage_von"]),
+                                Column2 = Convert.ToDecimal(reader["lst_bemgrundlage_bis"]),
+                                Column3 = Convert.ToDecimal(reader["grenzsteuersatz"]),
+                                Column4 = Convert.ToDecimal(reader["anz_kinder"]),
+                                Column5 = Convert.ToDecimal(reader["abgaben"]),
+                                Column1Name = "lst_bemgrundlage_von",
+                                Column2Name = "lst_bemgrundlage_bis",
+                                Column3Name = "grenzsteuersatz",
+                                Column4Name = "anz_kinder",
+                                Column5Name = "abzug",
+                            }; 
+                            return table;
+                        }
+                        if (tablename == "sz_steuergrenzen")
+                        {
+                            table = new Table()
+                            {
+                                TableName = tablename,
+                                Cnumber = Convert.ToInt32(reader["cnumber"]),
+                                Column1 = Convert.ToDecimal(reader["von"]),
+                                Column2 = Convert.ToDecimal(reader["bis"]),
+                                Column3 = Convert.ToDecimal(reader["prozent"]),
+                                Column1Name = "von",
+                                Column2Name = "bis",
+                                Column3Name = "prozent",
+                            };
+                            return table;
+                        }
+                        if (tablename == "freibetraege_lst")
+                        {
+                            table = new Table()
+                            {
+                                TableName = tablename,
+                                Cnumber = Convert.ToInt32(reader["cnumber"]),
+                                Column1 = Convert.ToDecimal(reader["§68/2"]),
+                                Column2 = Convert.ToDecimal(reader["§68/1"]),
+                                Column1Name = "§68/2",
+                                Column2Name = "§68/1",
+                            };
+                            return table;
+                        }
+
+                        if (tablename == "betrzugeh_angestellter" || tablename == "betrzugeh_arbeiter")
+                        {
+                            table = new Table()
+                            {
+                                TableName = tablename,
+                                Cnumber = Convert.ToInt32(reader["cnumber"]),
+                                Column1 = Convert.ToInt32(reader["von"]),
+                                Column2 = Convert.ToInt32(reader["bis"]),
+                                Column3 = Convert.ToInt32(reader["prozentsatz"]),
+                                Column1Name = "von",
+                                Column2Name = "bis",
+                                Column3Name = "prozentsatz",
 
                             };
-                        return table;
+                            return table;
                         }
+                        if (tablename == "bundesland_dz")
+                        {
+                            table = new Table()
+                            {
+                                TableName = tablename,
+                                Cnumber = Convert.ToInt32(reader["cnumber"]),
+                                Column1s = Convert.ToString(reader["bundesland"]),
+                                Column2 = Convert.ToInt32(reader["prozent"]),
+                                Column1Name = "bundesland",
+                                Column2Name = "prozent",
+
+                            };
+                            return table;
+                        }
+
 
                     }
                 }
@@ -403,9 +521,7 @@ namespace LohnverrechnerGastro.Models.DB
                                 Column1 = Convert.ToDecimal(reader["bruttovon"]),
                                 Column2 = Convert.ToDecimal(reader["bruttobis"]),
                                 Column3 = Convert.ToDecimal(reader["sv_satz"]),
-                                Column1Name = "bruttovon",
-                                Column2Name = "bruttobis",
-                                Column3Name = "sv_satz",
+                                
                             });
                         }
 
@@ -580,16 +696,16 @@ namespace LohnverrechnerGastro.Models.DB
                     "where cnumber = @cnumber;";
                     param1Name = "hbgl"; param2Name = "gfg";
                 }
-                //if (tablename == "sv" || tablename == "sv_sz")
-                //{
-                //    cmd.CommandText = "update " + tablenam64788e + " set bruttovon = @bruttovon, bruttobis = @bruttobis, " +
-                //    "sv_satz = @sv_satz, where cnumber = @cnumber;";
-                //}
-                //if (tablename == "sv" || tablename == "sv_sz")
-                //{
-                //    cmd.CommandText = "update " + tablename + " set bruttovon = @bruttovon, bruttobis = @bruttobis, " +
-                //    "sv_satz = @sv_satz, where cnumber = @cnumber;";
-                //}
+                if (tablename == "sv" || tablename == "sv_sz")
+                {
+                    cmd.CommandText = "update " + tablename + " set bruttovon = @bruttovon, bruttobis = @bruttobis, " +
+                    "sv_satz = @sv_satz, where cnumber = @cnumber;";
+                }
+                if (tablename == "sv" || tablename == "sv_sz")
+                {
+                    cmd.CommandText = "update " + tablename + " set bruttovon = @bruttovon, bruttobis = @bruttobis, " +
+                    "sv_satz = @sv_satz, where cnumber = @cnumber;";
+                }
 
 
                 DbParameter param1 = cmd.CreateParameter();

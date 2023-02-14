@@ -147,7 +147,6 @@ namespace LohnverrechnerGastro.Controllers
             {
                 await rep.DisconnectAsync();
             }
-            return View();
         }
 
         [HttpPost]

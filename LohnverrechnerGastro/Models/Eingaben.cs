@@ -263,6 +263,7 @@ namespace LohnverrechnerGastro.Models
         }
 
         public decimal Ergebnis { get; set; }
+        public decimal Netto { get; set; }  
 
         public bool IsNull(float value)
         {
@@ -272,12 +273,12 @@ namespace LohnverrechnerGastro.Models
 
         public Eingaben() : this(Bundesland.Tirol, 0, "", 0,
                 0, "", 0, 0, 0, 0, 0, false, false, false, false, 0, 0, 0,
-                Kategorie.notSpecified, 0, 0) { }
+                Kategorie.notSpecified, 0, 0, 0) { }
 
         public Eingaben(Bundesland bundesland, int jahr, string brutodnet, decimal einkommen,
             double stundenprowoche, string szvombruttoodKV) : this(bundesland, jahr, brutodnet, einkommen,
                 stundenprowoche, szvombruttoodKV, 0, 0, 0, 0, 0, false, false, false, false, 0, 0, 0,
-                Kategorie.notSpecified, 0, 0)
+                Kategorie.notSpecified, 0, 0, 0)
         {
             this.Bundesland = bundesland;
             this.Jahr = jahr;
@@ -291,7 +292,7 @@ namespace LohnverrechnerGastro.Models
             double stundenprowoche, string szvombruttoodKV, double tgpauschale, double sachbezug, 
             double fkersatz, double dnbeitrag, double lstfreibetrag,bool faboplus, bool avaboaeab, bool pendlerpauschale, 
             bool halberbonus, int anzkinderbis17, int anzkinderab18, int anzkinder, Kategorie kategorie, 
-            int anzkilometer, decimal ergebnis)
+            int anzkilometer, decimal ergebnis, decimal netto)
         {
             this.Bundesland = bundesland;
             this.Jahr = jahr;
@@ -315,6 +316,7 @@ namespace LohnverrechnerGastro.Models
             this.Kategorie = kategorie;
             this.AnzKilometer = anzkilometer;
             this.Ergebnis = ergebnis;
+            this.Netto = netto;
 
         }
     }

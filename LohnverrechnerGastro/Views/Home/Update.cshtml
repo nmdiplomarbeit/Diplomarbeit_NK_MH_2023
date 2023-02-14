@@ -10,19 +10,19 @@
 <form asp-controller="home" asp-action="update" method="post">
     <input type="hidden" asp-for="Cnumber" />
     <p>@Model.TableName
-        <label asp-for="Column1">@Model.Column1Name</label> <br />
+        <label asp-for="Column1Name">@Model.Column1Name</label> <br />
         <input asp-for="Column1" />
         <span asp-validation-for="Column1"></span>
     </p>
     <p>
-        <label asp-for="Column2">@Model.Column2Name</label> <br />
+        <label asp-for="Column2Name">@Model.Column2Name</label> <br />
         <input asp-for="Column2" />
         <span asp-validation-for="Column2"></span>
     </p>
    @* @if (Model.TableName != "grenzen_sv")
     {*@
         <p>
-            <label asp-for="Column3">@Model.Column3Name</label> <br />
+            <label asp-for="Column3Name">@Model.Column3Name</label> <br />
             <input asp-for="Column3" />
             <span asp-validation-for="Column3"></span>
         </p>
