@@ -635,7 +635,7 @@ namespace LohnverrechnerGastro.Models.DB
                                 TableName = tablename,
                                 Cnumber = Convert.ToInt32(reader["cnumber"]),
                                 Column1s = Convert.ToString(reader["bundesland"]),
-                                Column2 = Convert.ToInt32(reader["prozent"]),
+                                Column2 = Convert.ToDecimal(reader["prozent"]),
                                 Column1Name = "bundesland",
                                 Column2Name = "prozent",
 
@@ -696,10 +696,17 @@ namespace LohnverrechnerGastro.Models.DB
                     "where cnumber = @cnumber;";
                     param1Name = "hbgl"; param2Name = "gfg";
                 }
-                if (tablename == "sv" || tablename == "sv_sz")
+                if (tablename == "grenzen_sv_sz")
                 {
-                    cmd.CommandText = "update " + tablename + " set bruttovon = @bruttovon, bruttobis = @bruttobis, " +
-                    "sv_satz = @sv_satz, where cnumber = @cnumber;";
+                    cmd.CommandText = "update " + tablename + " set hbgl_sz = @hbgl_sz, gfg = @gfg, " +
+                    "where cnumber = @cnumber;";
+                    param1Name = "hbgl_sz"; param2Name = "gfg";
+                }
+                if (tablename == "sz_steuergrenzen")
+                {
+                    cmd.CommandText = "update " + tablename + " set bis = @bis, prozent = @prozent, " +
+                    "von = @von, where cnumber = @cnumber;";
+                    param1Name = "bis"; param2Name = "prozent"; param3Name = "von";
                 }
                 if (tablename == "sv" || tablename == "sv_sz")
                 {

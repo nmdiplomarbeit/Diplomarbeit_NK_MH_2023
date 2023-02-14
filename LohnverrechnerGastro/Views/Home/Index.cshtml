@@ -210,6 +210,12 @@
             </label>
             <output type="text" asp-for="Ergebnis" />
             <span asp-validation-for="Ergebnis"></span>
+            <label asp-for="Netto" class="output">
+                Ergebnis: @if (Model != null)
+                {
+                    <a>@Math.Round(Model.Netto, 2) €</a>
+                }
+            </label>
             <output type="text" asp-for="Netto" />
             <span asp-validation-for="Netto"></span>
         </p>
