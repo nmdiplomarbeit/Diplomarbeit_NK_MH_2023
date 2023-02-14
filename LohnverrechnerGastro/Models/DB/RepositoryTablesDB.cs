@@ -519,9 +519,9 @@ namespace LohnverrechnerGastro.Models.DB
                                 TableName = tablename,
                                 Cnumber = Convert.ToInt32(reader["cnumber"]),
                                 Column1s = Convert.ToString(reader["bundesland"]),
-                                Column2 = Convert.ToInt32(reader["prozentsatz"]),
+                                Column2 = Convert.ToInt32(reader["prozent"]),
                                 Column1Name = "bundesland",
-                                Column2Name = "prozentsatz",
+                                Column2Name = "prozent",
 
                             });
                         }
