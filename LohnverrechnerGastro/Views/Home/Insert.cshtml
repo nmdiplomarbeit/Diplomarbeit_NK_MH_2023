@@ -1,39 +1,63 @@
 ﻿@model LohnverrechnerGastro.Models.Table
 
+
 @{
     ViewData["Title"] = "Insert";
 }
 
-<h3>Insert</h3>
 
-<form asp-controller="home" asp-action="insert" method="post">
+
+<form asp-controller="home" asp-action="insert" method="post" style="text-align:center;">
     <p>
-        <label asp-for="Column1">
-            Column1
-        </label><br />
+        <label asp-for="Column1">Spalte 1</label> <br />
         <input asp-for="Column1" />
         <span asp-validation-for="Column1"></span>
-        <br>
     </p>
     <p>
-        <label asp-for="Column2">
-            Column2
-        </label><br />
+        <label asp-for="Column2">Spalte 2</label> <br />
         <input asp-for="Column2" />
         <span asp-validation-for="Column2"></span>
-        <br>
     </p>
-    <p>
-        <label asp-for="Column3">
-            Column3
 
-        </label><br />
+    <p>
+        <label asp-for="Column3">Spalte 3 (falls vorhanden)</label> <br />
         <input asp-for="Column3" />
         <span asp-validation-for="Column3"></span>
-        <br>
     </p>
     <p>
-        <input type="submit" value="registrieren" />
-        <input type="reset" value="abbrechen" />
+        <label asp-for="Column4">Spalte 4 (falls vorhanden)</label> <br />
+        <input asp-for="Column4" />
+        <span asp-validation-for="Column4"></span>
+    </p>
+    <p>
+        <label asp-for="Column5">Spalte 5 (falls vorhanden)</label> <br />
+        <input asp-for="Column5" />
+        <span asp-validation-for="Column5"></span>
+    </p>
+    <p>
+        <label asp-for="Column6">Spalte 6 (falls vorhanden)</label> <br />
+        <input asp-for="Column6" />
+        <span asp-validation-for="Column6"></span>
+    </p>
+    <p>
+        <label asp-for="Column7">Spalte 7 (falls vorhanden)</label> <br />
+        <input asp-for="Column7" />
+        <span asp-validation-for="Column7"></span>
+    </p>
+    <p>
+        <label asp-for="Column8">Spalte 8 (falls vorhanden)</label> <br />
+        <input asp-for="Column8" />
+        <span asp-validation-for="Column8"></span>
+    </p>
+    <p>
+        <label asp-for="Column9">Spalte 9 (falls vorhanden)</label> <br />
+        <input asp-for="Column9" />
+        <span asp-validation-for="Column9"></span>
+    </p>
+
+    <p>
+
+        <input type="submit" value="absenden" />
+        <input type="reset" value="Daten löschen" />
     </p>
 </form>

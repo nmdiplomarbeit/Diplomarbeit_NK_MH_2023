@@ -13,7 +13,7 @@ namespace LohnverrechnerGastro.Models.DB
         Task<decimal> GetSVSatzSZAsync(decimal einkommen);
 
         //Task<bool> UpdateLoggedAsync(int userId, bool newLogged);
-        Task<decimal> GetEffTarifAsync(decimal einkommen);
+        Task<decimal> GetEffTarifAsync(decimal einkommen, int anzkinder);
         Task<Dictionary<string, decimal>> GetDGAbgaben();
         Task<Dictionary<string, decimal>> GetDGAbgabenSZ();
         Task<Dictionary<string, decimal>> GetGrenzenSV();
@@ -26,6 +26,7 @@ namespace LohnverrechnerGastro.Models.DB
         Task<bool> DeleteAsync(string tablename, int cnumber);
         Task<bool> UpdateAsync(string tablename, int cnumber, Table newTable);
         Task<Table> GetOneTableRow(string tablename, int cnumber);
+        //Task<Table> GetOneEmptyTableRow(string tablename);
         Task<bool> InsertAsync(string tablename, Table newTable);
 
 

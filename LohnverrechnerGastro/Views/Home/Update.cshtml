@@ -5,43 +5,73 @@
     ViewData["Title"] = "Update";
 }
 
-<h3>Update</h3>
 
-<form asp-controller="home" asp-action="update" method="post">
+
+<form asp-controller="home" asp-action="update" method="post" style="text-align:center;">
+    <h3 style="color: darkblue;"><b>@Model.TableName</b></h3>
     <input type="hidden" asp-for="Cnumber" />
-    <p>@Model.TableName
-        <label asp-for="Column1Name">@Model.Column1Name</label> <br />
-        <input asp-for="Column1" />
-        <span asp-validation-for="Column1"></span>
-    </p>
+    @if(Model.TableName != "bundesland_dz"){
+        <p>
+            <label asp-for="Column1Name">@Model.Column1Name</label> <br />
+            <input asp-for="Column1" />
+            <span asp-validation-for="Column1"></span>
+        </p>
+    }
     <p>
         <label asp-for="Column2Name">@Model.Column2Name</label> <br />
         <input asp-for="Column2" />
         <span asp-validation-for="Column2"></span>
     </p>
-   @* @if (Model.TableName != "grenzen_sv")
-    {*@
+    @if (Model.TableName == "sz_steuergrenzen" || Model.TableName == "sv_sz" || Model.TableName == "sv" || Model.TableName == "betrzugeh_arbeiter" || Model.TableName == "betrzugeh_angestellter")
+    {
         <p>
             <label asp-for="Column3Name">@Model.Column3Name</label> <br />
             <input asp-for="Column3" />
             <span asp-validation-for="Column3"></span>
         </p>
-    @*}
-    @if (Model.TableName == "dg_abgaben" || Model.TableName == "dg_abgaben_sz"){
+    }
+    @if (Model.TableName == "dg_abgaben" || Model.TableName == "dg_abgaben_sz" || Model.TableName == "effektiv_tarif_monat"){
         <p>
-            <label asp-for="Column4">@Model.Column4Name</label> <br />
+            <label asp-for="Column3Name">@Model.Column3Name</label> <br />
+            <input asp-for="Column3" />
+            <span asp-validation-for="Column3"></span>
+        </p>
+        <p>
+            <label asp-for="Column4Name">@Model.Column4Name</label> <br />
             <input asp-for="Column4" />
             <span asp-validation-for="Column4"></span>
         </p>
         <p>
-            <label asp-for="Column5">@Model.Column5Name</label> <br />
+            <label asp-for="Column5Name">@Model.Column5Name</label> <br />
             <input asp-for="Column5" />
             <span asp-validation-for="Column5"></span>
         </p>
-    }*@
+    }
+    @if (Model.TableName == "effektiv_tarif_monat"){
+        <p>
+            <label asp-for="Column6Name">@Model.Column6Name</label> <br />
+            <input asp-for="Column6" />
+            <span asp-validation-for="Column6"></span>
+        </p>
+        <p>
+            <label asp-for="Column7Name">@Model.Column7Name</label> <br />
+            <input asp-for="Column7" />
+            <span asp-validation-for="Column7"></span>
+        </p>
+        <p>
+            <label asp-for="Column8Name">@Model.Column8Name</label> <br />
+            <input asp-for="Column8" />
+            <span asp-validation-for="Column8"></span>
+        </p>
+        <p>
+            <label asp-for="Column9Name">@Model.Column9Name</label> <br />
+            <input asp-for="Column9" />
+            <span asp-validation-for="Column9"></span>
+        </p>
+    }
     <p>
 
         <input type="submit" value="absenden" />
-        <input type="reset" value="abbrechnen" />
+        <input type="reset" value="Daten löschen" />
     </p>
 </form>

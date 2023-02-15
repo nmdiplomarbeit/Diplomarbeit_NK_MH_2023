@@ -11,35 +11,53 @@
     <p>
         Keine Einträge in der Tabelle vorhanden!
     </p>
-} else {
+}
+else
+{
     <table>
         <thead>
             <tr>
-                <td colspan="7">@Model[0].TableName</td>
+                <td colspan="7" style="text-align: center; font-size: xx-large;"><b>@Model[0].TableName</b></td>
             </tr>
         </thead>
 
         <tbody>
-            
+
             @*@foreach(Table t in Model){*@
-                
+
             <tr>
                 <th>@Model[0].Column1Name</th>
                 <th>@Model[0].Column2Name</th>
-                <th>@Model[0].Column3Name</th>
-                <th>@Model[0].Column4Name</th>
-                <th>@Model[0].Column5Name</th>
-                
+                @if (Model[0].TableName == "sz_steuergrenzen" || Model[0].TableName == "sv_sz" || Model[0].TableName == "sv" || Model[0].TableName == "betrzugeh_arbeiter" || Model[0].TableName == "betrzugeh_angestellter")
+                {
+                    <th>@Model[0].Column3Name</th>
+                }
+                @if (Model[0].TableName == "dg_abgaben" || Model[0].TableName == "dg_abgaben_sz" || Model[0].TableName == "effektiv_tarif_monat")
+                {
+                    <th>@Model[0].Column3Name</th>
+                    <th>@Model[0].Column4Name</th>
+                    <th>@Model[0].Column5Name</th>
+                }
+                @if (Model[0].TableName == "effektiv_tarif_monat")
+                {
+                    <th>@Model[0].Column6Name</th>
+                    <th>@Model[0].Column7Name</th>
+                    <th>@Model[0].Column8Name</th>
+                    <th>@Model[0].Column9Name</th>
+                }
             </tr>
 
             @*}*@
-            
+
             @foreach (Table t in Model)
             {
                 <tr>
-                    @if(t.Column1s != null){
+                    @if (t.Column1s != null)
+                    {
                         <td>@t.Column1s</td>
-                    } else {
+                    }
+                    else
+                    {
                         <td>@t.Column1</td>
                     }
                     <td>@t.Column2</td>
@@ -52,27 +70,35 @@
                             <td>@t.Column5</td>
                         }
                     }
+                    @if (t.TableName == "effektiv_tarif_monat"){
+                        <td>@t.Column6</td>
+                        <td>@t.Column7</td>
+                        <td>@t.Column8</td>
+                        <td>@t.Column9</td>
+                    }
 
-                @*@if (RepositoryUsersDB.IsAdmin)
-                {*@
+                        @if (RepositoryUsersDB.IsAdmin)
+                        {
+                        <th></th>
+                        <td>
+                            <form action="/home/deleteasync/@t.TableName/@t.Cnumber" method="get">
+                                <input type="submit" value="löschen" />
+                            </form>
+                        </td>
+
                     <td>
-                    <form action="/home/deleteasync/@t.TableName/@t.Cnumber" method="get">
-                    <input type="submit" value="löschen" />
-                    </form>
+                        <form action="/home/updateasync/@t.TableName/@t.Cnumber" method="get">
+                            <input type="submit" value="ändern" />
+                        </form>
                     </td>
-                    <td>
-                    <form action="/home/updateasync/@t.TableName/@t.Cnumber" method="get">
-                    <input type="submit" value="ändern" />
-                    </form>
-                    </td>
-                @*}*@      
-                
+                    }
+
                 </tr>
             }
 
         </tbody>
-        @*@if (RepositoryUsersDB.IsAdmin)
-        {*@
+        @if (RepositoryUsersDB.IsAdmin)
+        {
         <tfoot>
             <tr>
                 <td colspan="7" style="text-align: center;">
@@ -84,8 +110,7 @@
         </tfoot>
         }
     </table>
-   
 
-        }
-           
-       
+
+}
+

@@ -15,6 +15,14 @@
         public string Column4Name { get; set; }
         public decimal Column5 { get; set; }
         public string Column5Name { get; set; }
+        public decimal Column6 { get; set; }
+        public string Column6Name { get; set; }
+        public decimal Column7 { get; set; }
+        public string Column7Name { get; set; }
+        public decimal Column8 { get; set; }
+        public string Column8Name { get; set; }
+        public decimal Column9 { get; set; }
+        public string Column9Name { get; set; }
 
     }
 }

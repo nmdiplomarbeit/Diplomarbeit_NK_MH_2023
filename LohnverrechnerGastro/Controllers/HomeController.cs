@@ -45,19 +45,22 @@ namespace LohnverrechnerGastro.Controllers
                     }*/
 
                     // einfaches Beispiel rechnen
-                    decimal anzahl_682 = 0;
-                    decimal lst_bem1 = 0;
+                    //decimal anzahl_682 = 0;
+                    //decimal lst_bem1 = 0;
+                    //decimal lst_bem = data.Einkommen - ((await rep.GetSVSatzAsync(data.Einkommen) / 100) * data.Einkommen);
+                    //if (data.StundenproWoche > 40 && data.StundenproWoche < 42.5)
+                    //{
+                    //    anzahl_682 = (decimal)Math.Round((data.StundenproWoche - 40) * 4.33);
+                    //    lst_bem1 = lst_bem - (anzahl_682 * (decimal)4.71);
+                    //} else
+                    //{
+                    //    lst_bem1 = lst_bem;
+                    //}
+                    //decimal eff_tarif = await rep.GetEffTarifAsync(lst_bem1);
+                    //data.Ergebnis = lst_bem - eff_tarif;
+
                     decimal lst_bem = data.Einkommen - ((await rep.GetSVSatzAsync(data.Einkommen) / 100) * data.Einkommen);
-                    if (data.StundenproWoche > 40 && data.StundenproWoche < 42.5)
-                    {
-                        anzahl_682 = (decimal)Math.Round((data.StundenproWoche - 40) * 4.33);
-                        lst_bem1 = lst_bem - (anzahl_682 * (decimal)4.71);
-                    } else
-                    {
-                        lst_bem1 = lst_bem;
-                    }
-                    decimal eff_tarif = await rep.GetEffTarifAsync(lst_bem1);
-                    data.Ergebnis = lst_bem - eff_tarif;
+                    data.Ergebnis = await rep.GetEffTarifAsync(lst_bem, 1);
 
 
                     //data.Ergebnis = await rep.GetProzBundesland(data.Bundesland.ToString());
@@ -171,8 +174,9 @@ namespace LohnverrechnerGastro.Controllers
                     return View("Tables");
                 }
             }
-            catch (DbException)
+            catch (DbException e)
             {
+
                 return View("Login");
 
             }
@@ -188,8 +192,22 @@ namespace LohnverrechnerGastro.Controllers
 
         [HttpGet]
         [Route("/Home/InsertAsync/{tablename}")]
-        public IActionResult InsertAsync()
+        public IActionResult InsertAsync(/*string tablename*/)
         {
+            //try
+            //{
+            //    await rep.ConnectAsync();
+            //    // Liste mit allen Usern an die View übergeben
+            //    return View(await rep.GetOneEmptyTableRow(tablename));
+            //}
+            //catch (DbException)
+            //{
+            //    return View("Index");
+            //}
+            //finally
+            //{
+            //    await rep.DisconnectAsync();
+            //}
             return View();
         }
 
