@@ -40,6 +40,7 @@ namespace LohnverrechnerGastro.Controllers
                     decimal pendlerpau = 0;
                     decimal pendlereuro = data.AnzKilometer;
                     decimal kinder = data.AnzKinder;
+                    decimal fabo = 0;
 
                     if ((decimal)data.Kategorie == 0)
                     {
@@ -109,6 +110,22 @@ namespace LohnverrechnerGastro.Controllers
                     {
                         eff_tarif = 0;
                     }
+                    if (data.HalberBonus)
+                    {
+                        fabo = data.AnzKinderab18 * (decimal)20.84 + data.AnzKinderbis17 * (decimal)62.5;
+                    } else
+                    {
+                        fabo = data.AnzKinderab18 * (decimal)41.68 + data.AnzKinderbis17 * (decimal)125;
+                    }
+
+                    if ((eff_tarif - fabo) >= 0)
+                    {
+                        eff_tarif = eff_tarif - fabo;
+                    } else
+                    {
+                        eff_tarif = 0;
+                    }
+
                     data.Netto = lst_bem - eff_tarif - (decimal)data.Sachbezug + (decimal)data.LstFreibetrag - (decimal)data.FKErsatz + pendlerpau;
                     data.Ergebnis = lst_bem - eff_tarif - (decimal)data.Sachbezug - (decimal)data.DNBeitrag + (decimal)data.LstFreibetrag + pendlerpau;
                 }
