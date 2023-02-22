@@ -34,53 +34,83 @@ namespace LohnverrechnerGastro.Controllers
                 try
                 {
                     await rep.ConnectAsync();
-                    /*if (await rep.GetSVSatzAsync(data.Einkommen) != 0)
-                    {
 
-                        return RedirectToAction("Index", "Home");
+                    decimal anzahl_682 = 0;
+                    decimal anzahl_681 = 0;
+                    decimal pendlerpau = 0;
+                    decimal pendlereuro = data.AnzKilometer;
+                    decimal kinder = data.AnzKinder;
+
+                    if ((decimal)data.Kategorie == 0)
+                    {
+                        pendlerpau = 87;
+                    }
+                    else if ((decimal)data.Kategorie == 1)
+                    {
+                        pendlerpau = (decimal)169.5;
+
+                    }
+                    else if ((decimal)data.Kategorie == 2)
+                    {
+                        pendlerpau = (decimal)252;
+
+                    }
+                    else if ((decimal)data.Kategorie == 3)
+                    {
+                        pendlerpau = (decimal)46.5;
+
+                    }
+                    else if ((decimal)data.Kategorie == 4)
+                    {
+                        pendlerpau = (decimal)184.5;
+
+                    }
+                    else if ((decimal)data.Kategorie == 5)
+                    {
+                        pendlerpau = (decimal)321;
+
+                    }
+                    else if ((decimal)data.Kategorie == 6)
+                    {
+                        pendlerpau = (decimal)459;
+
                     }
                     else
                     {
-                        Console.WriteLine("Daten nicht gespeichert!");
-                    }*/
+                        pendlerpau = 0;
 
-                    // einfaches Beispiel rechnen
-                    //decimal anzahl_682 = 0;
-                    //decimal lst_bem1 = 0;
-                    //decimal lst_bem = data.Einkommen - ((await rep.GetSVSatzAsync(data.Einkommen) / 100) * data.Einkommen);
-                    //if (data.StundenproWoche > 40 && data.StundenproWoche < 42.5)
-                    //{
-                    //    anzahl_682 = (decimal)Math.Round((data.StundenproWoche - 40) * 4.33);
-                    //    lst_bem1 = lst_bem - (anzahl_682 * (decimal)4.71);
-                    //} else
-                    //{
-                    //    lst_bem1 = lst_bem;
-                    //}
-                    //decimal eff_tarif = await rep.GetEffTarifAsync(lst_bem1);
-                    //data.Ergebnis = lst_bem - eff_tarif;
+                    }
 
-                    decimal lst_bem = data.Einkommen - ((await rep.GetSVSatzAsync(data.Einkommen) / 100) * data.Einkommen);
-                    data.Ergebnis = await rep.GetEffTarifAsync(lst_bem, 1);
+                    decimal lst_bem1 = 0;
+                    decimal lst_bem = ((data.Einkommen + (decimal)data.TGPauschale + (decimal)data.Sachbezug) - ((await rep.GetSVSatzAsync((data.Einkommen + (decimal)data.TGPauschale + (decimal)data.Sachbezug)) / 100) * (data.Einkommen + (decimal)data.TGPauschale + (decimal)data.Sachbezug))) - (decimal)data.TGPauschale + (decimal)data.FKErsatz - (decimal)data.LstFreibetrag - pendlerpau;
+                    if (data.StundenproWoche > 40 && data.StundenproWoche <= 42.5)
+                    {
+                        anzahl_682 = (decimal)Math.Round((data.StundenproWoche - 40) * 4.33);
+                        lst_bem1 = lst_bem - (anzahl_682 * (decimal)4.71);
+                    }
+                    else
+                    {
+                        lst_bem1 = lst_bem;
+                    }
 
+                    if (data.StundenproWoche >= 42.5 && data.StundenproWoche <= 48)
+                    {
+                        anzahl_682 = 10;
+                        anzahl_681 = ((decimal)Math.Round((data.StundenproWoche - 40) * 4.33) - 10);
+                        lst_bem1 = lst_bem1 - (anzahl_681 * (decimal)4.71) - (anzahl_682 * (decimal)4.71);
+                    }
 
-                    //data.Ergebnis = await rep.GetProzBundesland(data.Bundesland.ToString());
-                    //data.Ergebnis = lst_bem - eff_tarif + (anzahl_682*(await rep.GetSVSatzAsync(data.Einkommen) / 2));
-                    //data.Ergebnis = (anzahl_682 * (await rep.GetSVSatzAsync(data.Einkommen) / 2));
-
-                    // DG Abgaben Dictionary testen
-                    //Dictionary<string, decimal> dic = await rep.GetDGAbgaben();
-                    //data.Ergebnis = dic["sv_dg"];
-
-                    // Grenzen SV Dictionary testen
-                    //Dictionary<string, decimal> dic = await rep.GetGrenzenSV();
-                    //Dictionary<string, decimal> dic2 = await rep.GetGrenzenSVSZ();
-                    //data.Ergebnis = dic["hbgl"] + dic2["hbgl_sz"];
-
-                    // SZ Steuergrenzen testen
-                    //data.Ergebnis = await rep.GetSZSteuergrenzen(data.Einkommen);
-
-
-
+                    decimal eff_tarif = await rep.GetEffTarifAsync(lst_bem1, (int)kinder);
+                    if ((eff_tarif - (pendlereuro * 8)) >= 0)
+                    {
+                        eff_tarif = eff_tarif - (pendlereuro * 8);
+                    }
+                    else
+                    {
+                        eff_tarif = 0;
+                    }
+                    data.Netto = lst_bem - eff_tarif - (decimal)data.Sachbezug + (decimal)data.LstFreibetrag - (decimal)data.FKErsatz + pendlerpau;
+                    data.Ergebnis = lst_bem - eff_tarif - (decimal)data.Sachbezug - (decimal)data.DNBeitrag + (decimal)data.LstFreibetrag + pendlerpau;
                 }
                 catch (DbException e)
                 {

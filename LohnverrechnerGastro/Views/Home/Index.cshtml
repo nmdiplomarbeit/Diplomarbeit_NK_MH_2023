@@ -99,13 +99,13 @@
             <label asp-for="FaBoPlus">
                 Fabo+:
             </label>
-            <input type="checkbox" asp-for="FaBoPlus" id="checkTogglefabo" onclick="togglefunc()" value="0" />
+            <input type="checkbox" asp-for="FaBoPlus" id="checkTogglefabo" onclick="togglefunc()" value="true" />
             <span asp-validation-for="FaBoPlus"></span>
             <a id="zusatzfabo" style="display:none">
             <label asp-for="HalberBonus">
                 Halber Bonus?:
             </label>
-            <input type="checkbox" asp-for="HalberBonus" value="0" />
+            <input type="checkbox" asp-for="HalberBonus" value="true" />
             <span asp-validation-for="HalberBonus"></span>
             &nbsp;&nbsp;&nbsp;&nbsp;                            @*Tabulatorabstand*@
             <label asp-for="AnzKinderbis17">
@@ -146,7 +146,7 @@
             <label asp-for="AVABoAEAB">
                 AVAB/AEAB:
             </label>
-            <input type="checkbox" asp-for="AVABoAEAB" id="checkToggleavabaeab" onclick="togglefunc()" value="0" />
+            <input type="checkbox" asp-for="AVABoAEAB" id="checkToggleavabaeab" onclick="togglefunc()" value="true" />
             <span asp-validation-for="AVABoAEAB"></span>
             <a id="zusatzavabaeab" style="display:none">
                 <label asp-for="AnzKinder">
@@ -173,7 +173,7 @@
             <label asp-for="PendlerPauschale">
                 Pendlerpauschale:
             </label>
-            <input type="checkbox" asp-for="PendlerPauschale" id="checkTogglependler" onclick="togglefunc()" value="0" />
+            <input type="checkbox" asp-for="PendlerPauschale" id="checkTogglependler" onclick="togglefunc()" value="true" />
             <span asp-validation-for="PendlerPauschale"></span>
             <a id="zusatzpendler" style="display:none">
             <label asp-for="Kategorie">
@@ -203,7 +203,7 @@
         </p>
         <p>
             <label asp-for="Ergebnis" class="output">
-                Ergebnis: @if (Model != null)
+                Auszahlung: @if (Model != null)
                 {
                     <a>@Math.Round(Model.Ergebnis, 2) €</a>
                 }
