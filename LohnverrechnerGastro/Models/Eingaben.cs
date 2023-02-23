@@ -34,56 +34,16 @@ namespace LohnverrechnerGastro.Models
 
         private Kategorie kategorie;
 
-        private LohnGruppen lohnGruppen;
-
-        private BeschaeftigungsGruppen beschaeftigungsGruppen;
+        
 
 
         public bool Arbeiter { get; set; }
         public bool Angestellter { get; set; }
         public Bundesland Bundesland { get; set; }
-        public LohnGruppen LohnGruppen
-        {
-            get
-            {
-                if (Arbeiter == true)
-                {
-                    return this.lohnGruppen;
-                }
-                else
-                {
-                    return LohnGruppen.notSpecified;
-                }
-            }
-            set
-            {
-                if (Arbeiter == true)
-                {
-                    this.lohnGruppen = value;
-                }
-            }
-        }
-        public BeschaeftigungsGruppen BeschaeftigungsGruppen
-        {
-            get
-            {
-                if (Angestellter == true)
-                {
-                    return this.beschaeftigungsGruppen;
-                }
-                else
-                {
-                    return BeschaeftigungsGruppen.notSpecified;
-                }
-            }
-            set
-            {
-                if (Angestellter == true)
-                {
-                    this.beschaeftigungsGruppen = value;
-                }
-            }
-        }
+        public string LohnGruppen { get; set; }
+
+        public string BeschaeftigungsGruppen { get; set; }
+        
 
         public int Betriebszugehoerigkeit { get; set; }
 
@@ -323,12 +283,12 @@ namespace LohnverrechnerGastro.Models
 
         public Eingaben() : this(Bundesland.Tirol, 0, "", 0,
                 0, "", 0, 0, 0, 0, 0, false, false, false, false, 0, 0, 0,
-                Kategorie.notSpecified, 0, 0, 0, false, false, LohnGruppen.notSpecified, BeschaeftigungsGruppen.notSpecified) { }
+                Kategorie.notSpecified, 0, 0, 0, false, false, "", "") { }
 
         public Eingaben(Bundesland bundesland, int jahr, string brutodnet, decimal einkommen,
             double stundenprowoche, string szvombruttoodKV, bool arbeiter, bool angestellter) : this(bundesland, jahr, brutodnet, einkommen,
                 stundenprowoche, szvombruttoodKV, 0, 0, 0, 0, 0, false, false, false, false, 0, 0, 0,
-                Kategorie.notSpecified, 0, 0, 0, arbeiter, angestellter, LohnGruppen.notSpecified, BeschaeftigungsGruppen.notSpecified)
+                Kategorie.notSpecified, 0, 0, 0, arbeiter, angestellter, "", "")
         {
             this.Bundesland = bundesland;
             this.Jahr = jahr;
@@ -344,7 +304,7 @@ namespace LohnverrechnerGastro.Models
             double stundenprowoche, string szvombruttoodKV, double tgpauschale, double sachbezug, 
             double fkersatz, double dnbeitrag, double lstfreibetrag,bool faboplus, bool avaboaeab, bool pendlerpauschale, 
             bool halberbonus, int anzkinderbis17, int anzkinderab18, int anzkinder, Kategorie kategorie, 
-            int anzkilometer, decimal ergebnis, decimal netto, bool arbeiter, bool angestellter, LohnGruppen lohnGruppen, BeschaeftigungsGruppen beschaeftigungsGruppen)
+            int anzkilometer, decimal ergebnis, decimal netto, bool arbeiter, bool angestellter, string lohnGruppen, string beschaeftigungsGruppen)
         {
             this.Bundesland = bundesland;
             this.Jahr = jahr;

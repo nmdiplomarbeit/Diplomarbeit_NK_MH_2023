@@ -28,8 +28,8 @@ namespace LohnverrechnerGastro.Models.DB
         Task<Table> GetOneTableRow(string tablename, int cnumber);
         //Task<Table> GetOneEmptyTableRow(string tablename);
         Task<bool> InsertAsync(string tablename, Table newTable);
-
         Task<decimal> GetLohngruppen(string lohngruppe);
+        Task<decimal> GetBeschaeftigungsgruppen(string beschaeftigungsgruppe);
 
 
 

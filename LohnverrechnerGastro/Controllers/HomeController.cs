@@ -129,6 +129,8 @@ namespace LohnverrechnerGastro.Controllers
 
                     data.Netto = lst_bem - eff_tarif - (decimal)data.Sachbezug + (decimal)data.LstFreibetrag - (decimal)data.FKErsatz + pendlerpau;
                     data.Ergebnis = lst_bem - eff_tarif - (decimal)data.Sachbezug - (decimal)data.DNBeitrag + (decimal)data.LstFreibetrag + pendlerpau;
+                    //data.Ergebnis = await rep.GetBeschaeftigungsgruppen(data.BeschaeftigungsGruppen);
+
                 }
                 catch (DbException e)
                 {
