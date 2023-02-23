@@ -40,6 +40,8 @@ namespace LohnverrechnerGastro.Models
 
         public int Betriebszugehoerigkeit { get; set; }
 
+        public int Anzahl_681 { get; set; }
+
         public int Jahr { get; set; }
 
         public string Brutodnet { get; set; } // Brutto 0, Netto 1

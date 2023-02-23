@@ -84,7 +84,7 @@ namespace LohnverrechnerGastro.Controllers
 
                     decimal lst_bem1 = 0;
                     decimal lst_bem = ((data.Einkommen + (decimal)data.TGPauschale + (decimal)data.Sachbezug) - ((await rep.GetSVSatzAsync((data.Einkommen + (decimal)data.TGPauschale + (decimal)data.Sachbezug)) / 100) * (data.Einkommen + (decimal)data.TGPauschale + (decimal)data.Sachbezug))) - (decimal)data.TGPauschale + (decimal)data.FKErsatz - (decimal)data.LstFreibetrag - pendlerpau;
-                    if (data.StundenproWoche > 40 && data.StundenproWoche <= 42.5)
+                    if (data.StundenproWoche > 40 && data.StundenproWoche < 42.5)
                     {
                         anzahl_682 = (decimal)Math.Round((data.StundenproWoche - 40) * 4.33);
                         lst_bem1 = lst_bem - (anzahl_682 * (decimal)4.71);
@@ -97,7 +97,8 @@ namespace LohnverrechnerGastro.Controllers
                     if (data.StundenproWoche >= 42.5 && data.StundenproWoche <= 48)
                     {
                         anzahl_682 = 10;
-                        anzahl_681 = ((decimal)Math.Round((data.StundenproWoche - 40) * 4.33) - 10);
+                        //anzahl_681 = ((decimal)Math.Round((data.StundenproWoche - 40) * 4.33) - 10);
+                        anzahl_681 = data.Anzahl_681;
                         lst_bem1 = lst_bem1 - (anzahl_681 * (decimal)4.71) - (anzahl_682 * (decimal)4.71);
                     }
 

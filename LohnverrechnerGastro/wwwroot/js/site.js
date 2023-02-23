@@ -68,4 +68,19 @@ $('#modal').on('shown.bs.modal', function () {
     $('#modal-body').trigger('focus')
 })
 
+function onInputChange() {
+    let hours = document.querySelector("#hprowoche").value;
+    let anz681_input = document.querySelector("#anz681");
+    hours = hours.replace(",", ".")
+    let anzahl_681 = (Math.round((hours - 40) * 4.33) - 10);
+
+
+    if (hours >= 42.5 && hours <= 48) {
+        //alert(anzahl_681)
+        let value = prompt("Wert zwischen 0 und " + anzahl_681 + ":")
+
+        anz681_input.value = value;
+    }
+}
+
 

@@ -13,68 +13,86 @@
             </label>
             <input id="arboang" type="text" asp-for="ArbeiteroAngestellter" value="Arbeiter" />
             <span asp-validation-for="ArbeiteroAngestellter"></span>
+            @*@if (Model != null)
+            {
+                @if (Model.ArbeiteroAngestellter == "Angesteller")
+                {
+                    <p>sarertretert</p>
+                }
+
+            }*@
+
+
+            @*eigentlich paragraph und ausserhalb von
+            <p> und </p> aber falls man diese Werte Bundesland, Jahr, Brutodnet, SZvombrutodKV*@
+            <a style="visibility: hidden; display: inline;">
+                <label asp-for="Bundesland">
+                    Bundesland<b class="notnull">*</b>:
+                </label>
+                <select id="bundesland" asp-for="Bundesland" dropzone="1">
+                    <option value="0">Vorarlberg</option>
+                    <option value="1">Tirol</option>
+                    <option value="2">Salzburg</option>
+                </select>
+                <span asp-validation-for="Bundesland"></span>
+            </a>
         </p>
-        <p>
-            <label asp-for="Bundesland">
-                Bundesland<b class="notnull">*</b>:
-            </label>
-            <select id="bundesland" asp-for="Bundesland" dropzone="1">
-                <option value="0">Vorarlberg</option>
-                <option value="1">Tirol</option>
-                <option value="2">Salzburg</option>
-            </select>
-            <span asp-validation-for="Bundesland"></span>
-        </p>
+        
         <p>
             <label asp-for="Betriebszugehoerigkeit">
                 Betriebszugehoerigkeit<b class="notnull">*</b>:
             </label>
             <input id="betrzugeh" type="number" asp-for="Betriebszugehoerigkeit" value="5" />
             <span asp-validation-for="Betriebszugehoerigkeit"></span>
+            <a style="visibility: hidden; display: inline;">
+                <label asp-for="Jahr">
+                    Jahr<b class="notnull">*</b>:
+                </label>
+                <input id="jahr" type="number" asp-for="Jahr" value="2022" />
+                <span asp-validation-for="Jahr"></span>
+            </a>
+            
         </p>
 
-        <p>
-            <label asp-for="Jahr">
-                Jahr<b class="notnull">*</b>:
-            </label>
-            <input id="jahr" type="number" asp-for="Jahr" value="2022"/>
-            <span asp-validation-for="Jahr"></span>
-        </p>
-        <p>
-            <label asp-for="Brutodnet">
-                Brutto / Netto<b class="notnull">*</b>:
-            </label>
-            <select id="brutodnet" asp-for="Brutodnet" dropzone="1">
-                <option value="Brutto" selected>Brutto</option>
-                <option value="Netto">Netto</option>
-            </select>
-            <span asp-validation-for="Brutodnet"></span>
-        </p>
+       
         <p>
             <label asp-for="Einkommen">
                 Einkommen<b class="notnull">*</b>:
             </label>
             <input id="einkommen" type="number" asp-for="Einkommen" value="2000"/>
             <span asp-validation-for="Einkommen"></span>
+            <a style="visibility: hidden; display: inline;">
+                <label asp-for="Brutodnet">
+                    Brutto / Netto<b class="notnull">*</b>:
+                </label>
+                <select id="brutodnet" asp-for="Brutodnet" dropzone="1">
+                    <option value="Brutto" selected>Brutto</option>
+                    <option value="Netto">Netto</option>
+                </select>
+                <span asp-validation-for="Brutodnet"></span>
+            </a>
         </p>
         <p>
             <label asp-for="StundenproWoche">
                 Stunden pro Woche<b class="notnull">*</b>:
             </label>
-            <input id="hprowoche" type="number" asp-for="StundenproWoche" value="40" />
+            <input id="hprowoche" asp-for="StundenproWoche" value="40" onchange="onInputChange()"/>
+            <input asp-for="Anzahl_681" id="anz681" style="display: none" value="0"/>
+
             <span asp-validation-for="StundenproWoche"></span>
+            <a style="visibility: hidden; display: inline;">
+                <label asp-for="SZvombrutodKV">
+                    SZ vom Brutto oder KV<b class="notnull">*</b>:
+                </label>
+                <select id="szbrutkv" asp-for="SZvombrutodKV" dropzone="1">
+                    <option value="Brutto" selected>Brutto</option>
+                    <option value="KV">KV</option>
+                </select>
+                <span asp-validation-for="SZvombrutodKV"></span>
+            </a>
         </p>
 
-        <p>
-            <label asp-for="SZvombrutodKV">
-                SZ vom Brutto oder KV<b class="notnull">*</b>:
-            </label>
-            <select id="szbrutkv" asp-for="SZvombrutodKV" dropzone="1">
-                <option value="Brutto" selected>Brutto</option>
-                <option value="KV">KV</option>
-            </select>
-            <span asp-validation-for="SZvombrutodKV"></span>
-        </p>
+        
         <p>
             <label asp-for="TGPauschale">
                 Trinkgeldpauschale:
