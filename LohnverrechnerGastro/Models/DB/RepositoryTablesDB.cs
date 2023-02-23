@@ -367,9 +367,9 @@ namespace LohnverrechnerGastro.Models.DB
             if (this._conn?.State == ConnectionState.Open)
             {
                 DbCommand cmd = this._conn.CreateCommand();
-                cmd.CommandText = "select kv from lohngruppen where lgruppe = @lgruppe";
+                cmd.CommandText = "select kv from lohngruppen where lgruppen = @lgruppen";
                 DbParameter paramB = cmd.CreateParameter();
-                paramB.ParameterName = "lgruppe";
+                paramB.ParameterName = "lgruppen";
                 paramB.DbType = DbType.String;
                 paramB.Value = lohngruppe;
                 cmd.Parameters.Add(paramB);
@@ -403,6 +403,54 @@ namespace LohnverrechnerGastro.Models.DB
                     {
                         kv = Convert.ToDecimal(reader["kv"]);
                         return kv;
+                    }
+                }
+            }
+            return 0;
+        }
+
+        public async Task<decimal> GetFabo(string alterundhalb)
+        {
+            decimal bonus = 0m;
+            if (this._conn?.State == ConnectionState.Open)
+            {
+                DbCommand cmd = this._conn.CreateCommand();
+                cmd.CommandText = "select bonus from fabo where alterundhalb = @alterundhalb";
+                DbParameter paramB = cmd.CreateParameter();
+                paramB.ParameterName = "alterundhalb";
+                paramB.DbType = DbType.String;
+                paramB.Value = alterundhalb;
+                cmd.Parameters.Add(paramB);
+                using (DbDataReader reader = await cmd.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        bonus = Convert.ToDecimal(reader["bonus"]);
+                        return bonus;
+                    }
+                }
+            }
+            return 0;
+        }
+
+        public async Task<decimal> GetPendler(string km)
+        {
+            decimal pauschale = 0m;
+            if (this._conn?.State == ConnectionState.Open)
+            {
+                DbCommand cmd = this._conn.CreateCommand();
+                cmd.CommandText = "select pauschale from pendlerpauschale whewre km = @km";
+                DbParameter paramB = cmd.CreateParameter();
+                paramB.ParameterName = "km";
+                paramB.DbType = DbType.String;
+                paramB.Value = km;
+                cmd.Parameters.Add(paramB);
+                using (DbDataReader reader = await cmd.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        pauschale = Convert.ToDecimal(reader["pauschale"]);
+                        return pauschale;
                     }
                 }
             }
