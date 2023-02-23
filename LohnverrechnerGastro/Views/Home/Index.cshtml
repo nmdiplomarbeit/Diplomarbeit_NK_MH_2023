@@ -11,7 +11,7 @@
             <label asp-for="Arbeiter">
                 Arbeiter:
             </label>
-            <input type="checkbox" asp-for="Arbeiter" id="checkTogglearbeiter" onclick="togglefunc(this.id)" value="true" />
+            <input type="checkbox" asp-for="Arbeiter" id="checkTogglearbeiter" onclick="togglefunc()" value="true" />
             <span asp-validation-for="Arbeiter"></span>
             <a id="arb" style="display:none">
                 <label asp-for="LohnGruppen">
@@ -31,7 +31,7 @@
             <label asp-for="Angestellter">
                 Angestellter:
             </label>
-            <input type="checkbox" asp-for="Angestellter" id="checkToggleangestellter" onclick="togglefunc(this.id)" value="true" />
+            <input type="checkbox" asp-for="Angestellter" id="checkToggleangestellter" onclick="togglefunc()" value="true" />
             <span asp-validation-for="Angestellter"></span>
             <a id="ang" style="display:none">
                 <label asp-for="BeschaeftigungsGruppen">

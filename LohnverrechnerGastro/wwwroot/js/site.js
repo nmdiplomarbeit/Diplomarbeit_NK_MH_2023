@@ -29,11 +29,9 @@
 
 // Quelle: https://www.w3schools.com/howto/howto_js_display_checkbox_text.asp
 
-function togglefunc(id) {
+function togglefunc() {
 
-    document.getElementById("checkTogglearbeiter").checked = false;
-    document.getElementById("checkToggleangestellter").checked = false;
-    document.getElementById(id).checked = true;
+    
 
     var checkTogglefabo = document.getElementById("checkTogglefabo");
     var zusatzfabo = document.getElementById("zusatzfabo");         

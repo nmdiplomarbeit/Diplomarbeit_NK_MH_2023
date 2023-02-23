@@ -361,6 +361,30 @@ namespace LohnverrechnerGastro.Models.DB
             return 0;
         }
 
+        public async Task<decimal> GetLohngruppen(string lohngruppe)
+        {
+            decimal kv = 0m;
+            if (this._conn?.State == ConnectionState.Open)
+            {
+                DbCommand cmd = this._conn.CreateCommand();
+                cmd.CommandText = "select kv from lohngruppen where lohngruppe = @lohngruppe";
+                DbParameter paramB = cmd.CreateParameter();
+                paramB.ParameterName = "lohngruppe";
+                paramB.DbType = DbType.String;
+                paramB.Value = lohngruppe;
+                cmd.Parameters.Add(paramB);
+                using (DbDataReader reader = await cmd.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        kv = Convert.ToDecimal(reader["kv"]);
+                        return kv;
+                    }
+                }
+            }
+            return 0;
+        }
+
 
         public async Task<Table> GetOneTableRow(string tablename, int cnumber)
         {
