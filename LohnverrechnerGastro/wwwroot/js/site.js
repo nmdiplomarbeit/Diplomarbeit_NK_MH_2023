@@ -29,7 +29,12 @@
 
 // Quelle: https://www.w3schools.com/howto/howto_js_display_checkbox_text.asp
 
-function togglefunc() {
+function togglefunc(id) {
+
+    document.getElementById("checkTogglearbeiter").checked = false;
+    document.getElementById("checkToggleangestellter").checked = false;
+    document.getElementById(id).checked = true;
+
     var checkTogglefabo = document.getElementById("checkTogglefabo");
     var zusatzfabo = document.getElementById("zusatzfabo");         
 
@@ -56,7 +61,28 @@ function togglefunc() {
     } else {
         zusatzpendler.style.display = "none";
     }
+
+    var checkTogglearbeiter = document.getElementById("checkTogglearbeiter");
+    var arb = document.getElementById("arb");
+
+    if (checkTogglearbeiter.checked == true) {
+        arb.style.display = "inline";
+    } else {
+        arb.style.display = "none";
+    }
+
+    var checkToggleangestellter = document.getElementById("checkToggleangestellter");
+    var ang = document.getElementById("ang");
+
+    if (checkToggleangestellter.checked == true) {
+        ang.style.display = "inline";
+    } else {
+        ang.style.display = "none";
+    }
+
+    
 }
+
 
 //function OpenPopup() {
 

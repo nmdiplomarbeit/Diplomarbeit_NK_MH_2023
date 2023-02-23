@@ -34,9 +34,56 @@ namespace LohnverrechnerGastro.Models
 
         private Kategorie kategorie;
 
+        private LohnGruppen lohnGruppen;
 
-        public string ArbeiteroAngestellter { get; set; }
+        private BeschaeftigungsGruppen beschaeftigungsGruppen;
+
+
+        public bool Arbeiter { get; set; }
+        public bool Angestellter { get; set; }
         public Bundesland Bundesland { get; set; }
+        public LohnGruppen LohnGruppen
+        {
+            get
+            {
+                if (Arbeiter == true)
+                {
+                    return this.lohnGruppen;
+                }
+                else
+                {
+                    return LohnGruppen.notSpecified;
+                }
+            }
+            set
+            {
+                if (Arbeiter == true)
+                {
+                    this.lohnGruppen = value;
+                }
+            }
+        }
+        public BeschaeftigungsGruppen BeschaeftigungsGruppen
+        {
+            get
+            {
+                if (Angestellter == true)
+                {
+                    return this.beschaeftigungsGruppen;
+                }
+                else
+                {
+                    return BeschaeftigungsGruppen.notSpecified;
+                }
+            }
+            set
+            {
+                if (Angestellter == true)
+                {
+                    this.beschaeftigungsGruppen = value;
+                }
+            }
+        }
 
         public int Betriebszugehoerigkeit { get; set; }
 
@@ -219,6 +266,7 @@ namespace LohnverrechnerGastro.Models
             }
         }
 
+
         public Kategorie Kategorie
         {
             get
@@ -275,12 +323,12 @@ namespace LohnverrechnerGastro.Models
 
         public Eingaben() : this(Bundesland.Tirol, 0, "", 0,
                 0, "", 0, 0, 0, 0, 0, false, false, false, false, 0, 0, 0,
-                Kategorie.notSpecified, 0, 0, 0) { }
+                Kategorie.notSpecified, 0, 0, 0, false, false, LohnGruppen.notSpecified, BeschaeftigungsGruppen.notSpecified) { }
 
         public Eingaben(Bundesland bundesland, int jahr, string brutodnet, decimal einkommen,
-            double stundenprowoche, string szvombruttoodKV) : this(bundesland, jahr, brutodnet, einkommen,
+            double stundenprowoche, string szvombruttoodKV, bool arbeiter, bool angestellter) : this(bundesland, jahr, brutodnet, einkommen,
                 stundenprowoche, szvombruttoodKV, 0, 0, 0, 0, 0, false, false, false, false, 0, 0, 0,
-                Kategorie.notSpecified, 0, 0, 0)
+                Kategorie.notSpecified, 0, 0, 0, arbeiter, angestellter, LohnGruppen.notSpecified, BeschaeftigungsGruppen.notSpecified)
         {
             this.Bundesland = bundesland;
             this.Jahr = jahr;
@@ -288,13 +336,15 @@ namespace LohnverrechnerGastro.Models
             this.Einkommen = einkommen;
             this.StundenproWoche = stundenprowoche;
             this.SZvombrutodKV = szvombruttoodKV;
+            this.Arbeiter = arbeiter;
+            this.Angestellter = angestellter;
         }
 
         public Eingaben(Bundesland bundesland, int jahr, string brutodnet, decimal einkommen, 
             double stundenprowoche, string szvombruttoodKV, double tgpauschale, double sachbezug, 
             double fkersatz, double dnbeitrag, double lstfreibetrag,bool faboplus, bool avaboaeab, bool pendlerpauschale, 
             bool halberbonus, int anzkinderbis17, int anzkinderab18, int anzkinder, Kategorie kategorie, 
-            int anzkilometer, decimal ergebnis, decimal netto)
+            int anzkilometer, decimal ergebnis, decimal netto, bool arbeiter, bool angestellter, LohnGruppen lohnGruppen, BeschaeftigungsGruppen beschaeftigungsGruppen)
         {
             this.Bundesland = bundesland;
             this.Jahr = jahr;
@@ -319,6 +369,10 @@ namespace LohnverrechnerGastro.Models
             this.AnzKilometer = anzkilometer;
             this.Ergebnis = ergebnis;
             this.Netto = netto;
+            this.Arbeiter = arbeiter;
+            this.Angestellter = angestellter;
+            this.LohnGruppen = lohnGruppen;
+            this.BeschaeftigungsGruppen = beschaeftigungsGruppen;
 
         }
     }
