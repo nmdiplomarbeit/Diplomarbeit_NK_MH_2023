@@ -44,7 +44,7 @@ namespace LohnverrechnerGastro.Models
 
         public string BeschaeftigungsGruppen { get; set; }
         
-
+        public string Grundwert { get; set; }
         public int Betriebszugehoerigkeit { get; set; }
 
         public int Anzahl_681 { get; set; }

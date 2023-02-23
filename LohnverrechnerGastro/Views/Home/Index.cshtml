@@ -276,6 +276,15 @@
             </label>
             <output type="text" asp-for="Netto" />
             <span asp-validation-for="Netto"></span>
+            <br />
+            <label asp-for="Netto" class="output">
+                @if (Model != null)
+                {
+                    <p style="color: red; font-size: x-large"><b>@Model.Grundwert</b></p>
+                }
+            </label>
+            <output type="text" asp-for="Grundwert" />
+            <span asp-validation-for="Grundwert"></span>
         </p>
     </form>
 </div>
