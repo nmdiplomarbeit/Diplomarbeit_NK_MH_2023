@@ -31,6 +31,10 @@ namespace LohnverrechnerGastro.Models.DB
         Task<decimal> GetLohngruppen(string lohngruppe);
         Task<decimal> GetBeschaeftigungsgruppen(string beschaeftigungsgruppe);
 
+        Task<decimal> GetPendler(string km);
+        Task<decimal> GetFabo(string alterundhalb);
+
+
 
 
 

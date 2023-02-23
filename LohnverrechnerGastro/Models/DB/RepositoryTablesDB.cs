@@ -439,7 +439,7 @@ namespace LohnverrechnerGastro.Models.DB
             if (this._conn?.State == ConnectionState.Open)
             {
                 DbCommand cmd = this._conn.CreateCommand();
-                cmd.CommandText = "select pauschale from pendlerpauschale whewre km = @km";
+                cmd.CommandText = "select pauschale from pendlerpauschale where km = @km";
                 DbParameter paramB = cmd.CreateParameter();
                 paramB.ParameterName = "km";
                 paramB.DbType = DbType.String;
