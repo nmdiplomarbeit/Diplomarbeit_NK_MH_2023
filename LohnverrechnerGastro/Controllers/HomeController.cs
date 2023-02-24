@@ -177,7 +177,7 @@ namespace LohnverrechnerGastro.Controllers
                     }
                     else
                     {
-                        data.Grundwert = "Fehler! Das eingegebene Einkommen liegt unter dem mindest Grundwert! Grundwert: " + grundwert;
+                        data.Grundwert = "Fehler! Das eingegebene Einkommen liegt unter dem mindest Grundwert! Grundwert: " + Math.Round((grundwert), 2);
                     }
                 }
                 catch (DbException e)
