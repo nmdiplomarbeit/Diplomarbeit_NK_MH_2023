@@ -34,6 +34,8 @@ namespace LohnverrechnerGastro.Models.DB
         Task<decimal> GetPendler(string km);
         Task<decimal> GetFabo(string alterundhalb);
 
+        Task<decimal> GetPendlerEuro();
+
 
 
 

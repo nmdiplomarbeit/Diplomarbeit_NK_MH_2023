@@ -10,13 +10,20 @@
 <form asp-controller="home" asp-action="update" method="post" style="text-align:center;">
     <h3 style="color: darkblue;"><b>@Model.TableName</b></h3>
     <input type="hidden" asp-for="Cnumber" />
-    @if(Model.TableName != "bundesland_dz"){
+    @if (Model.TableName != "bundesland_dz" && Model.TableName != "fabo" && Model.TableName != "pendlerpauschale" && Model.TableName != "lohngruppen" && Model.TableName != "beschaeftigungsgruppen" && Model.TableName != "pendlereuro")
+    {
         <p>
             <label asp-for="Column1Name">@Model.Column1Name</label> <br />
             <input asp-for="Column1" />
             <span asp-validation-for="Column1"></span>
         </p>
+    } else {
+        <p>
+            <label asp-for="Column1Name">@Model.Column1Name</label> <br />
+            <label asp-for="Column1s" ><b>@Model.Column1s</b></label>
+        </p>
     }
+    
     <p>
         <label asp-for="Column2Name">@Model.Column2Name</label> <br />
         <input asp-for="Column2" />

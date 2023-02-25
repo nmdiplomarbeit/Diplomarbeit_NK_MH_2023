@@ -456,6 +456,31 @@ namespace LohnverrechnerGastro.Models.DB
             }
             return 0;
         }
+        public async Task<decimal> GetPendlerEuro() 
+        {
+            decimal peuro = 0m;
+            if (this._conn?.State == ConnectionState.Open)
+            {
+                DbCommand cmd = this._conn.CreateCommand();
+                cmd.CommandText = "select wert from pendlereuro where bedeutung = @bedeutung";
+                DbParameter paramB = cmd.CreateParameter();
+                paramB.ParameterName = "bedeutung";
+                paramB.DbType = DbType.String;
+                paramB.Value = "peuro";
+                cmd.Parameters.Add(paramB);
+                using (DbDataReader reader = await cmd.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        peuro = Convert.ToDecimal(reader["wert"]);
+                        return peuro;
+                    }
+                }
+            }
+            return 0;
+
+        }
+
 
 
         public async Task<Table> GetOneTableRow(string tablename, int cnumber)
@@ -616,6 +641,76 @@ namespace LohnverrechnerGastro.Models.DB
                                 Cnumber = Convert.ToInt32(reader["cnumber"]),
                                 Column2 = Convert.ToDecimal(reader["prozent"]),
                                 Column2Name = "prozent",
+
+                            };
+                            return table;
+                        }
+                        if (tablename == "fabo")
+                        {
+                            table = new Table()
+                            {
+                                TableName = tablename,
+                                Cnumber = Convert.ToInt32(reader["cnumber"]),
+                                Column1s = Convert.ToString(reader["alterundhalb"]),
+                                Column2 = Convert.ToDecimal(reader["bonus"]),
+                                Column1Name = "alterundhalb", 
+                                Column2Name = "prozent",
+
+                            };
+                            return table;
+                        }
+                        if (tablename == "pendlerpauschale")
+                        {
+                            table = new Table()
+                            {
+                                TableName = tablename,
+                                Cnumber = Convert.ToInt32(reader["cnumber"]),
+                                Column1s = Convert.ToString(reader["km"]),
+                                Column2 = Convert.ToDecimal(reader["pauschale"]),
+                                Column1Name = "km",
+                                Column2Name = "pauschale",
+
+                            };
+                            return table;
+                        }
+                        if (tablename == "lohngruppen")
+                        {
+                            table = new Table()
+                            {
+                                TableName = tablename,
+                                Cnumber = Convert.ToInt32(reader["cnumber"]),
+                                Column1s = Convert.ToString(reader["lgruppen"]),
+                                Column2 = Convert.ToDecimal(reader["kv"]),
+                                Column1Name = "lohngruppen",
+                                Column2Name = "kv",
+
+                            };
+                            return table;
+                        }
+                        if (tablename == "beschaeftigungsgruppen")
+                        {
+                            table = new Table()
+                            {
+                                TableName = tablename,
+                                Cnumber = Convert.ToInt32(reader["cnumber"]),
+                                Column1s = Convert.ToString(reader["bgruppe"]),
+                                Column2 = Convert.ToDecimal(reader["kv"]),
+                                Column1Name = "beschaeftigungsgruppen",
+                                Column2Name = "kv",
+
+                            };
+                            return table;
+                        }
+                        if (tablename == "pendlereuro")
+                        {
+                            table = new Table()
+                            {
+                                TableName = tablename,
+                                Cnumber = Convert.ToInt32(reader["cnumber"]),
+                                Column1s = Convert.ToString(reader["bedeutung"]),
+                                Column2 = Convert.ToDecimal(reader["wert"]),
+                                Column1Name = "bedeutung",
+                                Column2Name = "wert",
 
                             };
                             return table;
@@ -957,7 +1052,73 @@ namespace LohnverrechnerGastro.Models.DB
                                 Cnumber = Convert.ToInt32(reader["cnumber"]),
                                 Column1s = Convert.ToString(reader["bundesland"]),
                                 Column2 = Convert.ToDecimal(reader["prozent"]),
+                                Column1Name = "bundesland",
                                 Column2Name = "prozent",
+
+                            });
+                        }
+                        if (tablename == "fabo")
+                        {
+                            table.Add(new Table()
+                            {
+                                TableName = tablename,
+                                Cnumber = Convert.ToInt32(reader["cnumber"]),
+                                Column1s = Convert.ToString(reader["alterundhalb"]),
+                                Column2 = Convert.ToDecimal(reader["bonus"]),
+                                Column1Name = "alterundhalb",
+                                Column2Name = "prozent",
+
+                            });
+                        }
+                        if (tablename == "pendlerpauschale")
+                        {
+                            table.Add(new Table()
+                            {
+                                TableName = tablename,
+                                Cnumber = Convert.ToInt32(reader["cnumber"]),
+                                Column1s = Convert.ToString(reader["km"]),
+                                Column2 = Convert.ToDecimal(reader["pauschale"]),
+                                Column1Name = "km",
+                                Column2Name = "pauschale",
+
+                            });
+                        }
+                        if (tablename == "lohngruppen")
+                        {
+                            table.Add(new Table()
+                            {
+                                TableName = tablename,
+                                Cnumber = Convert.ToInt32(reader["cnumber"]),
+                                Column1s = Convert.ToString(reader["lgruppen"]),
+                                Column2 = Convert.ToDecimal(reader["kv"]),
+                                Column1Name = "lohngruppen",
+                                Column2Name = "kv",
+
+                            });
+                        }
+                        if (tablename == "beschaeftigungsgruppen")
+                        {
+                            table.Add(new Table()
+                            {
+                                TableName = tablename,
+                                Cnumber = Convert.ToInt32(reader["cnumber"]),
+                                Column1s = Convert.ToString(reader["bgruppe"]),
+                                Column2 = Convert.ToDecimal(reader["kv"]),
+                                Column1Name = "beschaeftigungsgruppen",
+                                Column2Name = "kv",
+
+                            });
+                        }
+                        if (tablename == "pendlereuro")
+                        {
+                            table.Add(new Table()
+                            {
+                                TableName = tablename,
+                                Cnumber = Convert.ToInt32(reader["cnumber"]),
+                                Column1s = Convert.ToString(reader["bedeutung"]),
+                                Column2 = Convert.ToDecimal(reader["wert"]),
+                                Column1Name = "bedeutung",
+                                Column2Name = "wert",
 
                             });
                         }
@@ -1051,19 +1212,37 @@ namespace LohnverrechnerGastro.Models.DB
                 if(tablename == "bundesland_dz")
                 {
                     cmd.CommandText = "update " + tablename + " set prozent = @prozent where cnumber = @cnumber;";
-                    param1Name = "prozent";
+                    param2Name = "prozent";
+                }
+                if (tablename == "fabo")
+                {
+                    cmd.CommandText = "update " + tablename + " set bonus = @bonus where cnumber = @cnumber;";
+                    param2Name = "bonus";
+                }
+                if (tablename == "pendlerpauschale")
+                {
+                    cmd.CommandText = "update " + tablename + " set pauschale = @pauschale where cnumber = @cnumber;";
+                    param2Name = "pauschale";
+                }
+                if (tablename == "lohngruppen")
+                {
+                    cmd.CommandText = "update " + tablename + " set kv = @kv where cnumber = @cnumber;";
+                    param2Name = "kv";
+                }
+                if (tablename == "beschaeftigungsgruppen")
+                {
+                    cmd.CommandText = "update " + tablename + " set kv = @kv where cnumber = @cnumber;";
+                    param2Name = "kv";
+                }
+                if (tablename == "pendlereuro")
+                {
+                    cmd.CommandText = "update " + tablename + " set wert = @wert where cnumber = @cnumber;";
+                    param2Name = "wert";
                 }
 
                 DbParameter param1 = cmd.CreateParameter();
                 param1.ParameterName = param1Name;
-                if (tablename != "bundesland_dz")
-                {
-                    param1.DbType = DbType.Decimal;
-                }
-                else
-                {
-                    param1.DbType = DbType.String;
-                }
+                param1.DbType = DbType.Decimal;
                 param1.Value = newTable.Column1;
 
 
@@ -1220,11 +1399,41 @@ namespace LohnverrechnerGastro.Models.DB
 
                     param1Name = "bundesland"; param2Name = "prozent";
                 }
+                if (tablename == "fabo")
+                {
+                    cmd.CommandText = "insert into " + tablename + " values(null, @alterundhalb, @bonus)";
+
+                    param1Name = "alterundhalb"; param2Name = "bonus";
+                }
+                if (tablename == "pendlerpauschale")
+                {
+                    cmd.CommandText = "insert into " + tablename + " values(null, @km, @pauschale)";
+
+                    param1Name = "km"; param2Name = "pauschale";
+                }
+                if (tablename == "lohngruppen")
+                {
+                    cmd.CommandText = "insert into " + tablename + " values(null, @lgruppen, @kv)";
+
+                    param1Name = "lgruppen"; param2Name = "kv";
+                }
+                if (tablename == "beschaeftigungsgruppen")
+                {
+                    cmd.CommandText = "insert into " + tablename + " values(null, @bgruppe, @kv)";
+
+                    param1Name = "bgruppe"; param2Name = "kv";
+                }
+                if (tablename == "pendlereuro")
+                {
+                    cmd.CommandText = "insert into " + tablename + " values(null, @bedeutung, @wert)";
+
+                    param1Name = "bedeutung"; param2Name = "wert";
+                }
 
                 DbParameter param1 = cmd.CreateParameter();
                 param1.ParameterName = param1Name;
                 param1.DbType = DbType.Decimal;
-                if (tablename != "bundesland_dz")
+                if (tablename != "bundesland_dz" && tablename != "fabo" && tablename != "pendlerpauschale" && tablename != "lohngruppen" && tablename != "beschaeftigungsgruppen" && tablename != "pendlereuro")
                 {
                     param1.Value = newTable.Column1;
                 }
@@ -1287,5 +1496,7 @@ namespace LohnverrechnerGastro.Models.DB
             }
             return false;
         }
+
+
     }
 }
