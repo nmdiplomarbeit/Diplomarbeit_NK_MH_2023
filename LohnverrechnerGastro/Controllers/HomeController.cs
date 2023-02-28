@@ -117,9 +117,9 @@ namespace LohnverrechnerGastro.Controllers
                     }
 
                     decimal eff_tarif = await rep.GetEffTarifAsync(lst_bem1, (int)kinder);
-                    if ((eff_tarif - (pendlereuro * 8)) >= 0)
+                    if ((eff_tarif - (pendlereuro * (await rep.GetPendlerEuro()))) >= 0)
                     {
-                        eff_tarif = eff_tarif - (pendlereuro * 8);
+                        eff_tarif = eff_tarif - (pendlereuro * (await rep.GetPendlerEuro()));
                     }
                     else
                     {
@@ -142,7 +142,6 @@ namespace LohnverrechnerGastro.Controllers
                     {
                         eff_tarif = 0;
                     }
-
 
                     if (data.Angestellter)
                     {
@@ -173,8 +172,6 @@ namespace LohnverrechnerGastro.Controllers
                     {
                         data.Netto = lst_bem - eff_tarif - (decimal)data.Sachbezug + (decimal)data.LstFreibetrag - (decimal)data.FKErsatz + pendlerpau;
                         data.Ergebnis = lst_bem - eff_tarif - (decimal)data.Sachbezug - (decimal)data.DNBeitrag + (decimal)data.LstFreibetrag + pendlerpau;
-                        //data.Ergebnis = grundwert;
-                        
                     }
                     else
                     {
