@@ -43,6 +43,10 @@ namespace LohnverrechnerGastro.Controllers
                     decimal fabo = 0;
                     decimal grundwert = 0;
                     decimal kvsatz = 0;
+                    Dictionary<string, decimal> hbgldic = await rep.GetGrenzenSV();
+                    decimal hbgl = hbgldic["hbgl"];
+                    decimal EinkommenSV = data.Einkommen;
+                    decimal sv = 0;
 
                     if ((decimal)data.Kategorie == 0)
                     {
@@ -84,8 +88,17 @@ namespace LohnverrechnerGastro.Controllers
 
                     }
 
+                    if (EinkommenSV >= hbgl)
+                    {
+                        EinkommenSV = hbgl;
+                        sv = ((await rep.GetSVSatzAsync((data.Einkommen)) / 100) * (EinkommenSV));
+                    } else
+                    {
+                        sv = ((await rep.GetSVSatzAsync((data.Einkommen + (decimal)data.TGPauschale + (decimal)data.Sachbezug)) / 100) * (data.Einkommen + (decimal)data.TGPauschale + (decimal)data.Sachbezug));
+                    }
+
                     decimal lst_bem1 = 0;
-                    decimal lst_bem = ((data.Einkommen + (decimal)data.TGPauschale + (decimal)data.Sachbezug) - ((await rep.GetSVSatzAsync((data.Einkommen + (decimal)data.TGPauschale + (decimal)data.Sachbezug)) / 100) * (data.Einkommen + (decimal)data.TGPauschale + (decimal)data.Sachbezug))) - (decimal)data.TGPauschale + (decimal)data.FKErsatz - (decimal)data.LstFreibetrag - pendlerpau;
+                    decimal lst_bem = ((data.Einkommen + (decimal)data.TGPauschale + (decimal)data.Sachbezug) - sv) - (decimal)data.TGPauschale + (decimal)data.FKErsatz - (decimal)data.LstFreibetrag - pendlerpau;
 
                     if (data.Angestellter)
                     {
