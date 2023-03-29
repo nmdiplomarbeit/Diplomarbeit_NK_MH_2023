@@ -130,9 +130,9 @@ namespace LohnverrechnerGastro.Controllers
                     }
 
                     decimal eff_tarif = await rep.GetEffTarifAsync(lst_bem1, (int)kinder);
-                    if ((eff_tarif - (pendlereuro * (await rep.GetPendlerEuro()))) >= 0)
+                    if ((eff_tarif - (pendlereuro * (await rep.GetPendlerEuro() / 12))) >= 0)
                     {
-                        eff_tarif = eff_tarif - (pendlereuro * (await rep.GetPendlerEuro()));
+                        eff_tarif = eff_tarif - (pendlereuro * (await rep.GetPendlerEuro() / 12));
                     }
                     else
                     {
